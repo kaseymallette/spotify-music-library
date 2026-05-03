@@ -3,7 +3,7 @@ A Spotify-powered music recommendation system using clustering analysis and auto
 
 ## Database Setup
 
-The `create_database.py` file was created to ingest CSV files from 50 Spotify playlists into a SQLite database. The script:
+The `src/db/create_database.py` script ingests CSV files from 50 Spotify playlists into a SQLite database. The script:
 
 - Reads all CSV files from the `data/` folder
 - Extracts playlist number and name from filenames (format: `number_name.csv`)
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 Run the `create_database.py` script to ingest CSV files and create the playlists table:
 
 ```bash
-python create_database.py
+python src/db/create_database.py
 ```
 
 **Output:**
@@ -46,11 +46,11 @@ rm spotify_music_library.db
 
 ### Track Deduplication
 
-The `deduplicate_tracks.py` script removes duplicate tracks (same song with different Track_IDs, e.g., single vs album versions) and creates a `tracks` table with unique tracks sorted by Artist and Song.
+The `src/db/deduplicate_tracks.py` script removes duplicate tracks (same song with different Track_IDs, e.g., single vs album versions) and creates a `tracks` table with unique tracks sorted by Artist and Song.
 
 **Run deduplication:**
 ```bash
-python deduplicate_tracks.py
+python src/db/deduplicate_tracks.py
 ```
 
 **Output:**
@@ -64,11 +64,11 @@ Tracks table created with unique tracks sorted by Artist, Song.
 
 ### Song Playlist Count
 
-The `create_song_playlist_count.py` script creates a `song_playlist_count` table that counts how many playlists each song (by Track_Key) appears in.
+The `src/db/create_song_playlist_count.py` script creates a `song_playlist_count` table that counts how many playlists each song (by Track_Key) appears in.
 
 **Run script:**
 ```bash
-python create_song_playlist_count.py
+python src/db/create_song_playlist_count.py
 ```
 
 **Output:**
@@ -80,11 +80,11 @@ Maximum playlists per song: 11
 
 ### Artist Playlist Count
 
-The `create_artist_playlist_count.py` script creates an `artist_playlist_count` table that counts how many playlists each artist appears in.
+The `src/db/create_artist_playlist_count.py` script creates an `artist_playlist_count` table that counts how many playlists each artist appears in.
 
 **Run script:**
 ```bash
-python create_artist_playlist_count.py
+python src/db/create_artist_playlist_count.py
 ```
 
 **Output:**
@@ -96,11 +96,24 @@ Maximum playlists per artist: 18
 
 ### Sample Queries
 
-You can run all sample queries at once using the `sample_queries.py` script:
+You can run all sample queries at once using the `src/analysis/sample_queries.py` script:
 
 ```bash
-python sample_queries.py
+python src/analysis/sample_queries.py
 ```
+
+### Visualization
+
+The `src/analysis/visualize_playlist_counts.py` script creates charts showing the distribution of playlist counts for artists and songs.
+
+**Run script:**
+```bash
+python src/analysis/visualize_playlist_counts.py
+```
+
+**Output:**
+- Saves chart as `images/playlist_count_distributions.png`
+- Prints statistics for artist and song playlist count distributions
 
 **Get number of unique playlists:**
 50
