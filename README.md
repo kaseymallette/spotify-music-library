@@ -39,7 +39,7 @@ The `deduplicate_tracks.py` script removes duplicate tracks (same song with diff
 python deduplicate_tracks.py
 ```
 
-**Sample output:**
+**Output:**
 ```
 Original rows: 9544
 Unique Track_IDs: 5757
