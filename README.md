@@ -32,7 +32,10 @@ python create_database.py
 
 **Output:**
 ```
-Database created with 50 playlists and 9544 total rows.
+Database created: spotify_music_library.db
+Playlists table created successfully.
+Number of playlists: 50
+Row count: 9544
 ```
 
 ### Track Deduplication

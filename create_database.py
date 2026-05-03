@@ -38,7 +38,10 @@ for filename in os.listdir(data_folder):
 
 # Display database statistics
 df_stats = pd.read_sql('SELECT COUNT(DISTINCT playlist_name) as playlist_count, COUNT(*) as total_rows FROM playlists', conn)
-print(f"Database created with {df_stats['playlist_count'][0]} playlists and {df_stats['total_rows'][0]} total rows.")
+print("Database created: spotify_music_library.db")
+print("Playlists table created successfully.")
+print(f"Number of playlists: {df_stats['playlist_count'][0]}")
+print(f"Row count: {df_stats['total_rows'][0]}")
 
 # Close the database connection
 conn.close()
