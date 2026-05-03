@@ -24,7 +24,13 @@ pip install -r requirements.txt
 
 ### Create Database
 
-Run the `create_database.py` script to ingest CSV files and create the playlists table:
+If you've added new CSV files to the `data/` folder, remove the existing database first:
+
+```bash
+rm spotify_music_library.db
+```
+
+Then run the `create_database.py` script to ingest CSV files and create the playlists table:
 
 ```bash
 python create_database.py
