@@ -41,7 +41,7 @@ python create_database.py
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9544
+Row count: 9543
 ```
 
 ### Track Deduplication
@@ -56,63 +56,39 @@ python deduplicate_tracks.py
 **Output:**
 ```
 Unique Track_IDs: 5757
-Unique Track_Keys: 5229
-Unique Artists: 2025
-Removed: 528 duplicate tracks (same song, different Track_ID)
+Unique Track_Keys: 5231
+Unique Artists: 2027
+Removed: 526 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ```
 
 ### Sample Queries
 
+You can run all sample queries at once using the `sample_queries.py` script:
+
+```bash
+python sample_queries.py
+```
+
 #### Table: Playlists
 
 **Get number of unique playlists:**
-```bash
-sqlite3 spotify_music_library.db \
-  "SELECT COUNT(DISTINCT playlist_name) FROM playlists;"
-```
-Result: `50`
+Result: 50
 
 **Get number of unique artists:**
-```bash
-sqlite3 spotify_music_library.db \
-  "SELECT COUNT(DISTINCT Artist) FROM playlists;"
-```
-Result: `2025`
+Result: 2027
 
 **Get song count distribution per playlist (grouped ranges):**
-```bash
-sqlite3 spotify_music_library.db \
-  "SELECT CASE \
-           WHEN song_count <= 50 THEN '0-50' \
-           WHEN song_count <= 100 THEN '51-100' \
-           WHEN song_count <= 200 THEN '101-200' \
-           WHEN song_count <= 500 THEN '201-500' \
-           ELSE '500+' \
-         END as song_count_range, \
-         COUNT(*) as playlist_count \
-   FROM (SELECT playlist_name, COUNT(*) as song_count \
-        FROM playlists \
-        GROUP BY playlist_name) \
-   GROUP BY song_count_range \
-   ORDER BY MIN(song_count);"
-```
 Result:
 ```
-9 playlists have 0-50 songs (18%)
-13 playlists have 51-100 songs (26%)
-16 playlists have 101-200 songs (32%)
-8 playlists have 201-500 songs (16%)
-4 playlists have 500+ songs (8%)
+9 playlists have 0-50 songs (18.0%)
+13 playlists have 51-100 songs (26.0%)
+16 playlists have 101-200 songs (32.0%)
+8 playlists have 201-500 songs (16.0%)
+4 playlists have 500+ songs (8.0%)
 ```
 
 **Get songs from playlist 01:**
-```bash
-sqlite3 spotify_music_library.db \
-  "SELECT Song_Number, Song, Artist, Album_Year \
-   FROM playlists \
-   WHERE playlist_number = '01';"
-```
 Result:
 ```
 1|Temporary Love|The Brinks|2015
@@ -132,36 +108,14 @@ Result:
 #### Table: Tracks
 
 **Get distribution of artists by song count (grouped ranges):**
-```bash
-sqlite3 spotify_music_library.db \
-  "SELECT CASE \
-           WHEN song_count = 1 THEN '1' \
-           WHEN song_count BETWEEN 2 AND 3 THEN '2-3' \
-           ELSE '4+' \
-         END as song_count_range, \
-         COUNT(*) as artist_count \
-   FROM (SELECT Artist, COUNT(*) as song_count \
-        FROM tracks \
-        GROUP BY Artist) \
-   GROUP BY song_count_range \
-   ORDER BY MIN(song_count);"
-```
 Result:
 ```
-1411 artists have 1 song (69.7%)
-334 artists have 2-3 songs (16.5%)
-280 artists have 4+ songs (13.8%)
+1413 artists have 1 song(s) (69.7%)
+334 artists have 2-3 song(s) (16.5%)
+280 artists have 4+ song(s) (13.8%)
 ```
 
 **Get top five artists with song count:**
-```bash
-sqlite3 spotify_music_library.db \
-  "SELECT Artist, COUNT(*) as song_count \
-   FROM tracks \
-   GROUP BY Artist \
-   ORDER BY song_count DESC \
-   LIMIT 5;"
-```
 Result:
 ```
 Backstreet Boys|107
