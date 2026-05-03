@@ -14,11 +14,14 @@ for filename in os.listdir(data_folder):
         # Load the raw track data
         df = pd.read_csv(file_path)
         
-        # Rename the # column to Song_Number for SQL compatibility
-        df = df.rename(columns={'#': 'Song_Number'})
+        # Rename columns for SQL compatibility
+        df = df.rename(columns={'#': 'Song_Number', 'Spotify Track Id': 'Track_ID'})
         
         # Extract album year from Album Date column
         df['Album_Year'] = df['Album Date'].str[:4].astype(int)
+
+        # Create track_key column for unique track identification
+        df['Track_Key'] = df['Artist'] + '|' + df['Song']
         
         # Extract playlist number and name from filename
         # Number is everything before the first underscore
