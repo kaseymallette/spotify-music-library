@@ -11,12 +11,17 @@ print("#### Table: Playlists\n")
 # Get number of unique playlists
 print("Get number of unique playlists:")
 cursor = conn.execute("SELECT COUNT(DISTINCT playlist_name) FROM playlists;")
-print(f"Result: {cursor.fetchone()[0]}\n")
+print(f"{cursor.fetchone()[0]}\n")
 
 # Get number of unique artists
 print("Get number of unique artists:")
 cursor = conn.execute("SELECT COUNT(DISTINCT Artist) FROM playlists;")
-print(f"Result: {cursor.fetchone()[0]}\n")
+print(f"{cursor.fetchone()[0]}\n")
+
+# Get number of rows in playlists table
+print("Get number of rows in playlists table:")
+cursor = conn.execute("SELECT COUNT(*) FROM playlists;")
+print(f"{cursor.fetchone()[0]}\n")
 
 # Get song count distribution per playlist
 print("Get song count distribution per playlist (grouped ranges):")
@@ -37,7 +42,6 @@ cursor = conn.execute("""
 """)
 results = cursor.fetchall()
 total = sum(row[1] for row in results)
-print("Result:")
 for song_count_range, playlist_count in results:
     percentage = (playlist_count / total) * 100
     print(f"{playlist_count} playlists have {song_count_range} songs ({percentage:.1f}%)")
@@ -52,7 +56,6 @@ cursor = conn.execute("""
     ORDER BY Song_Number;
 """)
 results = cursor.fetchall()
-print("Result:")
 for row in results:
     print(f"{row[0]}|{row[1]}|{row[2]}|{row[3]}")
 print()
@@ -77,7 +80,6 @@ cursor = conn.execute("""
 """)
 results = cursor.fetchall()
 total = sum(row[1] for row in results)
-print("Result:")
 for song_count_range, artist_count in results:
     percentage = (artist_count / total) * 100
     print(f"{artist_count} artists have {song_count_range} song(s) ({percentage:.1f}%)")
@@ -93,7 +95,6 @@ cursor = conn.execute("""
     LIMIT 5;
 """)
 results = cursor.fetchall()
-print("Result:")
 for row in results:
     print(f"{row[0]}|{row[1]}")
 print()

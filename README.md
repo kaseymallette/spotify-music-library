@@ -73,13 +73,15 @@ python sample_queries.py
 #### Table: Playlists
 
 **Get number of unique playlists:**
-Result: 50
+50
 
 **Get number of unique artists:**
-Result: 2027
+2027
+
+**Get number of rows in playlists table:**
+9543
 
 **Get song count distribution per playlist (grouped ranges):**
-Result:
 ```
 9 playlists have 0-50 songs (18.0%)
 13 playlists have 51-100 songs (26.0%)
@@ -89,7 +91,6 @@ Result:
 ```
 
 **Get songs from playlist 01:**
-Result:
 ```
 1|Temporary Love|The Brinks|2015
 2|Basic Instinct|The Acid|2014
@@ -108,7 +109,6 @@ Result:
 #### Table: Tracks
 
 **Get distribution of artists by song count (grouped ranges):**
-Result:
 ```
 1413 artists have 1 song(s) (69.7%)
 334 artists have 2-3 song(s) (16.5%)
@@ -116,7 +116,6 @@ Result:
 ```
 
 **Get top five artists with song count:**
-Result:
 ```
 Backstreet Boys|107
 OneRepublic|88
