@@ -3,12 +3,12 @@ A Spotify-powered music recommendation system using clustering analysis and auto
 
 ## Database Setup
 
-The `database.py` file was created to ingest CSV files from 50 Spotify playlists into a SQLite database. The script:
+The `create_database.py` file was created to ingest CSV files from 50 Spotify playlists into a SQLite database. The script:
 
 - Reads all CSV files from the `data/` folder
 - Extracts playlist number and name from filenames (format: `number_name.csv`)
-- Adds metadata columns: `playlist_number`, `playlist_name`, and `Album_Year`
-- Renames the `#` column to `Song_Number` for SQL compatibility
+- Adds metadata columns: `playlist_number`, `playlist_name`, `Album_Year`, and `Track_Key`
+- Renames columns for SQL compatibility: `#` → `Song_Number`, `Spotify Track Id` → `Track_ID`
 - Appends all data to a `playlists` table in `spotify_music_library.db`
 
 ### Setup Commands
@@ -22,7 +22,25 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Run database creation script
-python database.py
+python create_database.py
+```
+
+### Track Deduplication
+
+The `deduplicate_tracks.py` script removes duplicate tracks (same song with different Track_IDs, e.g., single vs album versions) and creates a `tracks` table with unique tracks sorted by Artist and Song.
+
+**Run deduplication:**
+```bash
+python deduplicate_tracks.py
+```
+
+**Sample output:**
+```
+Original rows: 9544
+Unique Track_IDs: 5757
+Unique Track_Keys: 5229
+Removed: 528 duplicate tracks (same song, different Track_ID)
+Tracks table created with unique tracks sorted by Artist, Song.
 ```
 
 ### Sample Queries
@@ -33,6 +51,53 @@ sqlite3 spotify_music_library.db \
   "SELECT COUNT(DISTINCT playlist_name) FROM playlists;"
 ```
 Result: `50`
+
+**Get number of unique artists from tracks table:**
+```bash
+sqlite3 spotify_music_library.db \
+  "SELECT COUNT(DISTINCT Artist) FROM tracks;"
+```
+Result: `2025`
+
+**Get distribution of artists by song count (grouped ranges):**
+```bash
+sqlite3 spotify_music_library.db \
+  "SELECT CASE \
+           WHEN song_count = 1 THEN '1' \
+           WHEN song_count BETWEEN 2 AND 3 THEN '2-3' \
+           ELSE '4+' \
+         END as song_count_range, \
+         COUNT(*) as artist_count \
+   FROM (SELECT Artist, COUNT(*) as song_count \
+        FROM tracks \
+        GROUP BY Artist) \
+   GROUP BY song_count_range \
+   ORDER BY MIN(song_count);"
+```
+Result:
+```
+1411 artists have 1 song (69.7%)
+334 artists have 2-3 songs (16.5%)
+280 artists have 4+ songs (13.8%)
+```
+
+**Get top five artists with song count:**
+```bash
+sqlite3 spotify_music_library.db \
+  "SELECT Artist, COUNT(*) as song_count \
+   FROM tracks \
+   GROUP BY Artist \
+   ORDER BY song_count DESC \
+   LIMIT 5;"
+```
+Result:
+```
+Backstreet Boys|107
+OneRepublic|88
+Maroon 5|70
+Matt Maeson|64
+The Fray|58
+```
 
 **Get songs from playlist 01:**
 ```bash
@@ -56,3 +121,4 @@ Result:
 11|Cliff|Låpsley|2016
 12|Middle|DJ Snake,Bipolar Sunshine|2015
 ```
+
