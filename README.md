@@ -70,8 +70,6 @@ You can run all sample queries at once using the `sample_queries.py` script:
 python sample_queries.py
 ```
 
-#### Table: Playlists
-
 **Get number of unique playlists:**
 50
 
@@ -105,8 +103,6 @@ python sample_queries.py
 11|Cliff|Låpsley|2016
 12|Middle|DJ Snake,Bipolar Sunshine|2015
 ```
-
-#### Table: Tracks
 
 **Get distribution of artists by song count (grouped ranges):**
 ```
