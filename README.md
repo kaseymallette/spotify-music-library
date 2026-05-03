@@ -29,13 +29,17 @@ python database.py
 
 **Get the number of unique playlists:**
 ```bash
-sqlite3 spotify_music_library.db "SELECT COUNT(DISTINCT playlist_name) FROM playlists;"
+sqlite3 spotify_music_library.db \
+  "SELECT COUNT(DISTINCT playlist_name) FROM playlists;"
 ```
 Result: `50`
 
 **Get songs from playlist 01:**
 ```bash
-sqlite3 spotify_music_library.db "SELECT Song_Number, Song, Artist, Album_Year FROM playlists WHERE playlist_number = '01';"
+sqlite3 spotify_music_library.db \
+  "SELECT Song_Number, Song, Artist, Album_Year \
+   FROM playlists \
+   WHERE playlist_number = '01';"
 ```
 Result:
 ```
