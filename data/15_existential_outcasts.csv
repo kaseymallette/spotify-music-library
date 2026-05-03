@@ -1,0 +1,164 @@
+#,Song,Artist,BPM,Camelot,Energy,Added At,Duration,Popularity,Genres,Album,Album Date,Dance,Acoustic,Instrumental,Valence,Speech,Live,Loud (Db),Key,Time Signature,Spotify Track Id,ISRC
+1,"Jigsaw Falling Into Place","Radiohead",166,10A,83,2025-01-24,04:08,81,"art rock, alternative rock","In Rainbows",2007-12-28,46,11,0,81,0,0,-6,B Minor,4,0YJ9FWWHn9EfnN0lHwbzvV,GBSTK0700009
+2,"Weird Fishes / Arpeggi","Radiohead",153,10A,61,2025-01-24,05:18,79,"art rock, alternative rock","In Rainbows",2007-12-28,53,77,76,20,0,0,-8,B Minor,4,4wajJ1o7jWIg62YqpkHC7S,GBSTK0700004
+3,"Nude","Radiohead",128,12B,34,2025-01-24,04:15,75,"art rock, alternative rock","In Rainbows",2007-12-28,52,83,58,17,0,0,-10,E Major,3,35YyxFpE0ZTOoqFx5bADW8,GBSTK0700003
+4,"All I Need","Radiohead",88,9A,48,2025-01-24,03:48,83,"art rock, alternative rock","In Rainbows",2007-12-28,67,53,43,10,0,10,-9,E Minor,4,5Qv2Nby1xTr9pQyjkrc94J,GBSTK0700005
+5,"Paper Aeroplane","Angus & Julia Stone",104,1B,41,2025-02-22,03:43,57,"","A Book Like This",2009-00-00,81,59,27,37,10,10,-15,B Major,4,3XcvrvOCfSvK0mm6nOTw6d,AUAP10600004
+6,"Mango Tree","Angus & Julia Stone",108,8B,44,2025-02-22,03:45,48,"","A Book Like This",2009-00-00,59,83,13,28,0,10,-15,C Major,4,1zhUjkAPnvPvkKpwHB5qWT,AUAP10600002
+7,"Just a Boy","Angus & Julia Stone",161,8B,70,2025-03-04,04:01,43,"","A Book Like This",2009-00-00,64,24,1,37,0,30,-9,C Major,4,3R8KeqkoBJT9u0co2G1R6W,AUAP10700007
+8,"Jewels and Gold","Angus & Julia Stone",166,5A,32,2025-03-04,04:25,20,"","A Book Like This",2009-00-00,70,48,1,60,10,10,-12,C Minor,4,4ZdtYcA8sHzcqaUnQeCfDF,AUAP10700014
+9,"Rabbit Hole","The Temper Trap",162,12A,44,2025-02-22,03:05,27,"","The Temper Trap",2012-01-01,29,1,0,10,0,0,-8,C♯/D♭ Minor,4,6isn97Gnpr2GkA6X7xZm8Z,AULI01281220
+10,"I'm Gonna Wait","The Temper Trap",154,7B,67,2025-02-22,04:15,23,"","The Temper Trap",2012-01-01,41,0,73,14,0,20,-8,F Major,4,3sAlxkUQo8GWvvbD9zMDCu,AULI01281200
+11,"Codes and Keys","Death Cab for Cutie",119,8B,87,2025-02-22,03:21,35,"","Codes and Keys",2011-05-27,57,1,14,47,0,10,-8,C Major,4,3Myb5tcPivRHsoz1jw8GKr,USAT21100669
+12,"You Are a Tourist","Death Cab for Cutie",95,10B,87,2025-02-22,04:46,51,"","Codes and Keys",2011-05-27,57,0,14,66,0,20,-8,D Major,4,2bD1AW4yqiCurGCva6r88a,USAT21100467
+13,"Sweet Disposition","The Temper Trap",129,10B,80,2025-03-08,03:56,74,"","Conditions",2009-06-19,53,7,20,31,0,10,-7,D Major,4,0fIDUXVyJ1JISqB4HP4D5H,GBZUZ0900013
+14,"Science of Fear","The Temper Trap",150,8A,84,2025-02-22,04:22,35,"","Conditions",2009-06-19,47,0,48,18,0,30,-7,A Minor,4,0FdvSI0QIaUE3Fh0zrvPJg,GBZUZ0900003
+15,"Soldier On","The Temper Trap",106,10A,43,2025-02-22,06:00,38,"","Conditions",2009-06-19,32,45,21,7,0,10,-7,B Minor,4,18zAwMMfSQOGIErNnbJko3,GBZUZ0900012
+16,"Nerve","Half Moon Run",136,4A,49,2025-02-22,03:17,28,"","Dark Eyes",2013-01-01,64,72,0,51,0,0,-9,F Minor,4,6TzAL5Lt78ijxh2GVfdXKi,CAI251212609
+17,"She Wants To Know","Half Moon Run",96,10A,65,2025-02-22,04:11,32,"","Dark Eyes",2013-01-01,57,6,1,37,0,0,-9,B Minor,4,2nw5JnozeqC9ZBaoIordQD,CAI251212604
+18,"Need It","Half Moon Run",100,8A,22,2025-02-22,03:25,42,"","Dark Eyes",2013-01-01,61,82,1,14,0,10,-12,A Minor,3,1m0GXAaRNrclH8pfIxFFZD,CAI251212605
+19,"Backwards Directions","Abby Sage",115,6B,38,2025-02-22,03:07,56,"","Backwards Directions",2022-09-07,85,41,45,48,0,10,-10,A#/B♭ Major,4,5vbnQr1tWSSREmcIONIUm9,CAN112200678
+20,"High Five","Abby Sage",105,7B,63,2025-02-22,02:47,42,"","The Florist",2022-10-21,69,52,85,51,0,0,-9,F Major,4,6rbVTDom9bD9CVnpWfBHFb,CAN112200680
+21,"Soul Meets Body","Death Cab for Cutie",128,7A,85,2025-03-04,03:49,65,"","Plans",2005-08-29,62,8,0,71,0,0,-6,D Minor,4,5yc59J3MR3tVDPTOgwgRI5,USAT20504676
+22,"I Will Follow You into the Dark","Death Cab for Cutie",80,7B,21,2025-03-04,03:09,65,"","Plans",2005-08-29,52,92,0,49,0,10,-12,F Major,4,3kZC0ZmFWrEHdUCmUqlvgZ,USAT20504677
+23,"Your Heart Is an Empty Room","Death Cab for Cutie",112,8B,62,2025-03-04,03:39,41,"","Plans",2005-08-29,57,9,0,40,0,0,-9,C Major,4,4QJ9qzD7PHDET2bwlOxXyO,USAT20504683
+24,"The Sound of Settling","Death Cab for Cutie",175,2B,76,2025-02-22,02:12,52,"","Transatlanticism (10th Anniversary Edition)",2003-00-00,42,1,0,77,0,20,-7,F#/G♭ Major,4,6VKAWqNzAMo3m82rqV5BMR,USBS50310283
+25,"Big Jet Plane","Angus & Julia Stone",110,3A,39,2025-02-22,03:59,67,"","Down the Way",2010-03-30,76,24,1,27,0,10,-9,A#/B♭ Minor,4,3WGsYiBXmaT8XyY4Fmry2v,AUAP10900011
+26,"And The Boys","Angus & Julia Stone",100,4A,42,2025-02-22,04:10,30,"","Down the Way",2010-03-30,79,51,4,53,0,0,-9,F Minor,4,1cj5t7hfDdBy6jSYIBZi5C,AUAP10900002
+27,"I'm Not Yours","Angus & Julia Stone",72,1B,31,2025-02-22,03:58,30,"","Down the Way",2010-03-30,62,71,0,16,0,10,-9,B Major,4,6prZ2X2sTY9v7PRKYOm6C3,AUAP10900013
+28,"Draw Your Swords","Angus & Julia Stone",114,8A,30,2025-02-22,06:35,49,"","Down the Way",2010-03-30,69,17,0,6,0,0,-10,A Minor,4,0m6DFmtVCFmtAEdkO9KqUK,AUAP10900009
+29,"The Best Deceptions","Dashboard Confessional",172,3B,40,2025-03-04,04:14,45,"emo, pop punk","The Places You Have Come to Fear the Most",2001-03-20,46,80,0,36,0,10,-9,C♯/D♭ Major,4,6yJl0W1IVV1DsTr0vfDY2e,USVR90235403
+30,"Again I Go Unnoticed","Dashboard Confessional",135,3B,80,2025-03-04,02:17,41,"emo, pop punk","The Places You Have Come to Fear the Most",2001-03-20,45,43,0,61,0,0,-6,C♯/D♭ Major,4,1tlnTwKih4geL1cDF3I4MU,USVR90235408
+31,"Saints and Sailors","Dashboard Confessional",112,3B,74,2025-03-04,02:33,45,"emo, pop punk","The Places You Have Come to Fear the Most",2001-03-20,66,40,0,46,0,20,-6,C♯/D♭ Major,4,0kMMibKZeDcABgOWqY3LUm,USVR90235405
+32,"The Places You Have Come to Fear the Most","Dashboard Confessional",91,2B,48,2025-03-04,02:54,41,"emo, pop punk","The Places You Have Come to Fear the Most",2001-03-20,56,76,0,71,0,0,-11,F#/G♭ Major,4,1oSoBjO9hnKWQVUZ80wsAL,USVR90235409
+33,"Ghost Of A Good Thing","Dashboard Confessional",82,8B,29,2025-03-04,03:44,0,"emo, pop punk","A Mark, A Mission, A Brand, A Scar",2003-01-01,73,80,0,32,0,0,-8,C Major,4,6BbOlYFXUxEIXGHJcIkvme,USVR90338119
+34,"Several Ways To Die Trying","Dashboard Confessional",163,5B,67,2025-03-04,06:07,0,"emo, pop punk","A Mark, A Mission, A Brand, A Scar",2003-01-01,43,0,0,25,0,0,-6,D#/E♭ Major,4,2e2s5cr2Xo2jJgnbkBGIdN,USVR90338126
+35,"Vindicated","Dashboard Confessional",86,4B,80,2025-03-04,03:21,63,"emo, pop punk","Dusk And Summer",2006-00-00,52,3,0,29,0,0,-3,G#/A♭ Major,4,1EotcFbWTbMCXeKFVEtX6Y,USVR90400024
+36,"These Bones","Dashboard Confessional",82,1A,87,2025-03-04,02:58,29,"emo, pop punk","The Shade of Poison Trees",2007-10-02,58,1,0,67,0,30,-5,G#/A♭ Minor,4,3QEkDMcjzFuDc7th5Drozm,USVR90747704
+37,"The Shade of Poison Trees","Dashboard Confessional",78,1B,42,2025-03-04,02:58,27,"emo, pop punk","The Shade of Poison Trees",2007-10-02,30,33,0,10,0,10,-8,B Major,4,3EQmU7JX0BhDX0DtL3r6rF,USVR90747706
+38,"The Widow's Peak","Dashboard Confessional",78,4B,57,2025-03-04,02:58,17,"emo, pop punk","The Shade of Poison Trees",2007-10-02,50,25,0,40,0,10,-7,G#/A♭ Major,4,4QmsMomLZ3SpOCuovdOkpB,USVR90747712
+39,"Karma Police","Radiohead",75,9B,50,2025-01-24,04:24,82,"art rock, alternative rock","OK Computer",1997-05-28,36,6,0,32,0,10,-9,G Major,4,63OQupATfueTdZMWTxW03A,GBAYE9701368
+40,"No Surprises","Radiohead",76,7B,39,2025-01-24,03:49,87,"art rock, alternative rock","OK Computer",1997-05-28,26,6,0,12,0,10,-11,F Major,4,10nyNJ6zNy2YVYLrcwLccB,GBAYE9700386
+41,"Exit Music (For A Film)","Radiohead",122,9A,28,2025-01-24,04:27,81,"art rock, alternative rock","OK Computer",1997-05-28,29,22,12,20,0,10,-11,E Minor,4,0z1o5L7HJx562xZSATcIpY,GBAYE9701372
+42,"Creep","Radiohead",92,9B,43,2025-01-24,03:58,93,"art rock, alternative rock","Pablo Honey",1993-02-22,52,1,0,10,0,10,-10,G Major,4,70LcF31zb1H0PyJoS1Sx1r,GBAYE9200070
+43,"No Room in Frame","Death Cab for Cutie",125,12B,72,2025-02-22,04:05,47,"","Kintsugi",2015-03-27,64,20,47,44,0,0,-10,E Major,4,7DkTneByAopqOjXFG6XlZK,USAT21500032
+44,"Black Sun","Death Cab for Cutie",88,10B,64,2025-02-22,04:49,54,"","Kintsugi",2015-03-27,61,17,7,61,0,10,-8,D Major,4,59FC22eN2Syt9bbv2d6393,USAT21500029
+45,"The Ghosts of Beverly Drive","Death Cab for Cutie",155,10B,86,2025-02-22,04:03,56,"","Kintsugi",2015-03-27,56,0,0,75,0,10,-7,D Major,4,6wNCdMW82LwJgFrnGqLhpJ,USAT21500033
+46,"I Dreamt We Spoke Again","Death Cab for Cutie",119,8A,71,2025-02-22,03:04,43,"","Thank You for Today",2018-08-17,71,28,1,45,0,10,-6,A Minor,4,6TRQPx5Z0YZ0pCQX7JbtlS,USAT21802564
+47,"From The Stalls","Angus & Julia Stone",111,6A,55,2025-02-22,05:09,18,"","Angus & Julia Stone (Deluxe)",2014-08-01,65,3,0,22,0,10,-9,G Minor,4,61NITHJBz1JEqCzh8WshmT,AUAP11400010
+48,"Heart Beats Slow","Angus & Julia Stone",97,4A,86,2025-02-22,04:35,23,"","Angus & Julia Stone (Deluxe)",2014-08-01,65,0,0,47,0,20,-7,F Minor,4,1X5M1MgjM9fK3z5pou6XJB,AUAP11400005
+49,"My Word For It","Angus & Julia Stone",97,8A,67,2025-02-22,04:08,17,"","Angus & Julia Stone (Deluxe)",2014-08-01,71,6,8,42,0,0,-6,A Minor,4,5HJfIp59Bdyi8gGocu0s9T,AUAP11400003
+50,"Crash And Burn","Angus & Julia Stone",122,9A,39,2025-02-22,06:36,20,"","Angus & Julia Stone (Deluxe)",2014-08-01,50,7,71,11,0,10,-9,E Minor,4,4lKYgx0gHmJOFrmHVJvLZm,AUAP11400014
+51,"Please You","Angus & Julia Stone",158,9B,37,2025-02-22,05:40,18,"","Angus & Julia Stone (Deluxe)",2014-08-01,45,72,13,33,0,0,-10,G Major,4,5AYWmcuf1Qv5AyrgVBlSV1,AUAP11400012
+52,"Intro","The xx",100,8A,78,2025-03-04,02:07,45,"","xx",2009-08-18,62,46,93,15,0,10,-9,A Minor,4,5VfEuwErhx6X4eaPbyBfyu,GBBKS0900196
+53,"VCR","The xx",109,8B,48,2025-03-04,02:57,28,"","xx",2009-08-18,76,89,82,48,0,10,-13,C Major,4,65O4mmCwB46tKBNQhY79Ty,GBBKS0900197
+54,"Crystalised","The xx",123,10A,48,2025-03-04,03:21,37,"","xx",2009-08-18,76,81,39,42,0,0,-12,B Minor,4,33R3swWziWYmnDYvZqcZVS,GBBKS0900025
+55,"Islands","The xx",124,12B,47,2025-03-04,02:40,31,"","xx",2009-08-18,87,74,27,71,0,10,-11,E Major,4,6i5tYaGlOFDLILEB6HfJAa,GBBKS0900198
+56,"Heart Skipped A Beat","The xx",123,1B,35,2025-03-04,04:02,25,"","xx",2009-08-18,83,55,81,51,0,0,-13,B Major,4,6WfxJHrQyfGMukUtmrTHLd,GBBKS0900199
+57,"Shelter","The xx",215,8B,38,2025-03-04,04:30,22,"","xx",2009-08-18,26,80,54,6,0,10,-16,C Major,4,13F3T2TWkVW6oVZNnFc69e,GBBKS0900201
+58,"Basic Space","The xx",116,8A,21,2025-03-04,03:08,20,"","xx",2009-08-18,94,21,8,15,0,10,-15,A Minor,4,5jPLxdGG7KKX9rM3xrm6Dd,GBBKS0900202
+59,"Infinity","The xx",109,11B,27,2025-03-04,05:13,23,"","xx",2009-08-18,63,81,88,14,0,10,-14,A Major,4,7a4FlhlwnQe6BWl4UtiVek,GBBKS0900203
+60,"Night Time","The xx",122,10A,39,2025-03-04,03:36,21,"","xx",2009-08-18,68,51,19,14,0,10,-12,B Minor,4,53AfCfybXX2rNfTSej1mOB,GBBKS0900204
+61,"Stars","The xx",104,8A,20,2025-03-04,04:22,21,"","xx",2009-08-18,68,83,2,19,0,10,-18,A Minor,4,3nanq5MGiNbZYjoiEhpsLC,GBBKS0900242
+62,"Lips","The xx",174,3B,59,2025-03-04,03:20,53,"","I See You",2017-01-13,52,49,51,19,0,0,-9,C♯/D♭ Major,4,5hnx6uqwVsIj7L8D4ME4Li,UK7MC1600076
+63,"Replica","The xx",80,4B,44,2025-03-04,04:09,55,"","I See You",2017-01-13,62,47,50,51,0,10,-11,G#/A♭ Major,4,61WE54H3MD9N5P56Mpr6TN,UK7MC1600070
+64,"I Dare You","The xx",126,3B,54,2025-03-04,03:53,64,"","I See You",2017-01-13,75,62,7,28,0,10,-9,C♯/D♭ Major,4,3pAw0BXL8acShtjUwLosw8,UK7MC1600068
+65,"She Just Happens To Date The Prince Of Darkness","Say Hi",136,11A,53,2025-03-07,06:56,13,"","Impeccable Blahs",2006-07-25,63,53,70,39,0,10,-12,F#/G♭ Minor,4,20ftdDh5boQkgxgkx30Tri,USEF70600027
+66,"Sweet Sweet Heartkiller","Say Hi",140,1B,53,2025-03-04,03:18,23,"","Impeccable Blahs",2006-07-25,70,71,43,72,0,10,-9,B Major,4,1DddDeJCprganXaZ84Lp98,USEF70600031
+67,"November Was White, December Was Grey","Say Hi",120,12B,36,2025-03-04,03:03,43,"","Oohs & Aahs",2009-03-03,76,61,43,78,0,10,-11,E Major,4,5lqy7Xku9Kz4sx7uqkFr1J,USBS50830921
+68,"Oh Oh Oh Oh Oh Oh Oh Oh","Say Hi",150,10B,68,2025-03-04,02:56,40,"","Oohs & Aahs",2009-03-03,73,23,17,90,0,0,-10,D Major,4,0IV1avLMTqvqEjNZMgs5Ss,USBS50830920
+69,"One, Two ... One","Say Hi",110,9A,75,2025-03-04,03:20,20,"","Oohs & Aahs",2009-03-03,66,0,67,81,0,60,-10,E Minor,4,0vHwPvDTA3kjhGmYrR9syF,USBS50830924
+70,"Dots On Maps","Say Hi",90,12B,47,2025-03-04,03:45,21,"","Um, Uh Oh",2011-01-25,70,60,3,36,0,10,-9,E Major,4,1vlWZzA5IhzcG0hRta56zr,USBS51031132
+71,"Quick Musical Doodles","Two Feet",170,11A,35,2025-02-22,02:24,63,"","First Steps",2016-07-29,69,24,69,43,20,30,-7,F#/G♭ Minor,4,7tZdkPtebOG29TzPPHlsem,DEVF11600018
+72,"Go Fuck Yourself","Two Feet",75,2B,33,2025-02-22,02:09,72,"","First Steps",2016-07-29,77,57,5,29,20,0,-8,F#/G♭ Major,4,4NZrZgrRoR4GwR7flWOXRI,DEVF11600016
+73,"Pink","Two Feet",117,8A,45,2025-02-22,02:04,54,"","Pink",2020-03-13,69,32,0,52,0,10,-7,A Minor,4,4IHiN5A0ythEPmWIKSc7gc,USUM71917945
+74,"plastic door//","KennyHoopla",120,10B,84,2025-02-22,03:30,39,"pop punk","how will i rest in peace if i'm buried by a highway?//",2020-05-15,66,34,0,40,0,10,-5,D Major,4,5O24LBipnyWNsnWLEtEihs,USQX91903635
+75,"how will i rest in peace if i'm buried by a highway?//","KennyHoopla",160,12A,84,2025-02-22,03:38,52,"pop punk","how will i rest in peace if i'm buried by a highway?//",2020-02-04,48,1,0,49,0,20,-4,C♯/D♭ Minor,4,4jFLw7QqWlv3lZr980HyYW,USQX92000282
+76,"estella//","KennyHoopla,Travis Barker",165,4B,84,2025-02-22,01:58,51,"pop punk, rap rock","SURVIVORS GUILT: THE MIXTAPE//",2021-06-11,45,0,0,56,0,30,-4,G#/A♭ Major,4,3emo5sUq2OwBctNgX0NMEV,USQX92004761
+77,"44 Lies","Two Feet",140,10A,64,2025-02-22,03:15,44,"","Pink",2020-03-13,54,44,92,4,0,10,-11,B Minor,4,67JgbuqPg9YC1RfahNnr7j,USUM72000847
+78,"All Your Love","Sir Sly",122,11A,45,2025-02-22,03:07,42,"","All Your Love",2020-05-01,73,52,1,23,0,10,-9,F#/G♭ Minor,4,0sL5WC2mgffTiCXUA0g2nh,USUM72007487
+79,"Fun","Sir Sly",144,11B,68,2025-02-22,03:52,52,"","Don't You Worry, Honey",2017-06-30,63,0,21,86,0,0,-8,A Major,4,7plcUmQeFLphpul81MjBxk,USUM71705735
+80,"Take Me To The Riot","Stars",133,5B,73,2025-02-22,03:48,37,"","In Our Bedroom After The War",2007-09-25,56,1,1,60,0,10,-6,D#/E♭ Major,4,7oDUXxUIlfEnCh3wfeteYe,CAAA10702802
+81,"My Favourite Book","Stars",87,3B,54,2025-02-22,04:05,30,"","In Our Bedroom After The War",2007-09-25,62,54,1,54,0,10,-11,C♯/D♭ Major,4,1lkg1numZf1kisxKf0b3hb,CAAA10702805
+82,"Personal","Stars",130,4B,18,2025-02-22,04:07,30,"","In Our Bedroom After The War",2007-09-25,58,67,7,14,0,20,-18,G#/A♭ Major,4,42MSqGOJ5o2VQgC01Zlcd5,CAAA10702806
+83,"Your Ex-Lover Is Dead","Stars",153,8B,50,2025-02-22,04:16,47,"","Set Yourself On Fire",2004-09-14,38,0,3,33,0,20,-7,C Major,3,6XGKlssGb3oE9IUCvjLthd,CAAA10400901
+84,"This Charming Man","Stars",106,10B,65,2025-02-22,02:43,22,"","Nightsongs",2001-01-23,84,1,6,91,0,0,-12,D Major,4,5KISjwGl1veKdOkglRSaRL,US2770500020
+85,"Dead Hearts","Stars",78,5B,35,2025-02-22,03:31,44,"","The Five Ghosts",2010-06-06,42,70,0,24,0,0,-10,D#/E♭ Major,4,5FCZf7Xlox0NaLFySjEHXG,USVR91060101
+86,"Changes","Stars",103,6A,52,2025-02-22,04:15,8,"","The Five Ghosts (Deluxe Version)",2010-06-21,54,4,7,35,0,10,-9,G Minor,4,1Ax6rrhLfBGtLFqLAo0028,USVR91060107
+87,"Walls","Stars",138,1B,49,2025-02-22,04:16,8,"","The North",2012-04-09,57,33,3,28,0,10,-9,B Major,4,1YWw0yYt7FGxizto7bate8,CA7T31200012
+88,"Take Me to Church","Hozier",129,9A,66,2025-03-04,04:01,82,"","Hozier (Expanded Edition)",2014-09-19,57,63,0,44,0,10,-5,E Minor,4,1CS7Sd1u5tWkstBhpssyjP,USSM11307291
+89,"Work Song","Hozier",121,6B,36,2025-03-04,03:49,78,"","Hozier (Expanded Edition)",2014-09-19,53,75,0,26,0,10,-8,A#/B♭ Major,4,5TgEJ62DOzBpGxZ7WRsrqb,USSM11401475
+90,"Would That I","Hozier",131,7B,53,2025-02-22,04:28,74,"","Wasteland, Baby!",2019-03-01,52,24,1,50,0,10,-6,F Major,4,37zuIvk4KBkAxxLJsxJaHq,USSM11809035
+91,"Movement","Hozier",144,12A,50,2025-03-04,03:57,69,"","Wasteland, Baby!",2019-03-01,38,16,0,15,0,0,-6,C♯/D♭ Minor,4,1djzKW3eYLyzjjHXazEWWh,USSM11806792
+92,"Talk","Hozier",154,7A,54,2025-03-04,03:26,61,"","Wasteland, Baby!",2019-03-01,40,18,15,25,0,10,-7,D Minor,4,6ctlpLPyLH3R1V16fxoOWE,USSM11809032
+93,"Too Sweet","Hozier",117,6B,62,2025-03-04,04:11,81,"","Unreal Unearth: Unaired",2024-08-19,74,3,0,93,0,0,-6,A#/B♭ Major,4,76JKIsdKrAfWUMjaA0u7v5,USSM12401865
+94,"Little Talks","Of Monsters and Men",103,3B,76,2025-03-04,04:26,82,"folk pop","My Head Is An Animal",2012-01-01,46,2,0,42,0,10,-5,C♯/D♭ Major,4,2ihCaVdNZmnHZWt0fvAM7B,USUM71119106
+95,"Dirty Paws","Of Monsters and Men",112,5B,65,2025-03-04,04:38,73,"folk pop","My Head Is An Animal",2012-01-01,36,11,1,13,0,0,-7,D#/E♭ Major,4,5g7rJvWYVrloJZwKiShqlS,USUM71202066
+96,"King And Lionheart","Of Monsters and Men",127,5B,66,2025-03-04,04:33,65,"folk pop","My Head Is An Animal",2012-01-01,52,11,0,29,0,10,-7,D#/E♭ Major,4,310d8Vawp5kYDYrGrrTAzl,USUM71202067
+97,"Mountain Sound","Of Monsters and Men",102,12A,88,2025-03-04,03:31,68,"folk pop","My Head Is An Animal",2012-01-01,38,4,0,38,0,10,-4,C♯/D♭ Minor,4,3SPVZJzf1Hs30rB6yXVf2y,USUM71202068
+98,"From Finner","Of Monsters and Men",96,1A,66,2025-03-04,03:43,56,"folk pop","My Head Is An Animal",2012-01-01,38,2,0,18,0,10,-7,G#/A♭ Minor,3,16oGsGvhNhTihlZAYLp2wm,USUM71119283
+99,"Love Love Love","Of Monsters and Men",111,9B,37,2025-03-04,03:58,60,"folk pop","My Head Is An Animal",2012-01-01,32,81,0,16,0,0,-10,G Major,5,3o1cohFfwd57rAvrbyVE5e,USUM71119282
+100,"Sloom","Of Monsters and Men",90,3B,41,2025-03-04,04:43,47,"folk pop","My Head Is An Animal",2012-01-01,48,56,0,32,0,0,-9,C♯/D♭ Major,4,6xFxmcebq5XphN0WoxNLgp,USUM71202071
+101,"Yellow Light","Of Monsters and Men",101,10B,42,2025-03-04,04:52,53,"folk pop","My Head Is An Animal",2012-01-01,38,31,0,6,0,30,-11,D Major,4,3hs6kchwaeSe967AMMYTrp,USUM71202073
+102,"Unconsolable","X Ambassadors",151,11A,61,2025-03-04,03:36,41,"","Love Songs Drug Songs",2013-01-01,67,0,3,34,0,10,-8,F#/G♭ Minor,4,0jpoRHaMiyKNnCectzcXTv,USUM71304273
+103,"Litost","X Ambassadors",120,8A,46,2025-03-04,05:21,44,"","Love Songs Drug Songs",2013-01-01,46,7,0,17,0,10,-8,A Minor,3,7HyvbdOddwXEGzKoLNxhKG,USUM71304274
+104,"Renegades","X Ambassadors",90,10B,86,2025-03-04,03:15,77,"","VHS",2015-06-30,53,1,6,53,0,20,-6,D Major,4,0fYVliAYKHuPmECRs1pbRf,USUM71502643
+105,"Unsteady","X Ambassadors",117,8B,67,2025-03-04,03:13,74,"","VHS",2015-06-30,39,18,0,20,0,10,-6,C Major,4,7lGKEWMXVWWTt3X71Bv44I,USUM71400108
+106,"HEY CHILD","X Ambassadors",112,7B,66,2025-03-04,03:28,51,"","ORION",2019-06-14,70,0,0,55,0,0,-6,F Major,4,5j0oqJkeHoXjtPCgz9hMmd,USUM71906470
+107,"BOOM","X Ambassadors",108,10A,59,2025-03-04,02:44,60,"","ORION",2019-06-14,73,1,3,68,0,0,-6,B Minor,4,3V9cM3nCH2G66afoDi0snu,USUM71900447
+108,"Blinding","Florence + The Machine",108,8A,79,2025-03-04,04:35,44,"baroque pop","Lungs (Deluxe Edition)",2009-00-00,51,11,1,27,0,30,-6,A Minor,4,4tUOFydV4QoeqZOIoxzHNk,GBUM70903469
+109,"Cosmic Love","Florence + The Machine",140,8A,80,2025-03-04,04:15,68,"baroque pop","Lungs (Deluxe Edition)",2009-00-00,52,14,0,8,0,10,-6,A Minor,4,0CSTvWUps1YmpQoXXay9ol,GBUM70903473
+110,"Swimming","Florence + The Machine",109,8A,86,2025-03-04,03:20,41,"baroque pop","Lungs (Deluxe Edition)",2009-00-00,40,23,0,34,20,10,-4,A Minor,4,3Dls79P2lgOM92yBQDalMZ,GBUM70904479
+111,"Forever","Vertical Horizon",93,3B,76,2025-03-04,04:27,46,"","Go",2003-09-23,50,0,0,38,0,10,-5,C♯/D♭ Major,4,40YZGonZJpOw5oSf5OkhB0,TCABZ1472596
+112,"I'm Still Here","Vertical Horizon",183,3B,69,2025-03-04,03:52,50,"","Go",2003-09-23,43,2,0,75,0,10,-5,C♯/D♭ Major,4,7kABAeuLo8hIUHmwceSP3x,TCABZ1472595
+113,"Underwater","Vertical Horizon",120,2A,41,2025-03-04,04:32,20,"","Go",2003-09-23,47,16,2,23,0,20,-11,D#/E♭ Minor,4,2FPvMobNGX5MIOiRkP9eGw,TCABZ1472606
+114,"Ophelia","The Lumineers",76,7B,57,2025-03-04,02:40,82,"folk pop, indie folk","Cleopatra",2016-04-08,66,61,0,57,0,0,-7,F Major,4,14AyWf6y7KlWWLfAjdKMKI,USDMG1673802
+115,"Cleopatra","The Lumineers",151,4B,78,2025-03-04,03:21,76,"folk pop, indie folk","Cleopatra",2016-04-08,54,23,0,49,0,0,-7,G#/A♭ Major,4,2AXY5WABx7NjWw1zb4qCdc,USDMG1673803
+116,"Ho Hey","The Lumineers",80,8B,47,2025-03-04,02:43,84,"folk pop, indie folk","The Lumineers",2012-04-03,69,79,0,35,0,0,-9,C Major,4,0DwClY2t9YAWHBROMIgrXb,USDMG1260805
+117,"Dead Sea","The Lumineers",94,8B,32,2025-03-04,04:07,66,"folk pop, indie folk","The Lumineers",2012-04-03,71,81,0,47,0,10,-11,C Major,4,1ipIRGBLxYh0ijp3JioP3p,USDMG1260804
+118,"Stubborn Love","The Lumineers",115,8B,56,2025-03-04,04:39,79,"folk pop, indie folk","The Lumineers",2012-04-03,60,61,4,23,0,20,-12,C Major,4,4wG82w1L31yQhgGiWt6gIb,USDMG1260807
+119,"Slow It Down","The Lumineers",98,3B,7,2025-03-04,05:05,0,"folk pop, indie folk","The Lumineers",2012-01-01,42,93,0,11,0,0,-14,C♯/D♭ Major,3,0ewX9JsKy9oa4IifkFSroa,USDMG1260806
+120,"exile (feat. Bon Iver)","Taylor Swift,Bon Iver",76,2B,38,2025-03-04,04:45,80,"","folklore",2020-07-24,30,78,0,15,0,10,-8,F#/G♭ Major,4,4pvb0WLRcMtbPGmtejJJ6y,USUG12002838
+121,"Holocene","Bon Iver",148,3B,30,2025-03-04,05:36,71,"","Bon Iver, Bon Iver",2011-06-21,37,94,30,15,0,10,-15,C♯/D♭ Major,4,35KiiILklye1JRRctaLUb4,US38Y1113503
+122,"Skinny Love","Bon Iver",76,9A,26,2025-03-04,03:58,75,"","For Emma, Forever Ago",2008-02-19,59,85,0,11,0,10,-14,E Minor,4,3B3eOgLJSqPEA0RfboIQVM,US38Y0811503
+123,"The Wolves (Act I and II)","Bon Iver",116,7B,17,2025-03-04,05:22,56,"","For Emma, Forever Ago",2008-02-19,47,77,0,10,0,0,-16,F Major,3,3TO6wG55HdfwC8zfOaXAlJ,US38Y0811504
+124,"Beach Baby","Bon Iver",114,8B,8,2025-03-04,02:40,71,"","Blood Bank",2009-01-20,67,98,41,9,0,10,-17,C Major,3,2LXtyj95dK56ENS1QLt4IB,US38Y0913402
+125,"Smother","Daughter",125,3B,14,2025-03-04,04:00,0,"","If You Leave",2013-01-01,51,93,5,12,0,10,-16,C♯/D♭ Major,4,2Fa5PjvjXH1qKWI0umk4oY,USYAH1200373
+126,"Shallows","Daughter",141,1B,37,2025-03-04,06:53,0,"","If You Leave",2013-01-01,31,89,68,8,0,10,-14,B Major,4,2b9B1QVb9obQx1zqIqmBxn,USYAH1300036
+127,"Love","Daughter",134,12B,44,2025-03-04,05:44,38,"","Wild Youth",2012-01-01,56,33,68,14,0,0,-13,E Major,4,7kMS4VmGZAf38sZfsDQQIE,USYAH1200348
+128,"Youth","Daughter",151,8B,48,2025-03-04,04:11,35,"","Wild Youth",2012-01-01,59,62,0,42,0,10,-13,C Major,4,6vBhxOY5L0DJ7QSUxRuiAd,USYAH1200347
+129,"Landfill","Daughter",126,10A,47,2025-03-04,04:23,44,"","His Young Heart",2012-01-01,62,77,0,40,0,10,-8,B Minor,4,7e4KdOOrZ1I4ybWpeDd3ow,USYAH1200341
+130,"Candles","Daughter",155,2B,45,2025-03-04,04:53,47,"","His Young Heart",2012-01-01,40,21,0,17,0,0,-12,F#/G♭ Major,4,0jraO2dcqNVamQ4drjDt4l,USYAH1200343
+131,"Where the Time Went","Ex:Re,Josephine Stephenson,12 Ensemble",97,3B,19,2025-03-04,04:16,20,"art pop, choral","Ex:Re with 12 Ensemble",2021-02-19,40,71,0,21,0,10,-14,C♯/D♭ Major,3,5BgjyxVWI11cH36rzCIkh9,GBAFL2000451
+132,"Romance","Ex:Re,Josephine Stephenson,12 Ensemble",58,11B,18,2025-03-04,06:47,20,"art pop, choral","Ex:Re with 12 Ensemble",2021-02-19,12,55,0,12,0,10,-15,A Major,4,5M4cvsIfpAIzFcFHtDvcb3,GBAFL2000454
+133,"The Dazzler","Ex:Re,Josephine Stephenson,12 Ensemble",134,11B,16,2025-03-04,04:44,17,"art pop, choral","Ex:Re with 12 Ensemble",2021-02-19,20,73,5,11,0,10,-16,A Major,4,622oH8Sm9hZaR9wiLracO1,GBAFL2000455
+134,"Too Sad","Ex:Re,Josephine Stephenson,12 Ensemble",113,12A,8,2025-03-04,05:45,16,"art pop, choral","Ex:Re with 12 Ensemble",2021-02-19,26,83,0,4,0,10,-15,C♯/D♭ Minor,4,634BbZtRlgkpWZIX3ytEbi,GBAFL2000456
+135,"Liar","Ex:Re,Josephine Stephenson,12 Ensemble",83,3A,23,2025-03-04,04:36,12,"art pop, choral","Ex:Re with 12 Ensemble",2021-02-19,38,74,12,19,0,0,-15,A#/B♭ Minor,4,08yQOsu5UfEzrMk9xQJjTs,GBAFL2000457
+136,"5AM","Ex:Re,Josephine Stephenson,12 Ensemble",117,9A,12,2025-03-04,03:41,15,"art pop, choral","Ex:Re with 12 Ensemble",2021-02-19,30,91,0,5,0,10,-17,E Minor,4,08rkQly80pDeIvY2uQKC2z,GBAFL2000459
+137,"My Heart","Ex:Re,Josephine Stephenson,12 Ensemble",87,12A,20,2025-03-04,05:20,12,"art pop, choral","Ex:Re with 12 Ensemble",2021-02-19,12,39,53,5,0,70,-17,C♯/D♭ Minor,5,6NIJhiLIEUssFDBJBi2rR6,GBAFL2000460
+138,"To Build A Home","The Cinematic Orchestra,Patrick Watson",148,11B,13,2025-03-04,06:10,67,"nu jazz, downtempo, ","Ma Fleur",2007-06-05,26,89,35,8,0,10,-15,A Major,4,3AqPL1n1wKc5DVFFnYuJhp,GBCEL0700226
+139,"The Funeral","Band of Horses",122,5A,76,2025-03-04,05:22,72,"","Everything All The Time",2006-03-21,32,2,0,10,0,10,-6,C Minor,4,5lRzWDEe7UuedU2QPsFg0K,USSUB0669004
+140,"Not Nice","Chris Garneau",53,6B,17,2025-03-04,05:31,9,"","Music for Tourists",2006-00-00,53,84,12,7,0,10,-14,A#/B♭ Major,4,3XjUcHtxljDmCyF3KxmKn0,QZB4J1866786
+141,"Siberia","Backstreet Boys",80,7B,48,2025-03-04,04:16,52,"","Never Gone",2005-06-14,58,12,0,47,0,0,-7,F Major,4,4cVgV9EQ8rCVs2BCgtjkwa,USJI10500262
+142,"Ungodly Hour","The Fray",82,5B,27,2025-03-04,05:04,46,"","The Fray",2009-02-02,56,48,0,18,0,20,-13,D#/E♭ Major,4,6V2SKZhymLim16ri8A7K6h,USSM10805073
+143,"Oceans","Seafret",129,8A,48,2025-03-04,03:36,47,"","Oceans - EP",2015-01-21,40,27,0,20,0,10,-9,A Minor,3,7Cia4WzapwjMr0NUQF8vf3,GBARL1401714
+144,"Dusk And Summer","Dashboard Confessional",144,11B,27,2025-03-04,04:35,26,"emo, pop punk","Dusk And Summer",2007-01-01,59,78,0,11,0,10,-9,A Major,4,5XTqhWmQ23g1SsBLxkBh9C,USVR90690323
+145,"Jesus Christ","Brand New",88,10A,73,2025-02-22,05:18,57,"emo, pop punk, post-hardcore","The Devil And God Are Raging Inside Me",2006-01-01,66,30,16,26,0,20,-5,B Minor,4,72ccSGl5YcEWm0vhtVpi25,USUM70614449
+146,"Light In Your Eyes","Flyleaf",130,9B,59,2025-02-22,03:55,32,"christian rock, christian alternative rock, emo","Remember To Live",2010-01-01,45,4,0,46,0,10,-8,G Major,4,7FCwiuWa5tvFc73c13fBJ2,USUM71025473
+147,"Believe In Dreams","Flyleaf",135,10B,30,2025-02-22,04:27,33,"christian rock, christian alternative rock, emo","Remember To Live",2010-01-01,38,3,0,26,0,10,-11,D Major,4,7LHXqGF5LWLHoBCiEOvq6x,USUM71025469
+148,"I Felt It Too","Taking Back Sunday",110,11B,26,2025-03-04,05:22,24,"emo, pop punk, screamo, post-hardcore, punk","Tidal Wave",2016-09-16,55,84,4,4,0,10,-12,A Major,4,4gQGrIw38yZITh4JQNEVOO,USHR21681006
+149,"Miracle","Vertical Horizon",92,4A,62,2025-03-04,04:22,36,"","Everything You Want",1999-06-14,57,2,0,36,0,0,-6,F Minor,4,1pLDpHEV9ogVf6vlXxzSh0,USRC19900053
+150,"Wonderful","Everclear",187,9B,82,2025-03-04,04:40,60,"post-grunge, alternative rock","Songs From An American Movie: Learning How To Smile",2000-01-01,51,1,0,73,0,30,-6,G Major,4,0WHOPmOuQKuu05k4g3UTvk,USCA20000669
+151,"Trust Me","The Fray",107,12B,53,2025-03-04,03:22,45,"","How To Save A Life",2005-09-13,54,25,0,22,0,20,-6,E Major,4,66CtVHzbUyFKbaNaPA8KBl,USSM10503848
+152,"I Can Feel a Hot One","Manchester Orchestra",124,4B,30,2025-03-04,04:19,43,"","Mean Everything To Nothing",2009-04-21,55,49,0,6,0,10,-11,G#/A♭ Major,4,2pwdgph51JIwFkhmvZdgAn,USSM10900804
+153,"Lua","Bright Eyes",104,10B,12,2025-03-04,04:31,0,"indie folk","I'm Wide Awake, It's Morning",2005-01-25,60,80,0,31,0,0,-18,D Major,4,4PMvRfhHAx5j6Bb3XsFLoq,US2U60507204
+154,"How It Ends","DeVotchKa",104,8B,34,2025-03-04,06:59,41,"","How It Ends",2004-10-05,62,86,11,4,0,40,-11,C Major,4,59Ss6VuU0ML2mbb2Px70rt,USA2B0499605
+155,"Fix You","Coldplay",138,5B,42,2025-03-04,04:55,86,"","X&Y",2005-06-07,21,16,0,12,0,10,-9,D#/E♭ Major,4,7LVHVU3tWfcxj5aiPFEW4Q,GBAYE0500605
+156,"Twenty Years","Augustana",133,5B,41,2025-03-06,04:26,35,"","Can't Love, Can't Hurt",2008-00-00,39,27,2,28,0,10,-6,D#/E♭ Major,4,2xqjlxsJpuRwNnq5iz9sGX,USSM10800217
+157,"Hammers and Strings (A Lullaby)","Jack's Mannequin",125,4B,59,2025-03-06,04:34,32,"pop punk","The Glass Passenger",2008-09-29,47,34,0,34,0,10,-7,G#/A♭ Major,3,3tCXkho2JrhnYygrSMgKyH,USWB10804671
+158,"Swim","Jack's Mannequin",200,5B,90,2025-03-06,04:16,42,"pop punk","The Glass Passenger",2008-09-29,31,2,0,29,10,0,-6,D#/E♭ Major,3,08hh1QNXTUJ6cD9zEZ798r,USWB10804665
+159,"Caves","Jack's Mannequin",97,5B,61,2025-03-06,08:19,21,"pop punk","The Glass Passenger",2008-09-29,28,41,0,15,0,50,-8,D#/E♭ Major,4,6s65FXIP2qgBllZD65zKF9,USWB10804675
+160,"First Day of My Life","Bright Eyes",95,12A,25,2025-03-06,03:08,66,"indie folk","I'm Wide Awake, It's Morning",2005-01-25,60,90,0,37,0,10,-14,C♯/D♭ Minor,4,0eBryM7ePQH3Klt3jz8xZd,US2U61623706
+161,"Bruised - 2015 Remaster","Jack's Mannequin",136,5B,92,2025-03-06,04:02,46,"pop punk","Everything In Transit",2005-00-00,48,1,0,36,0,10,-5,D#/E♭ Major,4,12ettGOse4b5vko513KTuX,USWB11507813
+162,"9 Crimes","Damien Rice",74,8B,17,2025-04-02,03:39,55,"singer-songwriter","9",2006-11-07,33,91,0,10,0,0,-13,C Major,4,08YEGpKt2LHJ0URCXKHEie,IEABD0600100
+163,"Broadripple Is Burning - Daytrotter Sessions version","Margot & The Nuclear So And So's",118,11B,26,2025-05-13,04:49,24,"","The Daytrotter Sessions",2008-07-29,55,86,0,21,0,10,-11,A Major,4,6IVgqwKgttRsBSTyMnuzCd,USSM10802320
