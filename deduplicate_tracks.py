@@ -17,11 +17,9 @@ df = df.sort_values('Album Date', ascending=False, na_position='last')
 df_deduped = df.drop_duplicates(subset='Track_Key', keep='first')
 
 # Display stats
-original_rows = len(df)
 unique_track_ids = df['Track_ID'].nunique()
 unique_track_keys = df['Track_Key'].nunique()
 
-print(f"Original rows: {original_rows}")
 print(f"Unique Track_IDs: {unique_track_ids}")
 print(f"Unique Track_Keys: {unique_track_keys}")
 print(f"Removed: {unique_track_ids - unique_track_keys} duplicate tracks (same song, different Track_ID)")

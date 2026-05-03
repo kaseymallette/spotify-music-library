@@ -30,6 +30,11 @@ Run the `create_database.py` script to ingest CSV files and create the playlists
 python create_database.py
 ```
 
+**Output:**
+```
+Database created with 50 playlists and 9544 total rows.
+```
+
 ### Track Deduplication
 
 The `deduplicate_tracks.py` script removes duplicate tracks (same song with different Track_IDs, e.g., single vs album versions) and creates a `tracks` table with unique tracks sorted by Artist and Song.
@@ -41,7 +46,6 @@ python deduplicate_tracks.py
 
 **Output:**
 ```
-Original rows: 9544
 Unique Track_IDs: 5757
 Unique Track_Keys: 5229
 Removed: 528 duplicate tracks (same song, different Track_ID)

@@ -36,6 +36,9 @@ for filename in os.listdir(data_folder):
         # Append the data to the playlists table
         df.to_sql('playlists', conn, if_exists='append', index=False)
 
+# Display database statistics
+df_stats = pd.read_sql('SELECT COUNT(DISTINCT playlist_name) as playlist_count, COUNT(*) as total_rows FROM playlists', conn)
+print(f"Database created with {df_stats['playlist_count'][0]} playlists and {df_stats['total_rows'][0]} total rows.")
+
 # Close the database connection
 conn.close()
-print("Database created and playlists table initialized.")
