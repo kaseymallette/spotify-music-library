@@ -1,0 +1,6 @@
+pandas
+sqlalchemy
+numpy
+scikit-learn
+nltk
+spacy
