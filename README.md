@@ -20,8 +20,13 @@ source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+```
 
-# Run database creation script
+### Create Database
+
+Run the `create_database.py` script to ingest CSV files and create the playlists table:
+
+```bash
 python create_database.py
 ```
 
