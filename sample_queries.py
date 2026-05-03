@@ -49,19 +49,6 @@ for song_count_range, playlist_count in results:
     print(f"{playlist_count} playlists have {song_count_range} songs ({percentage:.1f}%)")
 print()
 
-# Get songs from playlist 01
-print("Get songs from playlist 01:")
-cursor = conn.execute("""
-    SELECT Song_Number, Song, Artist, Album_Year
-    FROM playlists
-    WHERE playlist_number = '01'
-    ORDER BY Song_Number;
-""")
-results = cursor.fetchall()
-for row in results:
-    print(f"{row[0]}|{row[1]}|{row[2]}|{row[3]}")
-print()
-
 # Get distribution of artists by song count
 print("Get distribution of artists by song count (grouped ranges):")
 cursor = conn.execute("""
@@ -96,6 +83,49 @@ cursor = conn.execute("""
 results = cursor.fetchall()
 for row in results:
     print(f"{row[0]}|{row[1]}")
+print()
+
+# Get top 5 songs by playlist count
+print("Get top 5 songs by playlist count:")
+cursor = conn.execute("""
+    SELECT Track_Key, Track_ID, playlist_count
+    FROM song_playlist_count
+    ORDER BY playlist_count DESC
+    LIMIT 5;
+""")
+results = cursor.fetchall()
+for row in results:
+    # Extract artist and song from Track_Key
+    parts = row[0].split('|')
+    artist = parts[0] if len(parts) > 0 else 'Unknown'
+    song = parts[1] if len(parts) > 1 else 'Unknown'
+    print(f"{artist} - {song}: {row[2]} playlists")
+print()
+
+# Get top 5 artists by playlist count
+print("Get top 5 artists by playlist count:")
+cursor = conn.execute("""
+    SELECT Artist, playlist_count
+    FROM artist_playlist_count
+    ORDER BY playlist_count DESC
+    LIMIT 5;
+""")
+results = cursor.fetchall()
+for row in results:
+    print(f"{row[0]}: {row[1]} playlists")
+print()
+
+# Get songs from playlist 01
+print("Get songs from playlist 01:")
+cursor = conn.execute("""
+    SELECT Song_Number, Song, Artist, Album_Year
+    FROM playlists
+    WHERE playlist_number = '01'
+    ORDER BY Song_Number;
+""")
+results = cursor.fetchall()
+for row in results:
+    print(f"{row[0]}|{row[1]}|{row[2]}|{row[3]}")
 print()
 
 conn.close()

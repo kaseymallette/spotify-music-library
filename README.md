@@ -62,6 +62,38 @@ Removed: 526 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ```
 
+### Song Playlist Count
+
+The `create_song_playlist_count.py` script creates a `song_playlist_count` table that counts how many playlists each song (by Track_Key) appears in.
+
+**Run script:**
+```bash
+python create_song_playlist_count.py
+```
+
+**Output:**
+```
+Total unique songs: 5231
+Songs in multiple playlists: 2265
+Maximum playlists per song: 11
+```
+
+### Artist Playlist Count
+
+The `create_artist_playlist_count.py` script creates an `artist_playlist_count` table that counts how many playlists each artist appears in.
+
+**Run script:**
+```bash
+python create_artist_playlist_count.py
+```
+
+**Output:**
+```
+Total unique artists: 2027
+Artists in multiple playlists: 1069
+Maximum playlists per artist: 18
+```
+
 ### Sample Queries
 
 You can run all sample queries at once using the `sample_queries.py` script:
@@ -91,6 +123,40 @@ python sample_queries.py
 4 playlists have 500+ songs (8.0%)
 ```
 
+**Get distribution of artists by song count (grouped ranges):**
+```
+1413 artists have 1 song(s) (69.7%)
+334 artists have 2-3 song(s) (16.5%)
+280 artists have 4+ song(s) (13.8%)
+```
+
+**Get top five artists with song count:**
+```
+Backstreet Boys|107
+OneRepublic|88
+Maroon 5|70
+Matt Maeson|64
+Daughter|58
+```
+
+**Get top 5 songs by playlist count:**
+```
+Kenny Loggins - Danger Zone - From  Top Gun  Original Soundtrack: 11 playlists
+The Fray - Singing Low: 10 playlists
+50 Cent,Justin Timberlake,Timbaland - Ayo Technology: 8 playlists
+Arctic Monkeys - Do I Wanna Know?: 8 playlists
+Blue Foundation - Eyes on Fire: 8 playlists
+```
+
+**Get top 5 artists by playlist count:**
+```
+Rainbow Kitten Surprise: 18 playlists
+Britney Spears: 18 playlists
+OneRepublic: 17 playlists
+Matt Maeson: 17 playlists
+The Fray: 16 playlists
+```
+
 **Get songs from playlist 01:**
 ```
 1|Temporary Love|The Brinks|2015
@@ -105,20 +171,4 @@ python sample_queries.py
 10|Devil Devil|MILCK|2016
 11|Cliff|Låpsley|2016
 12|Middle|DJ Snake,Bipolar Sunshine|2015
-```
-
-**Get distribution of artists by song count (grouped ranges):**
-```
-1413 artists have 1 song(s) (69.7%)
-334 artists have 2-3 song(s) (16.5%)
-280 artists have 4+ song(s) (13.8%)
-```
-
-**Get top five artists with song count:**
-```
-Backstreet Boys|107
-OneRepublic|88
-Maroon 5|70
-Matt Maeson|64
-The Fray|58
 ```
