@@ -58,7 +58,7 @@ Tracks table created with unique tracks sorted by Artist, Song.
 
 ### Sample Queries
 
-**Get the number of unique playlists:**
+**Get the number of unique playlists from playlists table:**
 ```bash
 sqlite3 spotify_music_library.db \
   "SELECT COUNT(DISTINCT playlist_name) FROM playlists;"
