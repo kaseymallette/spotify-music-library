@@ -58,19 +58,72 @@ Tracks table created with unique tracks sorted by Artist, Song.
 
 ### Sample Queries
 
-**Get the number of unique playlists from playlists table:**
+#### Table: Playlists
+
+**Get number of unique playlists:**
 ```bash
 sqlite3 spotify_music_library.db \
   "SELECT COUNT(DISTINCT playlist_name) FROM playlists;"
 ```
 Result: `50`
 
-**Get number of unique artists from tracks table:**
+**Get number of unique artists:**
 ```bash
 sqlite3 spotify_music_library.db \
-  "SELECT COUNT(DISTINCT Artist) FROM tracks;"
+  "SELECT COUNT(DISTINCT Artist) FROM playlists;"
 ```
 Result: `2025`
+
+**Get song count distribution per playlist (grouped ranges):**
+```bash
+sqlite3 spotify_music_library.db \
+  "SELECT CASE \
+           WHEN song_count <= 50 THEN '0-50' \
+           WHEN song_count <= 100 THEN '51-100' \
+           WHEN song_count <= 200 THEN '101-200' \
+           WHEN song_count <= 500 THEN '201-500' \
+           ELSE '500+' \
+         END as song_count_range, \
+         COUNT(*) as playlist_count \
+   FROM (SELECT playlist_name, COUNT(*) as song_count \
+        FROM playlists \
+        GROUP BY playlist_name) \
+   GROUP BY song_count_range \
+   ORDER BY MIN(song_count);"
+```
+Result:
+```
+9 playlists have 0-50 songs (18%)
+13 playlists have 51-100 songs (26%)
+16 playlists have 101-200 songs (32%)
+8 playlists have 201-500 songs (16%)
+4 playlists have 500+ songs (8%)
+```
+
+**Get songs from playlist 01:**
+```bash
+sqlite3 spotify_music_library.db \
+  "SELECT Song_Number, Song, Artist, Album_Year \
+   FROM playlists \
+   WHERE playlist_number = '01';"
+```
+Result:
+```
+1|Temporary Love|The Brinks|2015
+2|Basic Instinct|The Acid|2014
+3|Stressed Out|Twenty One Pilots|2015
+4|Genghis Khan|Miike Snow|2015
+5|Carl Sagan|Night Moves|2016
+6|Ophelia|The Lumineers|2016
+7|Nobody Dies|Thao & The Get Down Stay Down|2015
+8|Little Numbers - Acoustic Version|BOY|2013
+9|I'm a Mess|Ed Sheeran|2014
+10|Devil Devil|MILCK|2016
+11|Cliff|Låpsley|2016
+12|Middle|DJ Snake,Bipolar Sunshine|2015
+```
+
+#### Table: Tracks
 
 **Get distribution of artists by song count (grouped ranges):**
 ```bash
@@ -111,27 +164,3 @@ Maroon 5|70
 Matt Maeson|64
 The Fray|58
 ```
-
-**Get songs from playlist 01:**
-```bash
-sqlite3 spotify_music_library.db \
-  "SELECT Song_Number, Song, Artist, Album_Year \
-   FROM playlists \
-   WHERE playlist_number = '01';"
-```
-Result:
-```
-1|Temporary Love|The Brinks|2015
-2|Basic Instinct|The Acid|2014
-3|Stressed Out|Twenty One Pilots|2015
-4|Genghis Khan|Miike Snow|2015
-5|Carl Sagan|Night Moves|2016
-6|Ophelia|The Lumineers|2016
-7|Nobody Dies|Thao & The Get Down Stay Down|2015
-8|Little Numbers - Acoustic Version|BOY|2013
-9|I'm a Mess|Ed Sheeran|2014
-10|Devil Devil|MILCK|2016
-11|Cliff|Låpsley|2016
-12|Middle|DJ Snake,Bipolar Sunshine|2015
-```
-
