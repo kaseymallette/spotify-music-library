@@ -48,8 +48,8 @@ python deduplicate_tracks.py
 ```
 Unique Track_IDs: 5757
 Unique Track_Keys: 5229
-Removed: 528 duplicate tracks (same song, different Track_ID)
 Unique Artists: 2025
+Removed: 528 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ```
 

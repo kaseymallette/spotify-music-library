@@ -23,8 +23,8 @@ unique_artists = df['Artist'].nunique()
 
 print(f"Unique Track_IDs: {unique_track_ids}")
 print(f"Unique Track_Keys: {unique_track_keys}")
-print(f"Removed: {unique_track_ids - unique_track_keys} duplicate tracks (same song, different Track_ID)")
 print(f"Unique Artists: {unique_artists}")
+print(f"Removed: {unique_track_ids - unique_track_keys} duplicate tracks (same song, different Track_ID)")
 
 # Sort by Artist, Song for the tracks table
 df_deduped = df_deduped.sort_values(['Artist', 'Song'])
