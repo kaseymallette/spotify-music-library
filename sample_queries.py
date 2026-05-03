@@ -5,12 +5,14 @@ conn = sqlite3.connect('spotify_music_library.db')
 
 print("=== Sample Queries ===\n")
 
-# Playlists Table Queries
-print("#### Table: Playlists\n")
-
 # Get number of unique playlists
 print("Get number of unique playlists:")
 cursor = conn.execute("SELECT COUNT(DISTINCT playlist_name) FROM playlists;")
+print(f"{cursor.fetchone()[0]}\n")
+
+# Get number of rows in playlists table
+print("Get number of rows in playlists table:")
+cursor = conn.execute("SELECT COUNT(*) FROM playlists;")
 print(f"{cursor.fetchone()[0]}\n")
 
 # Get number of unique artists
@@ -18,9 +20,9 @@ print("Get number of unique artists:")
 cursor = conn.execute("SELECT COUNT(DISTINCT Artist) FROM playlists;")
 print(f"{cursor.fetchone()[0]}\n")
 
-# Get number of rows in playlists table
-print("Get number of rows in playlists table:")
-cursor = conn.execute("SELECT COUNT(*) FROM playlists;")
+# Get number of unique songs
+print("Get number of unique songs:")
+cursor = conn.execute("SELECT COUNT(*) FROM tracks;")
 print(f"{cursor.fetchone()[0]}\n")
 
 # Get song count distribution per playlist
@@ -59,9 +61,6 @@ results = cursor.fetchall()
 for row in results:
     print(f"{row[0]}|{row[1]}|{row[2]}|{row[3]}")
 print()
-
-# Tracks Table Queries
-print("#### Table: Tracks\n")
 
 # Get distribution of artists by song count
 print("Get distribution of artists by song count (grouped ranges):")

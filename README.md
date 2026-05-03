@@ -73,11 +73,14 @@ python sample_queries.py
 **Get number of unique playlists:**
 50
 
+**Get number of rows in playlists table:**
+9543
+
 **Get number of unique artists:**
 2027
 
-**Get number of rows in playlists table:**
-9543
+**Get number of unique songs:**
+5231
 
 **Get song count distribution per playlist (grouped ranges):**
 ```
