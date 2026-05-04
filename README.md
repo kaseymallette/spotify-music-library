@@ -334,6 +334,36 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Features: BPM=125, Valence=89, Dance=71, Energy=77, Acoustic=22, Loud_Db=-7
 ```
 
+### Playlist Builder
+
+The dashboard includes an interactive playlist builder that lets you create a custom playlist by accepting or rejecting songs one by one based on similarity to a seed song.
+
+**Features:**
+
+- **Song Search**: Searchable dropdown with ~5,000 songs sorted by title (format: "Song - Artist")
+- **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
+- **Target Playlist Size**: Set the total number of songs for your playlist (including the seed song, default: 50)
+- **Interactive Review**: Review songs one by one, starting with the most similar
+- **Accept/Reject**: Accept songs to add to your playlist, or reject to skip
+- **Progress Tracking**: Real-time progress display (e.g., "1/50" when seed selected, "25/50" after accepting 24 songs)
+- **Export**: Export your completed playlist to CSV with Track_ID, Song, Artist, Album, and Year
+
+**Methodology:**
+
+- Uses the same K-nearest neighbors algorithm as the KNN Seed Songs feature
+- Songs are offered in order of similarity (most similar first)
+- Seed song counts as #1 in the playlist
+- Export includes Spotify Track_ID for easy import to Spotify
+
+**How to Use:**
+
+1. Select a seed song from the dropdown
+2. Set year range and target playlist size
+3. Click "Start Playlist Builder"
+4. Review each song offered and click "Accept" or "Reject"
+5. Continue until you reach your target size
+6. Click "Export Playlist to CSV" when complete
+
 ### Interactive Dashboard
 
 The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard for finding similar songs using K-nearest neighbors:
