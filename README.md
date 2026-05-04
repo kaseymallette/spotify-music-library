@@ -13,7 +13,7 @@ A Spotify-powered music recommendation system using clustering analysis and auto
 └── src/
     ├── analysis/
     │   ├── sample_queries.py
-    │   └── visualize_playlist_counts.py
+    │   └── visualize_distributions.py
     └── db/
         ├── create_artist_playlist_count.py
         ├── create_playlists.py
