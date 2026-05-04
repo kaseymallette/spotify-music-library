@@ -4,8 +4,7 @@ import plotly.express as px
 from dash import Dash, html, dcc, Input, Output
 import os
 from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-import numpy as np
+from sklearn.metrics.pairwise import euclidean_distances
 
 # Get the root directory (two levels up from src/analysis/)
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -14,26 +13,9 @@ db_path = os.path.join(root_dir, 'spotify_music_library.db')
 # Connect to the database
 conn = sqlite3.connect(db_path)
 
-# Query playlist names for dropdown
-df_playlists = pd.read_sql("SELECT DISTINCT playlist_name FROM playlists ORDER BY playlist_name", conn)
-playlist_options = df_playlists['playlist_name'].tolist()
-
-# Query tracks table for audio features
-df_all = pd.read_sql("""
-    SELECT t.Track_Key, p.playlist_name, t.Album_Year, t.Artist, t.Song,
-           t.BPM, t.Valence, t.Dance, t.Energy, t.Acoustic, t."Loud (DB)" as Loud_Db,
-           t.Speech, t.Live, t.Popularity
-    FROM tracks t
-    JOIN playlists p ON t.Track_Key = p.Track_Key
-    WHERE t.Album_Year IS NOT NULL
-""", conn)
-df_all['Decade'] = (df_all['Album_Year'] // 10) * 10
-df_all['Decade'] = df_all['Decade'].astype(str) + 's'
-
-# Convert features to numeric
-FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Speech', 'Live', 'Album_Year', 'Popularity']
-for col in FEATURES:
-    df_all[col] = pd.to_numeric(df_all[col], errors='coerce')
+# Query artists and songs for KNN dropdowns
+df_songs = pd.read_sql("SELECT Song, Artist FROM tracks ORDER BY Song, Artist", conn)
+song_options = [{'label': f"{row['Song']} - {row['Artist']}", 'value': f"{row['Song']}|{row['Artist']}"} for _, row in df_songs.iterrows()]
 
 conn.close()
 
@@ -43,231 +25,158 @@ app = Dash(__name__)
 app.layout = html.Div([
     html.H1("Spotify Music Library Dashboard"),
     
-    html.H2("Playlist Statistics"),
+    html.Hr(),
+    html.H2("K-Nearest Neighbors (KNN) Seed Songs"),
     
     html.Div([
-        html.Label("Select Playlist:"),
+        html.Label("Select Song:"),
         dcc.Dropdown(
-            id='playlist-dropdown',
-            options=[{'label': 'All Playlists', 'value': 'all'}] + 
-                    [{'label': playlist, 'value': playlist} for playlist in playlist_options],
-            value='all'
+            id='knn-song-dropdown',
+            options=song_options,
+            value=None,
+            placeholder="Search for a song...",
+            searchable=True
         ),
-    ], style={'marginBottom': '20px'}),
+    ], style={'marginBottom': '15px'}),
     
-    html.Div(id='playlist-stats', style={'marginBottom': '20px', 'fontSize': '18px'}),
+    html.Div([
+        html.Label("Year Range (years from seed song):"),
+        dcc.Input(
+            id='knn-year-range',
+            type='number',
+            value=10,
+            min=0,
+            step=5,
+            style={'width': '150px'}
+        ),
+    ], style={'marginBottom': '15px'}),
     
-    html.H2("Song Count Distribution by Artist"),
-    dcc.Graph(id='artist-song-chart'),
+    html.Div([
+        html.Label("Number of Songs:"),
+        dcc.Input(
+            id='knn-num-songs',
+            type='number',
+            value=10,
+            min=1,
+            max=100,
+            step=1,
+            style={'width': '150px'}
+        ),
+    ], style={'marginBottom': '15px'}),
     
-    html.H2("Decade Distribution"),
-    dcc.Graph(id='decade-chart'),
+    html.Button('Find Similar Songs', id='knn-button', n_clicks=0, style={'marginBottom': '20px'}),
     
-    html.H2("Clustering Analysis"),
-    dcc.Graph(id='elbow-chart'),
-    
-    html.H2("Cluster Visualization"),
-    dcc.Graph(id='cluster-chart')
+    html.Div(id='knn-results')
 ])
 
 @app.callback(
-    Output('playlist-stats', 'children'),
-    Input('playlist-dropdown', 'value')
+    Output('knn-results', 'children'),
+    Input('knn-button', 'n_clicks'),
+    Input('knn-song-dropdown', 'value'),
+    Input('knn-year-range', 'value'),
+    Input('knn-num-songs', 'value')
 )
-def update_stats(selected_playlist):
-    if selected_playlist == 'all':
-        df_filtered = df_all
-    else:
-        df_filtered = df_all[df_all['playlist_name'] == selected_playlist]
+def update_knn_results(n_clicks, selected_song_artist, year_range, num_songs):
+    if n_clicks == 0 or not selected_song_artist:
+        return html.Div("Select a song to find similar tracks.")
     
-    song_count = len(df_filtered)
-    unique_artists = df_filtered['Artist'].nunique()
-    
-    return html.Div([
-        html.P(f"Total Songs: {song_count}"),
-        html.P(f"Unique Artists: {unique_artists}")
-    ])
-
-@app.callback(
-    Output('decade-chart', 'figure'),
-    Input('playlist-dropdown', 'value')
-)
-def update_decade_chart(selected_playlist):
-    if selected_playlist == 'all':
-        df_filtered = df_all
-    else:
-        df_filtered = df_all[df_all['playlist_name'] == selected_playlist]
-    
-    decade_counts = df_filtered['Decade'].value_counts().sort_index()
-    # Filter to start from 1950s
-    decade_counts = decade_counts[decade_counts.index >= '1950s']
-    
-    fig = px.bar(
-        x=decade_counts.index,
-        y=decade_counts.values,
-        labels={'x': 'Decade', 'y': 'Number of Songs'},
-        title=f"Decade Distribution: {selected_playlist}"
-    )
-    
-    return fig
-
-@app.callback(
-    Output('artist-song-chart', 'figure'),
-    Input('playlist-dropdown', 'value')
-)
-def update_artist_chart(selected_playlist):
-    if selected_playlist == 'all':
-        df_filtered = df_all
-    else:
-        df_filtered = df_all[df_all['playlist_name'] == selected_playlist]
-    
-    artist_song_counts = df_filtered['Artist'].value_counts().head(10)
-    
-    fig = px.bar(
-        x=artist_song_counts.values,
-        y=artist_song_counts.index,
-        orientation='h',
-        labels={'x': 'Song Count', 'y': 'Artist'},
-        title=f"Top 10 Artists by Song Count: {selected_playlist}"
-    )
-    
-    fig.update_layout(yaxis={'categoryorder': 'total ascending'})
-    
-    return fig
-
-@app.callback(
-    Output('elbow-chart', 'figure'),
-    Input('playlist-dropdown', 'value')
-)
-def update_elbow_chart(selected_playlist):
     try:
-        if selected_playlist == 'all':
-            df_filtered = df_all
-        else:
-            df_filtered = df_all[df_all['playlist_name'] == selected_playlist]
+        # Parse song and artist from selected value
+        selected_song, selected_artist = selected_song_artist.split('|')
+        # Load data for KNN
+        conn = sqlite3.connect(db_path)
+        df_metadata = pd.read_sql("""
+            SELECT Track_Key, Song, Artist, Album_Year, Popularity
+            FROM tracks
+            WHERE Album_Year IS NOT NULL
+        """, conn)
         
-        # Select features for clustering
-        FEATURES_CLUSTER = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Album_Year', 'Popularity']
-        df_features = df_filtered[FEATURES_CLUSTER].dropna()
+        df_features = pd.read_sql("""
+            SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db, Album_Year, Popularity
+            FROM tracks
+            WHERE Album_Year IS NOT NULL
+        """, conn)
+        conn.close()
         
-        print(f"Elbow chart - Playlist: {selected_playlist}, Records: {len(df_features)}")
+        # Set index
+        df_metadata = df_metadata.set_index('Track_Key')
+        df_features = df_features.set_index('Track_Key')
         
-        if len(df_features) < 10:
-            # Return empty figure if not enough data
-            return px.line(title=f"Elbow Method: {selected_playlist} (Insufficient data)")
+        # Find seed song
+        seed_key = f"{selected_artist}|{selected_song}"
+        if seed_key not in df_metadata.index:
+            return html.Div(f"Song '{selected_song}' by '{selected_artist}' not found in database.")
+        
+        seed_row = df_metadata.loc[seed_key]
+        seed_year = seed_row['Album_Year']
+        
+        # Features for KNN
+        FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db']
         
         # Standardize features
         scaler = StandardScaler()
-        df_features_scaled = scaler.fit_transform(df_features)
+        df_features_scaled = scaler.fit_transform(df_features[FEATURES])
         
         # Apply valence weighting
-        valence_idx = FEATURES_CLUSTER.index('Valence')
+        valence_idx = FEATURES.index('Valence')
         df_features_scaled[:, valence_idx] *= 1.5
         
-        # Calculate inertia for different cluster numbers
-        n_clusters_range = range(3, 11)
-        inertias = []
+        # Get seed features
+        seed_idx = df_features.index.get_loc(seed_key)
+        seed_features = df_features_scaled[seed_idx]
         
-        for n_clusters in n_clusters_range:
-            kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
-            kmeans.fit(df_features_scaled)
-            inertias.append(kmeans.inertia_)
+        # Calculate distances
+        from sklearn.metrics.pairwise import euclidean_distances
+        distances = euclidean_distances([seed_features], df_features_scaled)[0]
         
-        # Plot elbow method
-        fig = px.line(
-            x=list(n_clusters_range),
-            y=inertias,
-            markers=True,
-            labels={'x': 'Number of Clusters', 'y': 'Inertia'},
-            title=f"Elbow Method: {selected_playlist}"
-        )
+        # Add distances to metadata
+        df_metadata['distance'] = distances
         
-        fig.update_layout(showlegend=False)
+        # Sort by distance
+        df_metadata = df_metadata.sort_values('distance')
         
-        return fig
+        # Remove seed song
+        df_metadata = df_metadata[df_metadata.index != seed_key]
+        
+        # Apply year filter if specified
+        if year_range and year_range > 0:
+            df_metadata = df_metadata[
+                (df_metadata['Album_Year'] >= seed_year - year_range) & 
+                (df_metadata['Album_Year'] <= seed_year + year_range)
+            ]
+        
+        # Get top N results
+        df_results = df_metadata.head(num_songs)
+        
+        # Build results display
+        results_html = [
+            html.H3(f"{num_songs} songs most similar to '{selected_song}' by '{selected_artist}':"),
+            html.P(f"Seed song year: {seed_year}, Year filter: ±{year_range} years" if year_range else f"Seed song year: {seed_year}"),
+            html.Hr(),
+            html.Div([
+                html.P(f"0. {seed_row['Song']} — {seed_row['Artist']} ({seed_row['Album_Year']}) [ORIGINAL]", style={'fontWeight': 'bold'}),
+                html.P(f"   Distance: 0.0000"),
+                html.P(f"   Popularity: {seed_row['Popularity']}"),
+                html.P(f"   Features: BPM={df_features.loc[seed_key, 'BPM']}, Valence={df_features.loc[seed_key, 'Valence']}, Dance={df_features.loc[seed_key, 'Dance']}, Energy={df_features.loc[seed_key, 'Energy']}, Acoustic={df_features.loc[seed_key, 'Acoustic']}, Loud_Db={df_features.loc[seed_key, 'Loud_Db']}"),
+                html.Hr()
+            ])
+        ]
+        
+        for i, (idx, row) in enumerate(df_results.iterrows(), 1):
+            results_html.append(html.Div([
+                html.P(f"{i}. {row['Song']} — {row['Artist']} ({row['Album_Year']})", style={'fontWeight': 'bold'}),
+                html.P(f"   Distance: {row['distance']:.4f}"),
+                html.P(f"   Popularity: {row['Popularity']}"),
+                html.P(f"   Features: BPM={df_features.loc[idx, 'BPM']}, Valence={df_features.loc[idx, 'Valence']}, Dance={df_features.loc[idx, 'Dance']}, Energy={df_features.loc[idx, 'Energy']}, Acoustic={df_features.loc[idx, 'Acoustic']}, Loud_Db={df_features.loc[idx, 'Loud_Db']}"),
+                html.Hr()
+            ]))
+        
+        return html.Div(results_html)
+    
     except Exception as e:
-        print(f"Error in elbow chart: {e}")
-        return px.line(title=f"Elbow Method: {selected_playlist} (Error: {str(e)})")
-
-@app.callback(
-    Output('cluster-chart', 'figure'),
-    Input('playlist-dropdown', 'value')
-)
-def update_cluster_chart(selected_playlist):
-    try:
-        if selected_playlist == 'all':
-            df_filtered = df_all
-        else:
-            df_filtered = df_all[df_all['playlist_name'] == selected_playlist]
-        
-        # Select features for clustering
-        FEATURES_CLUSTER = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Album_Year', 'Popularity']
-        df_features = df_filtered[FEATURES_CLUSTER].dropna()
-        
-        print(f"Cluster chart - Playlist: {selected_playlist}, Records: {len(df_features)}")
-        
-        if len(df_features) < 10:
-            # Return empty figure if not enough data
-            return px.scatter(title=f"Cluster Visualization: {selected_playlist} (Insufficient data)")
-        
-        # Standardize features
-        scaler = StandardScaler()
-        df_features_scaled = scaler.fit_transform(df_features)
-        
-        # Apply valence weighting
-        valence_idx = FEATURES_CLUSTER.index('Valence')
-        df_features_scaled[:, valence_idx] *= 1.5
-        
-        # Find optimal number of clusters using elbow method
-        n_clusters_range = range(3, 11)
-        inertias = []
-        
-        for n_clusters in n_clusters_range:
-            kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
-            kmeans.fit(df_features_scaled)
-            inertias.append(kmeans.inertia_)
-        
-        # Calculate distances to find elbow
-        n_points = len(n_clusters_range)
-        x = np.array(n_clusters_range)
-        y = np.array(inertias)
-        x1, y1 = x[0], y[0]
-        x2, y2 = x[-1], y[-1]
-        distances = []
-        for i in range(n_points):
-            # Distance from point (x[i], y[i]) to line through (x1, y1) and (x2, y2)
-            numerator = abs((y2 - y1) * x[i] - (x2 - x1) * y[i] + x2 * y1 - y2 * x1)
-            denominator = ((y2 - y1)**2 + (x2 - x1)**2)**0.5
-            dist = numerator / denominator
-            distances.append(dist)
-        elbow_idx = distances.index(max(distances))
-        best_n_clusters = n_clusters_range[elbow_idx]
-        
-        print(f"Best number of clusters: {best_n_clusters}")
-        
-        # Fit final model with best number of clusters
-        kmeans_final = KMeans(n_clusters=best_n_clusters, random_state=42, n_init=10)
-        cluster_labels = kmeans_final.fit_predict(df_features_scaled)
-        
-        # Add cluster labels to dataframe
-        df_features['cluster'] = cluster_labels
-        
-        # Plot Valence vs Energy with clusters
-        fig = px.scatter(
-            df_features,
-            x='Valence',
-            y='Energy',
-            color='cluster',
-            labels={'Valence': 'Valence (Mood)', 'Energy': 'Energy'},
-            title=f"Cluster Visualization (Valence vs Energy): {selected_playlist} - {best_n_clusters} clusters"
-        )
-        
-        return fig
-    except Exception as e:
-        print(f"Error in cluster chart: {e}")
         import traceback
         traceback.print_exc()
-        return px.scatter(title=f"Cluster Visualization: {selected_playlist} (Error: {str(e)})")
+        return html.Div(f"Error: {str(e)}")
 
 if __name__ == '__main__':
     app.run(debug=True)

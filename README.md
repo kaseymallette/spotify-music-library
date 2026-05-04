@@ -341,27 +341,26 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
 
 ### Interactive Dashboard
 
-The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard to explore playlist statistics:
+The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard for finding similar songs using K-nearest neighbors:
 
-- **Playlist Statistics**: Displays total song count and unique artist count for the selected playlist.
-- **Artist Distribution**: Shows the top 10 artists by song count for the selected playlist.
-- **Decade Distribution**: View the distribution of songs by decade across all playlists or filter by a specific playlist.
-- **Clustering Analysis**: Runs K-means clustering on eight audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness, Album Year, Popularity) with valence weighted 1.5x to prioritize mood separation. Uses the elbow method to determine the optimal number of clusters (testing 3-10 clusters) and displays the elbow curve.
-- **Cluster Visualization**: Plots clusters as a scatter plot (Valence vs Energy) showing how songs group by mood and other characteristics, with the optimal number of clusters detected via elbow method.
+- **Song Search**: Searchable dropdown with ~5,000 songs sorted by title (format: "Song - Artist")
+- **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
+- **Number of Songs**: Configure how many similar songs to return (default: 10)
+- **Results Display**: Shows the seed song and similar songs with distance, popularity, and audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
+
+**Methodology:**
+
+- Uses Euclidean distance on standardized audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
+- Valence (mood) weighted 1.5x in the distance calculation to prioritize mood similarity
+- Songs are deduplicated by normalizing song names (removing "(feat. ...)", "(with ...)", "(ft. ...)" patterns and trailing punctuation) and keeping the earliest release
 
 **Run script:**
 ```bash
 python src/analysis/dashboard.py
 ```
 
-**Dashboard Screenshots:**
+**Dashboard Screenshot:**
 
-![Dashboard - Playlist Statistics](images/plotly_dashboard_01.png)
-
-![Dashboard - Artist Distribution](images/plotly_dashboard_02.png)
-
-![Dashboard - Decade Distribution](images/plotly_dashboard_03.png)
-
-![Dashboard - Clustering Analysis](images/plotly_dashboard_04.png)
+![Dashboard](images/plotly_dashboard.png)
 
 The dashboard will start locally at `http://127.0.0.1:8050/`
