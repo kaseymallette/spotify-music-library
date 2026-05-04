@@ -1,8 +1,13 @@
 import sqlite3
 import pandas as pd
+import os
+
+# Get the root directory (two levels up from src/db/)
+root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+db_path = os.path.join(root_dir, 'spotify_music_library.db')
 
 # Connect to the database
-conn = sqlite3.connect('spotify_music_library.db')
+conn = sqlite3.connect(db_path)
 
 # Query to count how many playlists each artist appears in
 df = pd.read_sql("""

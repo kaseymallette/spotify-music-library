@@ -1,9 +1,15 @@
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+
+# Get the root directory (two levels up from src/analysis/)
+root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+db_path = os.path.join(root_dir, 'spotify_music_library.db')
+images_dir = os.path.join(root_dir, 'images')
 
 # Connect to the database
-conn = sqlite3.connect('spotify_music_library.db')
+conn = sqlite3.connect(db_path)
 
 # Query artist playlist count
 df_artists = pd.read_sql("SELECT Artist, playlist_count FROM artist_playlist_count", conn)
@@ -33,7 +39,8 @@ ax2.set_title('Song Playlist Count Distribution')
 ax2.grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('playlist_count_distributions.png', dpi=150)
+chart_path = os.path.join(images_dir, 'playlist_count_distributions.png')
+plt.savefig(chart_path, dpi=150)
 print("Chart saved as playlist_count_distributions.png")
 
 # Show statistics

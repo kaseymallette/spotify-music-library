@@ -3,8 +3,12 @@ import pandas as pd
 import os
 
 # Connect and create the database file
-conn = sqlite3.connect('spotify_music_library.db')
-data_folder = 'data'
+# Get the root directory (two levels up from src/db/)
+root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+db_path = os.path.join(root_dir, 'spotify_music_library.db')
+data_folder = os.path.join(root_dir, 'data')
+
+conn = sqlite3.connect(db_path)
 
 # Loop through all files in the data folder
 for filename in os.listdir(data_folder):
