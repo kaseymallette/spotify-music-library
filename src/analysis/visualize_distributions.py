@@ -17,39 +17,33 @@ df_artist_playlist_raw = pd.read_sql("SELECT Artist, playlist_count FROM artist_
 # Query raw song playlist count
 df_song_playlist_raw = pd.read_sql("SELECT Track_ID, playlist_count FROM song_playlist_count", conn)
 
-# Query unique artists per playlist distribution (grouped ranges)
-df_artists_per_playlist = pd.read_sql("""
-    SELECT CASE
-             WHEN artist_count <= 50 THEN '0-50'
-             WHEN artist_count <= 100 THEN '51-100'
-             WHEN artist_count <= 200 THEN '101-200'
-             WHEN artist_count <= 300 THEN '201-300'
-             ELSE '300+'
-           END as artist_count_range,
-           COUNT(*) as playlist_count
-    FROM (SELECT playlist_name, COUNT(DISTINCT Artist) as artist_count
-         FROM playlists
-         GROUP BY playlist_name)
-    GROUP BY artist_count_range
-    ORDER BY MIN(artist_count);
+# Query unique artists per playlist
+df_artists_per_playlist_raw = pd.read_sql("""
+    SELECT playlist_name, COUNT(DISTINCT Artist) as unique_artists
+    FROM playlists
+    GROUP BY playlist_name
 """, conn)
 
-# Query song count by playlist (grouped ranges)
-df_playlist_song = pd.read_sql("""
-    SELECT CASE
-             WHEN song_count <= 50 THEN '0-50'
-             WHEN song_count <= 100 THEN '51-100'
-             WHEN song_count <= 200 THEN '101-200'
-             WHEN song_count <= 500 THEN '201-500'
-             ELSE '500+'
-           END as song_count_range,
-           COUNT(*) as playlist_count
-    FROM (SELECT playlist_name, COUNT(*) as song_count
-         FROM playlists
-         GROUP BY playlist_name)
-    GROUP BY song_count_range
-    ORDER BY MIN(song_count);
+# Use explicit bins for artist count ranges (same as playlist song count)
+bins = [0, 50, 100, 200, 500, float('inf')]
+labels = ['0-50', '51-100', '101-200', '201-500', '500+']
+df_artists_per_playlist_raw['artist_range'] = pd.cut(df_artists_per_playlist_raw['unique_artists'], bins=bins, labels=labels)
+df_artists_per_playlist = df_artists_per_playlist_raw['artist_range'].value_counts().sort_index().reset_index()
+df_artists_per_playlist.columns = ['artist_count_range', 'playlist_count']
+
+# Query song count by playlist
+df_playlist_song_raw = pd.read_sql("""
+    SELECT playlist_name, COUNT(*) as song_count
+    FROM playlists
+    GROUP BY playlist_name
 """, conn)
+
+# Use explicit bins for song count ranges
+bins_song = [0, 50, 100, 200, 500, float('inf')]
+labels_song = ['0-50', '51-100', '101-200', '201-500', '500+']
+df_playlist_song_raw['song_range'] = pd.cut(df_playlist_song_raw['song_count'], bins=bins_song, labels=labels_song)
+df_playlist_song = df_playlist_song_raw['song_range'].value_counts().sort_index().reset_index()
+df_playlist_song.columns = ['song_count_range', 'playlist_count']
 
 conn.close()
 
