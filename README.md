@@ -179,5 +179,6 @@ python src/analysis/visualize_distributions.py
 ```
 
 **Output:**
-- Saves chart as `images/distributions.png` - [View chart](images/distributions.png)
+![Distributions Chart](images/distributions.png)
+
 - Prints statistics for artist and song playlist count distributions
