@@ -15,11 +15,6 @@ print("Get number of unique playlists:")
 cursor = conn.execute("SELECT COUNT(DISTINCT playlist_name) FROM playlists;")
 print(f"{cursor.fetchone()[0]}\n")
 
-# Get number of rows in playlists table
-print("Get number of rows in playlists table:")
-cursor = conn.execute("SELECT COUNT(*) FROM playlists;")
-print(f"{cursor.fetchone()[0]}\n")
-
 # Get number of unique artists
 print("Get number of unique artists:")
 cursor = conn.execute("SELECT COUNT(DISTINCT Artist) FROM playlists;")
@@ -29,52 +24,6 @@ print(f"{cursor.fetchone()[0]}\n")
 print("Get number of unique songs:")
 cursor = conn.execute("SELECT COUNT(*) FROM tracks;")
 print(f"{cursor.fetchone()[0]}\n")
-
-# Get song count distribution per playlist
-print("Get song count distribution per playlist (grouped ranges):")
-cursor = conn.execute("""
-    SELECT CASE
-             WHEN song_count <= 50 THEN '0-50'
-             WHEN song_count <= 100 THEN '51-100'
-             WHEN song_count <= 200 THEN '101-200'
-             WHEN song_count <= 500 THEN '201-500'
-             ELSE '500+'
-           END as song_count_range,
-           COUNT(*) as playlist_count
-    FROM (SELECT playlist_name, COUNT(*) as song_count
-         FROM playlists
-         GROUP BY playlist_name)
-    GROUP BY song_count_range
-    ORDER BY MIN(song_count);
-""")
-results = cursor.fetchall()
-total = sum(row[1] for row in results)
-for song_count_range, playlist_count in results:
-    percentage = (playlist_count / total) * 100
-    print(f"{playlist_count} playlists have {song_count_range} songs ({percentage:.1f}%)")
-print()
-
-# Get distribution of artists by song count
-print("Get distribution of artists by song count (grouped ranges):")
-cursor = conn.execute("""
-    SELECT CASE 
-             WHEN song_count = 1 THEN '1'
-             WHEN song_count BETWEEN 2 AND 3 THEN '2-3'
-             ELSE '4+'
-           END as song_count_range,
-           COUNT(*) as artist_count
-    FROM (SELECT Artist, COUNT(*) as song_count
-         FROM tracks
-         GROUP BY Artist)
-    GROUP BY song_count_range
-    ORDER BY MIN(song_count);
-""")
-results = cursor.fetchall()
-total = sum(row[1] for row in results)
-for song_count_range, artist_count in results:
-    percentage = (artist_count / total) * 100
-    print(f"{artist_count} artists have {song_count_range} song(s) ({percentage:.1f}%)")
-print()
 
 # Get top five artists with song count
 print("Get top five artists with song count:")

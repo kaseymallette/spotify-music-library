@@ -116,30 +116,11 @@ python src/analysis/sample_queries.py
 **Get number of unique playlists:**
 50
 
-**Get number of rows in playlists table:**
-9543
-
 **Get number of unique artists:**
 2027
 
 **Get number of unique songs:**
 5231
-
-**Get song count distribution per playlist (grouped ranges):**
-```
-9 playlists have 0-50 songs (18.0%)
-13 playlists have 51-100 songs (26.0%)
-16 playlists have 101-200 songs (32.0%)
-8 playlists have 201-500 songs (16.0%)
-4 playlists have 500+ songs (8.0%)
-```
-
-**Get distribution of artists by song count (grouped ranges):**
-```
-1413 artists have 1 song(s) (69.7%)
-334 artists have 2-3 song(s) (16.5%)
-280 artists have 4+ song(s) (13.8%)
-```
 
 **Get top five artists with song count:**
 ```
@@ -198,5 +179,5 @@ python src/analysis/visualize_distributions.py
 ```
 
 **Output:**
-- Saves chart as `images/distributions.png`
+- Saves chart as `images/distributions.png` - [View chart](images/distributions.png)
 - Prints statistics for artist and song playlist count distributions
