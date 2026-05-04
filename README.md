@@ -334,7 +334,7 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Features: BPM=125, Valence=89, Dance=71, Energy=77, Acoustic=22, Loud_Db=-7
 ```
 
-### Interactive Dashboard
+## Interactive Dashboard
 
 The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard for finding similar songs using K-nearest neighbors:
 
