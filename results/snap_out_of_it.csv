@@ -1,0 +1,51 @@
+Track_Number,Track_Key,Track_ID,Song,Artist,Album,Year,BPM,Valence,Dance,Energy,Acoustic,Loud_Db,Distance,Popularity
+1,Arctic Monkeys|Snap Out Of It,0NdTUS4UiNYCNn5FgVqKQY,Snap Out Of It,Arctic Monkeys,AM,2013,130,87,73,64,25,-6,0.0,81
+2,Shania Twain|Don't Be Stupid (You Know I Love You),6xAF3xYDK915NEvC6WNbj9,Don't Be Stupid (You Know I Love You),Shania Twain,Come On Over,1997,122,90,77,64,26,-7,0.53104708210973,49
+3,"Eurythmics,Annie Lennox,Dave Stewart|Sweet Dreams (Are Made of This) - 2005 Remaster",1TfqLAPs4K3s2rJMoCokcS,Sweet Dreams (Are Made of This) - 2005 Remaster,"Eurythmics,Annie Lennox,Dave Stewart",Sweet Dreams (Are Made Of This),1983,125,88,69,71,23,-7,0.5774564304263792,86
+4,Tegan and Sara|I Know I Know I Know,2WxVHQkKYr7qUcJBVnJt2E,I Know I Know I Know,Tegan and Sara,So Jealous,2004,117,85,72,66,16,-6,0.6069911548503303,41
+5,"No Doubt,Lady Saw|Underneath It All",6fR6Z0Vc1K6yQWNUIKjAIR,Underneath It All,"No Doubt,Lady Saw",Rock Steady (Expanded Edition),2001,138,84,73,73,24,-5,0.6523281659200413,69
+6,Bear Hands|Floor It,4E3DhWlhgxDUCUIGeLIRV6,Floor It,Bear Hands,The Key to What,2024,132,79,76,72,26,-6,0.6800505085256057,0
+7,Rockwell|Somebody's Watching Me,2H2379xRxgQVvcOSoL8Ajr,Somebody's Watching Me,Rockwell,Body By Jake: Randy Couture Workout Mix (BPM 104-144),2012,124,84,79,62,12,-6,0.7120024069939161,57
+8,Snow Patrol|Shut Your Eyes,2BQJVwxDZEdGvBOeWrj34g,Shut Your Eyes,Snow Patrol,Eyes Open,2006,125,84,69,74,15,-6,0.7414816370885847,0
+9,Shania Twain|Love Gets Me Every Time,0sWuCk3I32giCWbub1ySZC,Love Gets Me Every Time,Shania Twain,Come On Over,1997,123,96,74,69,26,-7,0.7423148457208031,45
+10,Toby Keith|You Ain't Much Fun,4kCGFouiuWugGQ32YYkmlL,You Ain't Much Fun,Toby Keith,Greatest Hits,1998,138,77,76,70,27,-6,0.7821177247178618,22
+11,"Alan Jackson,Jimmy Buffett|It's Five O'Clock Somewhere",7KysI43rsjlhjTeWO6ePUq,It's Five O'Clock Somewhere,"Alan Jackson,Jimmy Buffett",Greatest Hits Volume II,2003,125,89,71,77,22,-7,0.7836872347633381,70
+12,Sabrina Carpenter|Manchild,2BwO5K8Q7EPAJSGze3AAh9,Manchild,Sabrina Carpenter,Man’s Best Friend,2025,123,84,73,69,10,-5,0.7854422063125327,91
+13,Djo|Delete Ya,7tFI5cqfAoR7MIvmbw1qd8,Delete Ya,Djo,The Crux,2025,118,84,83,67,25,-6,0.8064200335888982,79
+14,Crystal Castles|Crimewave,1xzsEmaU4IXjvxxwQlA8Lz,Crimewave,Crystal Castles,Crystal Castles,2008,120,89,75,69,18,-8,0.8343522215009596,75
+15,Enrique Iglesias|Wish I Was Your Lover,2j5JmCkUL2g0xFvpCrFcbJ,Wish I Was Your Lover,Enrique Iglesias,Insomniac,2007,118,81,68,66,12,-6,0.8381294341900619,23
+16,Foster The People|Pumped Up Kicks,7w87IxuO7BDcJ3YUqCyMTT,Pumped Up Kicks,Foster The People,Torches,2011,128,97,73,71,14,-6,0.8479816508238393,87
+17,"Jagged Edge,Nelly|Where the Party At (feat. Nelly)",5mNV8Mz59bzyuQ53gTw0c0,Where the Party At (feat. Nelly),"Jagged Edge,Nelly",Jagged Little Thrill,2001,129,86,60,66,31,-6,0.8774715386116206,66
+18,Milky Chance|Colorado,0eZmBWVC1HYayrP2fqQ7nu,Colorado,Milky Chance,Colorado,2021,124,80,79,74,29,-7,0.8777809548769597,56
+19,MARINA|Are You Satisfied?,411Hvulc0PrGQLOHljTYed,Are You Satisfied?,MARINA,The Family Jewels,2009,124,80,67,73,32,-5,0.8795614658737797,66
+20,Danity Kane|Damaged,4yHFxB8kzzeuNvoouR8N0N,Damaged,Danity Kane,Welcome to the Dollhouse,2008,120,82,77,65,9,-5,0.8925177381689029,61
+21,Shania Twain|That Don't Impress Me Much - Edit,1MQbbhl0P5Kbfk38Psgirr,That Don't Impress Me Much - Edit,Shania Twain,Not Just A Girl (The Highlights),2022,125,96,74,77,27,-6,0.8939647168927276,27
+22,OneRepublic|West Coast,3wSKESVpeeRrShLTe3tpN1,West Coast,OneRepublic,Artificial Paradise (Deluxe),2024,134,90,69,70,36,-8,0.8964844984319397,55
+23,HAIM|Go Slow,5mKbFgEbuYRJRvl7SlPpRf,Go Slow,HAIM,Days Are Gone,2013,145,80,68,71,17,-7,0.9507148286997333,33
+24,Maroon 5|Lost,6tHQAadcluhVV4oD2IvHSk,Lost,Maroon 5,JORDI (Deluxe),2021,143,77,77,71,22,-7,0.954903771452604,49
+25,Jennifer Lopez|Ain't Your Mama,2hgzdQdnfWwtdpZbhZlV72,Ain't Your Mama,Jennifer Lopez,Ain't Your Mama,2016,120,82,76,68,5,-6,0.9671114700500179,71
+26,Tegan and Sara|Walking with a Ghost,7ImkjvM1OKWhJ5HIPOHcHE,Walking with a Ghost,Tegan and Sara,So Jealous,2004,118,93,79,54,13,-6,0.9780565103627192,51
+27,Shania Twain|Whose Bed Have Your Boots Been Under?,29t2kfPLZgqIEmPx4jRfYW,Whose Bed Have Your Boots Been Under?,Shania Twain,Not Just A Girl (The Highlights),2022,132,80,71,74,9,-5,0.9894205947673769,21
+28,HAIM|My Song 5,0jCGo9MLTR98iPUQCT0p5r,My Song 5,HAIM,Days Are Gone,2013,152,86,65,66,33,-6,0.9902889034199396,35
+29,Milky Chance|Cocoon,6acDlNeA06MCVCzsTVGr9V,Cocoon,Milky Chance,Blossom (Deluxe),2017,114,80,74,66,10,-7,0.9909416566992537,59
+30,Justin Timberlake|LoveStoned / I Think She Knows (Interlude),5iyE2d4U3Vc5cqY9mPTlpy,LoveStoned / I Think She Knows (Interlude),Justin Timberlake,FutureSex/LoveSounds,2006,121,85,86,68,34,-6,0.9917061033157074,60
+31,Aaliyah|Are You That Somebody?,4QTO9eLRONw0rzOVWU4uB4,Are You That Somebody?,Aaliyah,I Care 4 U,2002,138,84,85,66,14,-7,1.0053176062926157,72
+32,"David Guetta,Akon|Sexy Bitch (feat. Akon)",0uXO2GrNiIb1xHT9LUdxZE,Sexy Bitch (feat. Akon),"David Guetta,Akon",One Love (Deluxe),2009,130,80,81,63,8,-5,1.0088347098604191,71
+33,Tate McRae|greedy,5OUlarOZKy0cmIoLjdVj8L,greedy,Tate McRae,exes,2023,111,83,75,70,28,-4,1.0162351201424253,0
+34,Glass Animals|I Don't Wanna Talk (I Just Wanna Dance),6IbCvfmmICEEAyDwQ9zcbt,I Don't Wanna Talk (I Just Wanna Dance),Glass Animals,Dreamland (+ Bonus Levels),2021,132,81,70,62,2,-6,1.0163525604348735,64
+35,"Justin Bieber,Quavo|Intentions",364dI1bYnvamSnBJ8JcNzN,Intentions,"Justin Bieber,Quavo",Intentions,2020,148,86,81,55,32,-7,1.0280112045971466,72
+36,Milky Chance|Blossom,3vmE845FU7PdYh4tuoWUU2,Blossom,Milky Chance,Blossom (Deluxe),2017,120,85,75,68,3,-7,1.0315067640401019,49
+37,Bear Hands|Crime Pays,7Hp0Q61qaKXvX1AVui0xCm,Crime Pays,Bear Hands,Burning Bush Supper Club,2010,111,80,82,70,24,-6,1.0348928864338787,27
+38,BLACKWELL|can't get over you,0O8mSSGxKvlqqqZpb09bWh,can't get over you,BLACKWELL,can't get over you,2024,125,89,76,64,0,-6,1.0364267412118193,43
+39,Toby Keith|I Can't Take You Anywhere,0lzcNtphdk0YXXVr4KvFws,I Can't Take You Anywhere,Toby Keith,Pull My Chain,2001,107,82,73,75,27,-6,1.0368305655915613,28
+40,Maroon 5|Maps,4gbVRS8gloEluzf0GzDOFc,Maps,Maroon 5,V,2014,120,88,74,71,2,-6,1.047416146999117,86
+41,Wet Leg|Wet Dream,260Ub1Yuj4CobdISTOBvM9,Wet Dream,Wet Leg,Wet Leg,2022,130,89,72,70,0,-6,1.0503629967967254,71
+42,Hozier|Too Sweet,0AjmK0Eai4zGrLaJwPvrDp,Too Sweet,Hozier,Unreal Unearth: Unheard,2024,117,93,74,62,3,-6,1.0646654995456473,4
+43,Aaron Carter|Fool's Gold,4ibvd9quldF0rV7YRah0DO,Fool's Gold,Aaron Carter,LØVË,2018,130,79,69,70,5,-5,1.0702443570230662,33
+44,Shania Twain|(If You're Not In It For Love) I'm Outta Here!,6Lst3nF4McKOTLSLuTvLhw,(If You're Not In It For Love) I'm Outta Here!,Shania Twain,The Woman In Me,1995,120,87,77,76,14,-8,1.0731980277507132,55
+45,Britney Spears|Piece of Me,2EvwLVrnYbCZEG6Kx5DCRy,Piece of Me,Britney Spears,Blackout,2007,115,78,77,64,9,-5,1.0820113460657579,69
+46,Rihanna|S&M,7ySUcLPVX7KudhnmNcgY2D,S&M,Rihanna,Loud,2010,128,84,77,69,1,-5,1.0877320464697173,87
+47,Lady Gaga|Boys Boys Boys,129NQr4tA6j60b59rflcTY,Boys Boys Boys,Lady Gaga,The Fame,2008,123,82,72,66,1,-5,1.0890856364986865,53
+48,Britney Spears|Don't Go Knockin' on My Door,3HTkB9Nk04MJHkG0X6cL2R,Don't Go Knockin' on My Door,Britney Spears,Oops!... I Did It Again,2000,111,92,81,76,23,-6,1.090891276494492,49
+49,Demi Lovato|Sorry Not Sorry,0yvPEnB032fojLfVluFjUv,Sorry Not Sorry,Demi Lovato,Tell Me You Love Me,2017,144,88,71,64,2,-7,1.0960021009078442,74
+50,"Chamillionaire,Krayzie Bone|Ridin'",3kZoay4ANo86ehb6s4RwS9,Ridin',"Chamillionaire,Krayzie Bone",The Sound of Revenge,2005,143,84,79,80,19,-5,1.101186478888633,71
