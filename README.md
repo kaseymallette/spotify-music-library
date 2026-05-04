@@ -186,3 +186,20 @@ python src/analysis/visualize_distributions.py
 ![Distributions Chart](images/distributions.png)
 
 - Prints statistics for artist and song playlist count distributions
+
+### Interactive Dashboard
+
+The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard to explore playlist statistics:
+
+- **Playlist Statistics**: Displays total song count and unique artist count for the selected playlist.
+- **Artist Distribution**: Shows the top 10 artists by song count for the selected playlist.
+- **Decade Distribution**: View the distribution of songs by decade across all playlists or filter by a specific playlist.
+
+**Run script:**
+```bash
+python src/analysis/dashboard.py
+```
+
+![Dashboard](images/plotly_dashboard.png)
+
+The dashboard will start locally at `http://127.0.0.1:8050/`
