@@ -288,52 +288,52 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Features: BPM=130, Valence=87, Dance=73, Energy=64, Acoustic=25, Loud_Db=-6
 
 1. Don't Be Stupid (You Know I Love You) — Shania Twain (1997)
-   Distance: 0.5310
+   Distance: 0.5279
    Popularity: 49
    Features: BPM=122, Valence=90, Dance=77, Energy=64, Acoustic=26, Loud_Db=-7
 
 2. Sweet Dreams (Are Made of This) - 2005 Remaster — Eurythmics,Annie Lennox,Dave Stewart (1983)
-   Distance: 0.5775
+   Distance: 0.5721
    Popularity: 86
    Features: BPM=125, Valence=88, Dance=69, Energy=71, Acoustic=23, Loud_Db=-7
 
 3. I Know I Know I Know — Tegan and Sara (2004)
-   Distance: 0.6070
+   Distance: 0.6029
    Popularity: 41
    Features: BPM=117, Valence=85, Dance=72, Energy=66, Acoustic=16, Loud_Db=-6
 
 4. Underneath It All — No Doubt,Lady Saw (2001)
-   Distance: 0.6523
+   Distance: 0.6464
    Popularity: 69
    Features: BPM=138, Valence=84, Dance=73, Energy=73, Acoustic=24, Loud_Db=-5
 
 5. Floor It — Bear Hands (2024)
-   Distance: 0.6801
+   Distance: 0.6763
    Popularity: 0
    Features: BPM=132, Valence=79, Dance=76, Energy=72, Acoustic=26, Loud_Db=-6
 
 6. Somebody's Watching Me — Rockwell (2012)
-   Distance: 0.7120
+   Distance: 0.7049
    Popularity: 57
    Features: BPM=124, Valence=84, Dance=79, Energy=62, Acoustic=12, Loud_Db=-6
 
 7. Shut Your Eyes — Snow Patrol (2006)
-   Distance: 0.7415
+   Distance: 0.7337
    Popularity: 0
    Features: BPM=125, Valence=84, Dance=69, Energy=74, Acoustic=15, Loud_Db=-6
 
 8. Love Gets Me Every Time — Shania Twain (1997)
-   Distance: 0.7423
+   Distance: 0.7384
    Popularity: 45
    Features: BPM=123, Valence=96, Dance=74, Energy=69, Acoustic=26, Loud_Db=-7
 
-9. You Ain't Much Fun — Toby Keith (1998)
-   Distance: 0.7821
-   Popularity: 22
-   Features: BPM=138, Valence=77, Dance=76, Energy=70, Acoustic=27, Loud_Db=-6
+9. Manchild — Sabrina Carpenter (2025)
+   Distance: 0.7752
+   Popularity: 91
+   Features: BPM=123, Valence=84, Dance=73, Energy=69, Acoustic=10, Loud_Db=-5
 
 10. It's Five O'Clock Somewhere — Alan Jackson,Jimmy Buffett (2003)
-   Distance: 0.7837
+   Distance: 0.7753
    Popularity: 70
    Features: BPM=125, Valence=89, Dance=71, Energy=77, Acoustic=22, Loud_Db=-7
 ```
