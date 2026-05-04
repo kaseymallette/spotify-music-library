@@ -354,8 +354,6 @@ The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashbo
 python src/analysis/dashboard.py
 ```
 
-The dashboard will start locally at `http://127.0.0.1:8050/`
-
 **Dashboard Screenshots:**
 
 ![Dashboard - Playlist Statistics](images/plotly_dashboard_01.png)
@@ -365,3 +363,5 @@ The dashboard will start locally at `http://127.0.0.1:8050/`
 ![Dashboard - Decade Distribution](images/plotly_dashboard_03.png)
 
 ![Dashboard - Clustering Analysis](images/plotly_dashboard_04.png)
+
+The dashboard will start locally at `http://127.0.0.1:8050/`
