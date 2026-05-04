@@ -187,6 +187,32 @@ python src/analysis/visualize_distributions.py
 
 - Prints statistics for artist and song playlist count distributions
 
+### Feature Analysis
+
+The `src/analysis/feature_analysis.py` script analyzes audio features from the tracks table and generates visualizations:
+
+- **Feature Statistics**: Displays mean, standard deviation, min, max, and quartiles for audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness, Album Year, Popularity).
+- **Feature Distributions**: Plots histogram + KDE for each feature showing the distribution and summary statistics.
+- **Correlation Matrix**: Shows the correlation between audio features as a heatmap to identify relationships.
+
+Note: Speechiness, Liveness, and Time Signature were excluded due to low variance and limited discriminative value across the library.
+
+**Run script:**
+```bash
+python src/analysis/feature_analysis.py
+```
+
+**Output:**
+![Feature Distributions](images/feature_distributions.png)
+
+![Correlation Matrix](images/correlation_matrix.png)
+
+**Feature Insights:**
+
+- **Energy vs. Loudness**: Despite their 0.73 correlation, both features are retained. Energy is perceptual; Loudness (dB) is physical amplitude. They diverge on fast acoustic passages (high energy, low loudness) and sustained drones (low energy, high loudness), and keeping both intentionally up-weights intensity — a primary axis of separation in the library.
+- **Acousticness**: Acousticness correlates negatively with both Energy (-0.65) and Loudness (-0.54), positioning it as the inverse pole of the intensity axis rather than an independent dimension. It's retained because it captures the acoustic/non-acoustic distinction more directly than either intensity feature alone, and because its right-skewed distribution (median 8, mean 19.7) means a meaningful subset of the library sits at the high-acoustic end where Energy and Loudness lose resolution.
+- **Scaling**: All features are standardized via StandardScaler before clustering to prevent the dB scale from dominating the distance metric.
+
 ### Interactive Dashboard
 
 The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard to explore playlist statistics:
