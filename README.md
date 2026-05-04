@@ -3,12 +3,7 @@ A Spotify-powered song recommendation system using K-nearest neighbors on audio 
 
 ## Overview
 
-This project ingests 50 Spotify playlists into a SQLite database, deduplicates 
-tracks across playlists, and analyzes audio features (BPM, valence, energy, 
-acousticness, etc.) to cluster ~5,000 songs by mood and sonic profile. The 
-clustering is the foundation for an automated playlist generator that creates 
-new mood-coherent playlists from the library — the goal is discovery without 
-repetition across the 50 existing playlists.
+This project ingests 50 Spotify playlists into a SQLite database, deduplicates tracks across playlists, and analyzes audio features (BPM, valence, energy, acousticness, etc.) across ~5,000 songs. Two complementary analysis layers are built on top: K-means clustering to surface mood and sonic groupings across the library, and K-nearest neighbors recommendation to find songs similar to a given seed track. The goal is discovery without repetition across the existing 50 playlists.
 
 **Stack:** Python, SQLite, pandas, scikit-learn, Plotly Dash, matplotlib/seaborn.
 
