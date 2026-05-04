@@ -1,5 +1,5 @@
 # spotify-music-library
-A Spotify-powered music recommendation system using clustering analysis and automated playlist generation to help discover new music and avoid repetition.
+A Spotify-powered song recommendation system using K-nearest neighbors on audio features, with clustering analysis to explore mood and sonic patterns across 5,000+ tracks.
 
 ## Overview
 
