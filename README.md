@@ -12,6 +12,8 @@ A Spotify-powered music recommendation system using clustering analysis and auto
 ├── spotify_music_library.db
 └── src/
     ├── analysis/
+    │   ├── dashboard.py
+    │   ├── feature_analysis.py
     │   ├── sample_queries.py
     │   └── visualize_distributions.py
     └── db/
