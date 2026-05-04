@@ -27,6 +27,7 @@ This project ingests 50 Spotify playlists into a SQLite database, deduplicates t
 ├── data/
 ├── images/
 ├── requirements.txt
+├── results/
 ├── spotify_music_library.db
 └── src/
     ├── analysis/
@@ -37,6 +38,7 @@ This project ingests 50 Spotify playlists into a SQLite database, deduplicates t
     │   └── visualize_distributions.py
     └── db/
         ├── create_artist_playlist_count.py
+        ├── create_custom_playlists.py
         ├── create_playlists.py
         ├── create_song_playlist_count.py
         ├── create_tracks.py
