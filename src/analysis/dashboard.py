@@ -449,16 +449,16 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     # Create CSV content
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(['Track_ID', 'Song', 'Artist', 'Album', 'Year'])
+    writer.writerow(['Track_Key', 'Track_ID', 'Song', 'Artist', 'Album', 'Year'])
     
     # Write seed song
     if not seed_data.empty:
         row = seed_data.iloc[0]
-        writer.writerow([row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year']])
+        writer.writerow([f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year']])
     
     # Write accepted songs
     for song in accepted_songs:
-        writer.writerow([song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year']])
+        writer.writerow([f"{song['Artist']}|{song['Song']}", song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year']])
     
     output.seek(0)
     
