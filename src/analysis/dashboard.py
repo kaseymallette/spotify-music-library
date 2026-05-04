@@ -17,12 +17,19 @@ playlist_options = df_playlists['playlist_name'].tolist()
 
 # Query all data with decade calculation
 df_all = pd.read_sql("""
-    SELECT playlist_name, Album_Year, Artist, Song
+    SELECT playlist_name, Album_Year, Artist, Song,
+           BPM, Valence, Dance, Energy, Acoustic, 'Loud (DB)' as Loud_Db,
+           Speech, Live, Popularity
     FROM playlists
     WHERE Album_Year IS NOT NULL
 """, conn)
 df_all['Decade'] = (df_all['Album_Year'] // 10) * 10
 df_all['Decade'] = df_all['Decade'].astype(str) + 's'
+
+# Convert features to numeric
+FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Speech', 'Live', 'Album_Year', 'Popularity']
+for col in FEATURES:
+    df_all[col] = pd.to_numeric(df_all[col], errors='coerce')
 
 conn.close()
 
@@ -45,6 +52,9 @@ app.layout = html.Div([
     ], style={'marginBottom': '20px'}),
     
     html.Div(id='playlist-stats', style={'marginBottom': '20px', 'fontSize': '18px'}),
+    
+    html.H2("Feature Statistics"),
+    html.Div(id='feature-stats', style={'marginBottom': '20px'}),
     
     html.H2("Song Count Distribution by Artist"),
     dcc.Graph(id='artist-song-chart'),
@@ -70,6 +80,28 @@ def update_stats(selected_playlist):
         html.P(f"Total Songs: {song_count}"),
         html.P(f"Unique Artists: {unique_artists}")
     ])
+
+@app.callback(
+    Output('feature-stats', 'children'),
+    Input('playlist-dropdown', 'value')
+)
+def update_feature_stats(selected_playlist):
+    if selected_playlist == 'all':
+        df_filtered = df_all
+    else:
+        df_filtered = df_all[df_all['playlist_name'] == selected_playlist]
+    
+    feature_stats = df_filtered[FEATURES].describe().loc[['mean', 'std']]
+    
+    return html.Table([
+        html.Thead([
+            html.Tr([html.Th('Feature')] + [html.Th(col) for col in feature_stats.columns])
+        ]),
+        html.Tbody([
+            html.Tr([html.Td('Mean')] + [html.Td(f"{feature_stats.loc['mean', col]:.2f}") for col in feature_stats.columns]),
+            html.Tr([html.Td('Std')] + [html.Td(f"{feature_stats.loc['std', col]:.2f}") for col in feature_stats.columns])
+        ])
+    ], style={'border': '1px solid #ddd', 'borderCollapse': 'collapse'})
 
 @app.callback(
     Output('decade-chart', 'figure'),

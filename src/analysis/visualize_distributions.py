@@ -95,9 +95,10 @@ ax4.set_title('Playlist Song Count Distribution')
 ax4.grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
-chart_path = os.path.join(images_dir, 'distributions.png')
+chart_path = os.path.join(images_dir, 'playlist_distributions.png')
 plt.savefig(chart_path, dpi=150)
-print("Chart saved as distributions.png")
+print("Chart saved as playlist_distributions.png")
+plt.show()
 
 # Show statistics
 print("\n=== Artist Playlist Count Statistics ===")
