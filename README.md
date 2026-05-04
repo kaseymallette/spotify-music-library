@@ -165,13 +165,15 @@ The Fray: 16 playlists
 12|Middle|DJ Snake,Bipolar Sunshine|2015
 ```
 
-### Visualization
+## Analysis
 
-The `src/analysis/visualize_distributions.py` script creates charts showing various distributions:
-- Artist playlist count distribution (grouped ranges)
-- Song playlist count distribution (grouped ranges)
-- Unique artists per playlist distribution (grouped ranges)
-- Playlist song count distribution (grouped ranges)
+### Data Distribution
+
+The `src/analysis/visualize_distributions.py` script generates charts to analyze the library's composition and identify patterns:
+
+- **Artist & Song Frequency**: Shows the distribution of artists and songs across playlists. 47.3% of artists appear in only one playlist, while 56.7% of songs are unique to a single playlist.
+- **Playlist Composition**: 44% of playlists contain 0-50 unique artists, while 32% of playlists have 101-200 songs. Most playlists are moderately sized, with only 8% containing 500+ songs.
+
 
 **Run script:**
 ```bash

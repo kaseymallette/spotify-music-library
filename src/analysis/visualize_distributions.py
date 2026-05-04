@@ -101,15 +101,36 @@ print("Chart saved as distributions.png")
 
 # Show statistics
 print("\n=== Artist Playlist Count Statistics ===")
-print(f"Total artists: {len(df_artist_playlist_raw)}")
-print(f"Artists in 1 playlist: {(df_artist_playlist_raw['playlist_count'] == 1).sum()}")
-print(f"Artists in 2+ playlists: {(df_artist_playlist_raw['playlist_count'] >= 2).sum()}")
-print(f"Artists in 5+ playlists: {(df_artist_playlist_raw['playlist_count'] >= 5).sum()}")
+total_artists = len(df_artist_playlist_raw)
+print(f"Total artists: {total_artists}")
+for i in range(1, 6):
+    if i == 5:
+        count = (df_artist_playlist_raw['playlist_count'] >= 5).sum()
+        print(f"Artists in 5+ playlists: {count} ({count/total_artists*100:.1f}%)")
+    else:
+        count = (df_artist_playlist_raw['playlist_count'] == i).sum()
+        print(f"Artists in {i} playlist(s): {count} ({count/total_artists*100:.1f}%)")
 print(f"Max playlists per artist: {df_artist_playlist_raw['playlist_count'].max()}")
 
 print("\n=== Song Playlist Count Statistics ===")
-print(f"Total songs: {len(df_song_playlist_raw)}")
-print(f"Songs in 1 playlist: {(df_song_playlist_raw['playlist_count'] == 1).sum()}")
-print(f"Songs in 2+ playlists: {(df_song_playlist_raw['playlist_count'] >= 2).sum()}")
-print(f"Songs in 5+ playlists: {(df_song_playlist_raw['playlist_count'] >= 5).sum()}")
+total_songs = len(df_song_playlist_raw)
+print(f"Total songs: {total_songs}")
+for i in range(1, 6):
+    if i == 5:
+        count = (df_song_playlist_raw['playlist_count'] >= 5).sum()
+        print(f"Songs in 5+ playlists: {count} ({count/total_songs*100:.1f}%)")
+    else:
+        count = (df_song_playlist_raw['playlist_count'] == i).sum()
+        print(f"Songs in {i} playlist(s): {count} ({count/total_songs*100:.1f}%)")
 print(f"Max playlists per song: {df_song_playlist_raw['playlist_count'].max()}")
+
+print("\n=== Unique Artists per Playlist Statistics ===")
+total_playlists = df_artists_per_playlist['playlist_count'].sum()
+for idx, row in df_artists_per_playlist.iterrows():
+    percentage = (row['playlist_count'] / total_playlists) * 100
+    print(f"{row['playlist_count']} playlists have {row['artist_count_range']} unique artists ({percentage:.1f}%)")
+
+print("\n=== Playlist Song Count Statistics ===")
+for idx, row in df_playlist_song.iterrows():
+    percentage = (row['playlist_count'] / total_playlists) * 100
+    print(f"{row['playlist_count']} playlists have {row['song_count_range']} songs ({percentage:.1f}%)")
