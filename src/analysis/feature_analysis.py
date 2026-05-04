@@ -137,7 +137,7 @@ print("Features standardized using StandardScaler")
 print("Valence weighted 1.5x to prioritize mood separation")
 
 # Run k-means clustering with different cluster numbers and evaluate using elbow method
-n_clusters_range = range(4, 11)
+n_clusters_range = range(3, 11)
 inertias = []
 
 for n_clusters in n_clusters_range:
