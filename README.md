@@ -1,9 +1,9 @@
 # spotify-music-library
-A Spotify-powered song recommendation system using K-nearest neighbors on audio features, with clustering analysis to explore mood and sonic patterns across 5,000+ tracks.
+A Spotify-powered song recommendation system using K-nearest neighbors on audio features, with clustering analysis to explore mood and sonic patterns across 5,300+ tracks.
 
 ## Overview
 
-This project ingests 50 Spotify playlists into a SQLite database, deduplicates tracks across playlists, and analyzes audio features (BPM, valence, energy, acousticness, etc.) across 5,000+ songs. Three analysis layers are built on top: K-means clustering to surface mood and sonic groupings across the library, K-nearest neighbors recommendation to find songs similar to a given seed track, and an interactive playlist builder that constructs custom playlists by walking through similarity-ranked candidates with accept/reject review. The goal is discovery without repetition: building new playlists that don't recycle the same tracks. 
+This project ingests 50 Spotify playlists into a SQLite database, deduplicates tracks across playlists, and analyzes audio features (BPM, valence, energy, acousticness, etc.) across 5,300+ songs. Three analysis layers are built on top: K-means clustering to surface mood and sonic groupings across the library, K-nearest neighbors recommendation to find songs similar to a given seed track, and an interactive playlist builder that constructs custom playlists by walking through similarity-ranked candidates with accept/reject review. The goal is discovery without repetition: building new playlists that don't recycle the same tracks. 
 
 **Stack:** Python, SQLite, pandas, scikit-learn, Plotly Dash, matplotlib/seaborn.
 
@@ -96,31 +96,31 @@ Running create_playlists.py...
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9543
+Row count: 9617
 ✓ create_playlists.py completed successfully
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 5757
-Unique Track_Keys: 5231
-Unique Artists: 2027
-Removed: 526 duplicate tracks (same song, different Track_ID)
+Unique Track_IDs: 5795
+Unique Track_Keys: 5268
+Unique Artists: 2051
+Removed: 527 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5231
-Songs in multiple playlists: 2265
+Total unique songs: 5264
+Songs in multiple playlists: 2276
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
 
 --- Create artist playlist count table ---
 Running create_artist_playlist_count.py...
-Total unique artists: 2027
-Artists in multiple playlists: 1069
-Maximum playlists per artist: 18
+Total unique artists: 2051
+Artists in multiple playlists: 1073
+Maximum playlists per artist: 19
 Artist playlist count table created successfully.
 ✓ create_artist_playlist_count.py completed successfully
 
@@ -140,16 +140,16 @@ python src/analysis/sample_queries.py
 50
 
 **Get number of unique artists:**
-2027
+2051
 
 **Get number of unique songs:**
-5231
+5264
 
 **Get top five artists with song count:**
 ```
 Backstreet Boys|107
 OneRepublic|88
-Maroon 5|70
+Maroon 5|71
 Matt Maeson|64
 Daughter|58
 ```
@@ -165,10 +165,10 @@ Blue Foundation - Eyes on Fire: 8 playlists
 
 **Get top 5 artists by playlist count:**
 ```
-Rainbow Kitten Surprise: 18 playlists
+Rainbow Kitten Surprise: 19 playlists
+OneRepublic: 18 playlists
+Matt Maeson: 18 playlists
 Britney Spears: 18 playlists
-OneRepublic: 17 playlists
-Matt Maeson: 17 playlists
 The Fray: 16 playlists
 ```
 
@@ -194,11 +194,11 @@ The Fray: 16 playlists
 
 The `src/analysis/visualize_distributions.py` script generates charts to analyze the library's composition and identify patterns:
 
-- **Artist Distribution:** 47.3% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
-- **Track Distribution:** 56.7% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
+- **Artist Distribution:** 47.7% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
+- **Track Distribution:** 56.8% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
 - **Playlist Composition:**
   - Artist density: 44% of playlists contain fewer than 50 unique artists, while 6% of playlists contain more than 200 unique artists.
-  - Track volume: 18% of playlists have fewer than 50 songs and 8% of playlists exceed 500 tracks; the majority vary in size, between 50-500 songs.
+  - Track volume: 16% of playlists have 50 or fewer songs and 8% of playlists exceed 500 tracks; the majority vary in size, between 51-500 songs.
 
 **Run script:**
 ```bash
@@ -232,8 +232,8 @@ python src/analysis/feature_analysis.py
 
 **Feature Insights:**
 
-- **Energy vs. Loudness**: Despite their 0.73 correlation, both features are retained. Energy is perceptual; Loudness (dB) is physical amplitude. They diverge on fast acoustic passages (high energy, low loudness) and sustained drones (low energy, high loudness), and keeping both intentionally up-weights intensity — a primary axis of separation in the library.
-- **Acousticness**: Acousticness correlates negatively with both Energy (-0.65) and Loudness (-0.54), positioning it as the inverse pole of the intensity axis rather than an independent dimension. It's retained because it captures the acoustic/non-acoustic distinction more directly than either intensity feature alone, and because its right-skewed distribution (median 8, mean 19.7) means a meaningful subset of the library sits at the high-acoustic end where Energy and Loudness lose resolution.
+- **Energy vs. Loudness**: Despite their 0.74 correlation, both features are retained. Energy is perceptual; Loudness (dB) is physical amplitude. They diverge on fast acoustic passages (high energy, low loudness) and sustained drones (low energy, high loudness), and keeping both intentionally up-weights intensity — a primary axis of separation in the library.
+- **Acousticness**: Acousticness correlates negatively with both Energy (-0.66) and Loudness (-0.55), positioning it as the inverse pole of the intensity axis rather than an independent dimension. It's retained because it captures the acoustic/non-acoustic distinction more directly than either intensity feature alone, and because its right-skewed distribution (median 8, mean 19.7) means a meaningful subset of the library sits at the high-acoustic end where Energy and Loudness lose resolution.
 - **Scaling**: All features are standardized via StandardScaler before clustering to prevent the dB scale from dominating the distance metric.
 
 **Clustering Methodology:**
@@ -342,7 +342,7 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
 
 The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard for finding similar songs using K-nearest neighbors:
 
-- **Song Search**: Searchable dropdown with ~5,000 songs sorted by title (format: "Song - Artist")
+- **Song Search**: Searchable dropdown with ~5,300 songs sorted by title (format: "Song - Artist")
 - **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
 - **Number of Songs**: Configure how many similar songs to return (default: 10)
 - **Results Display**: Shows the seed song and similar songs with distance, popularity, and audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
@@ -364,7 +364,7 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 
 **Features:**
 
-- **Song Search**: Searchable dropdown with ~5,000 songs sorted by title (format: "Song - Artist")
+- **Song Search**: Searchable dropdown with ~5,300 songs sorted by title (format: "Song - Artist")
 - **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
 - **Target Playlist Size**: Set the total number of songs for your playlist (including the seed song, default: 50)
 - **Exclude Previous Playlists**: Optionally exclude songs from the last 5, 10, or all previously created playlists to avoid duplicates
