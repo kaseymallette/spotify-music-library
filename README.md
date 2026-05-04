@@ -7,9 +7,7 @@ A Spotify-powered music recommendation system using clustering analysis and auto
 .
 ├── README.md
 ├── data/
-│   └── (50 playlist CSV files)
 ├── images/
-│   └── playlist_count_distributions.png
 ├── requirements.txt
 ├── spotify_music_library.db
 └── src/
@@ -188,13 +186,17 @@ The Fray: 16 playlists
 
 ### Visualization
 
-The `src/analysis/visualize_playlist_counts.py` script creates charts showing the distribution of playlist counts for artists and songs.
+The `src/analysis/visualize_distributions.py` script creates charts showing various distributions:
+- Artist playlist count distribution (grouped ranges)
+- Song playlist count distribution (grouped ranges)
+- Unique artists per playlist distribution (grouped ranges)
+- Playlist song count distribution (grouped ranges)
 
 **Run script:**
 ```bash
-python src/analysis/visualize_playlist_counts.py
+python src/analysis/visualize_distributions.py
 ```
 
 **Output:**
-- Saves chart as `images/playlist_count_distributions.png`
+- Saves chart as `images/distributions.png`
 - Prints statistics for artist and song playlist count distributions
