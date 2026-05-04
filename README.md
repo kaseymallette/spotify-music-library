@@ -1,6 +1,25 @@
 # spotify-music-library
 A Spotify-powered music recommendation system using clustering analysis and automated playlist generation to help discover new music and avoid repetition.
 
+## Overview
+
+This project ingests 50 Spotify playlists into a SQLite database, deduplicates 
+tracks across playlists, and analyzes audio features (BPM, valence, energy, 
+acousticness, etc.) to cluster ~5,000 songs by mood and sonic profile. The 
+clustering is the foundation for an automated playlist generator that creates 
+new mood-coherent playlists from the library — the goal is discovery without 
+repetition across the 50 existing playlists.
+
+**Stack:** Python, SQLite, pandas, scikit-learn, Plotly Dash, matplotlib/seaborn.
+
+**Key design decisions:**
+- Tracks deduplicated by composite Track_Key (artist + song) to handle 
+  Spotify's multiple Track_IDs for the same song
+- Valence weighted 1.5x in clustering to prioritize mood coherence — prevents 
+  sad and happy songs from grouping by shared energy/tempo
+- Speechiness, Liveness, and Time Signature dropped from features due to 
+  low variance
+
 ## Project Structure
 
 ```
