@@ -17,8 +17,10 @@ repetition across the 50 existing playlists.
   Spotify's multiple Track_IDs for the same song
 - Valence weighted 1.5x in clustering to prioritize mood coherence — prevents 
   sad and happy songs from grouping by shared energy/tempo
-- Speechiness, Liveness, and Time Signature dropped from features due to 
-  low variance
+- K-nearest neighbors (KNN) on audio features for song recommendations — finds 
+  similar songs by Euclidean distance on standardized features (BPM, valence, 
+  dance, energy, acoustic, loudness) with optional year filtering
+
 
 ## Project Structure
 
