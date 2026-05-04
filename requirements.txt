@@ -8,3 +8,4 @@ matplotlib
 plotly
 dash
 seaborn
+adjustText

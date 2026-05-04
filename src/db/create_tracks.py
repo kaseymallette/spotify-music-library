@@ -12,14 +12,26 @@ conn = sqlite3.connect(db_path)
 # Read all data from playlists table
 df = pd.read_sql('SELECT * FROM playlists', conn)
 
-# Sort by Album Date descending so latest comes first
+# Normalize song names by removing common patterns before deduplication
+# Remove (feat. ...), (with ...), (ft. ...), etc.
+df['Song_Normalized'] = df['Song'].str.replace(r'\s*\(feat\.\s*[^)]*\)', '', regex=True, case=False)
+df['Song_Normalized'] = df['Song_Normalized'].str.replace(r'\s*\(with\s*[^)]*\)', '', regex=True, case=False)
+df['Song_Normalized'] = df['Song_Normalized'].str.replace(r'\s*\(ft\.\s*[^)]*\)', '', regex=True, case=False)
+# Remove trailing punctuation (?, !, .)
+df['Song_Normalized'] = df['Song_Normalized'].str.replace(r'[?!\.]+$', '', regex=True)
+df['Song_Normalized'] = df['Song_Normalized'].str.strip()
+
+# Create normalized Track_Key for deduplication
+df['Track_Key_Normalized'] = df['Artist'] + '|' + df['Song_Normalized']
+
+# Sort by Album Date ascending so earliest comes first
 # Use errors='coerce' to handle invalid dates like "1956-00-00"
 df['Album Date'] = pd.to_datetime(df['Album Date'], errors='coerce')
 # Sort by Album Date, with NaT (invalid dates) going last
-df = df.sort_values('Album Date', ascending=False, na_position='last')
+df = df.sort_values('Album Date', ascending=True, na_position='last')
 
-# Keep only the first occurrence of each Track_Key (latest release)
-df_deduped = df.drop_duplicates(subset='Track_Key', keep='first')
+# Keep only the first occurrence of each normalized Track_Key (earliest release)
+df_deduped = df.drop_duplicates(subset='Track_Key_Normalized', keep='first')
 
 # Display stats
 unique_track_ids = df['Track_ID'].nunique()

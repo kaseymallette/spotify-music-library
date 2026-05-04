@@ -33,6 +33,7 @@ repetition across the 50 existing playlists.
     ├── analysis/
     │   ├── dashboard.py
     │   ├── feature_analysis.py
+    │   ├── knn_seed_songs.py
     │   ├── sample_queries.py
     │   └── visualize_distributions.py
     └── db/
@@ -248,6 +249,93 @@ The script performs K-means clustering on audio features with the following appr
 ![Elbow Method](images/elbow_method.png)
 
 ![Cluster Visualization](images/cluster_visualization.png)
+
+### K-Nearest Neighbors (KNN) Seed Songs
+
+The `src/analysis/knn_seed_songs.py` script finds similar songs to a given seed song using K-nearest neighbors based on audio features. This is useful for discovering new music similar to a favorite track.
+
+**Methodology:**
+
+- **Similarity Metric**: Uses Euclidean distance on standardized audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
+- **Valence Weighting**: Valence (mood) is weighted 1.5x in the distance calculation to prioritize mood similarity
+- **Year Filter**: Optional filter to exclude songs outside a specified year range from the seed song's release year
+- **Deduplication**: Songs are deduplicated by normalizing song names (removing "(feat. ...)", "(with ...)", "(ft. ...)" patterns and trailing punctuation) and keeping the earliest release
+
+**Run script:**
+```bash
+python src/analysis/knn_seed_songs.py --song "Song Name" --artist "Artist Name" [--year-range N] [--num-songs N]
+```
+
+**Arguments:**
+- `--song`: Song name (required if not using default)
+- `--artist`: Artist name (required if not using default)
+- `--year-range`: Maximum year difference from seed song (optional, e.g., 10 for songs within 10 years)
+- `--num-songs`: Number of similar songs to find (optional, default: 10)
+
+**Sample Command:**
+```bash
+python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic Monkeys" --year-range 30 --num-songs 10
+```
+
+**Sample Output:**
+```
+10 songs most similar to 'Snap Out Of It' by 'Arctic Monkeys':
+
+0. Snap Out Of It — Arctic Monkeys (2013) [ORIGINAL]
+   Distance: 0.0000
+   Popularity: 81
+   Features: BPM=130, Valence=87, Dance=73, Energy=64, Acoustic=25, Loud_Db=-6
+
+1. Don't Be Stupid (You Know I Love You) — Shania Twain (1997)
+   Distance: 0.5310
+   Popularity: 49
+   Features: BPM=122, Valence=90, Dance=77, Energy=64, Acoustic=26, Loud_Db=-7
+
+2. Sweet Dreams (Are Made of This) - 2005 Remaster — Eurythmics,Annie Lennox,Dave Stewart (1983)
+   Distance: 0.5775
+   Popularity: 86
+   Features: BPM=125, Valence=88, Dance=69, Energy=71, Acoustic=23, Loud_Db=-7
+
+3. I Know I Know I Know — Tegan and Sara (2004)
+   Distance: 0.6070
+   Popularity: 41
+   Features: BPM=117, Valence=85, Dance=72, Energy=66, Acoustic=16, Loud_Db=-6
+
+4. Underneath It All — No Doubt,Lady Saw (2001)
+   Distance: 0.6523
+   Popularity: 69
+   Features: BPM=138, Valence=84, Dance=73, Energy=73, Acoustic=24, Loud_Db=-5
+
+5. Floor It — Bear Hands (2024)
+   Distance: 0.6801
+   Popularity: 0
+   Features: BPM=132, Valence=79, Dance=76, Energy=72, Acoustic=26, Loud_Db=-6
+
+6. Somebody's Watching Me — Rockwell (2012)
+   Distance: 0.7120
+   Popularity: 57
+   Features: BPM=124, Valence=84, Dance=79, Energy=62, Acoustic=12, Loud_Db=-6
+
+7. Shut Your Eyes — Snow Patrol (2006)
+   Distance: 0.7415
+   Popularity: 0
+   Features: BPM=125, Valence=84, Dance=69, Energy=74, Acoustic=15, Loud_Db=-6
+
+8. Love Gets Me Every Time — Shania Twain (1997)
+   Distance: 0.7423
+   Popularity: 45
+   Features: BPM=123, Valence=96, Dance=74, Energy=69, Acoustic=26, Loud_Db=-7
+
+9. You Ain't Much Fun — Toby Keith (1998)
+   Distance: 0.7821
+   Popularity: 22
+   Features: BPM=138, Valence=77, Dance=76, Energy=70, Acoustic=27, Loud_Db=-6
+
+10. It's Five O'Clock Somewhere — Alan Jackson,Jimmy Buffett (2003)
+   Distance: 0.7837
+   Popularity: 70
+   Features: BPM=125, Valence=89, Dance=71, Energy=77, Acoustic=22, Loud_Db=-7
+```
 
 ### Interactive Dashboard
 
