@@ -233,9 +233,10 @@ The script performs K-means clustering on audio features with the following appr
 The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard to explore playlist statistics:
 
 - **Playlist Statistics**: Displays total song count and unique artist count for the selected playlist.
-- **Feature Statistics**: Shows mean and standard deviation for audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness, Speech, Live, Album Year, Popularity) for the selected playlist.
 - **Artist Distribution**: Shows the top 10 artists by song count for the selected playlist.
 - **Decade Distribution**: View the distribution of songs by decade across all playlists or filter by a specific playlist.
+- **Clustering Analysis**: Runs K-means clustering on eight audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness, Album Year, Popularity) with valence weighted 1.5x to prioritize mood separation. Uses the elbow method to determine the optimal number of clusters (testing 3-10 clusters) and displays the elbow curve.
+- **Cluster Visualization**: Plots clusters as a scatter plot (Valence vs Energy) showing how songs group by mood and other characteristics, with the optimal number of clusters detected via elbow method.
 
 **Run script:**
 ```bash
