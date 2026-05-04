@@ -213,6 +213,21 @@ python src/analysis/feature_analysis.py
 - **Acousticness**: Acousticness correlates negatively with both Energy (-0.65) and Loudness (-0.54), positioning it as the inverse pole of the intensity axis rather than an independent dimension. It's retained because it captures the acoustic/non-acoustic distinction more directly than either intensity feature alone, and because its right-skewed distribution (median 8, mean 19.7) means a meaningful subset of the library sits at the high-acoustic end where Energy and Loudness lose resolution.
 - **Scaling**: All features are standardized via StandardScaler before clustering to prevent the dB scale from dominating the distance metric.
 
+**Clustering Methodology:**
+
+The script performs K-means clustering on audio features with the following approach:
+
+- **Valence Weighting**: Valence (mood) is weighted 1.5x before clustering to prioritize mood separation. This prevents mixing sad songs with happy songs within the same cluster, which would kill the mood in playlists.
+- **Feature Standardization**: All features are standardized using StandardScaler to ensure equal contribution to the distance metric.
+- **Elbow Method**: The optimal number of clusters is determined using the elbow method, which plots inertia (within-cluster sum of squares) against the number of clusters. The elbow point is detected by finding the point with maximum distance from the line connecting the first and last points on the curve.
+- **Cluster Range**: The algorithm tests cluster counts from 4 to 10, with a minimum of 4 clusters to ensure sufficient granularity for mood-based grouping.
+- **Visualization**: Clusters are visualized using feature pairs (Valence vs Energy, Valence vs Dance, Valence vs Acoustic, Valence vs BPM) to show how songs group by mood and other characteristics.
+
+**Output:**
+![Elbow Method](images/elbow_method.png)
+
+![Cluster Visualization](images/cluster_visualization.png)
+
 ### Interactive Dashboard
 
 The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard to explore playlist statistics:
