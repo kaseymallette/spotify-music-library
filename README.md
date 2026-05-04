@@ -334,6 +334,26 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Features: BPM=125, Valence=89, Dance=71, Energy=77, Acoustic=22, Loud_Db=-7
 ```
 
+### Interactive Dashboard
+
+The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard for finding similar songs using K-nearest neighbors:
+
+- **Song Search**: Searchable dropdown with ~5,000 songs sorted by title (format: "Song - Artist")
+- **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
+- **Number of Songs**: Configure how many similar songs to return (default: 10)
+- **Results Display**: Shows the seed song and similar songs with distance, popularity, and audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
+
+**Methodology:**
+
+- Uses Euclidean distance on standardized audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
+- Valence (mood) weighted 1.5x in the distance calculation to prioritize mood similarity
+- Songs are deduplicated by normalizing song names (removing "(feat. ...)", "(with ...)", "(ft. ...)" patterns and trailing punctuation) and keeping the earliest release
+
+**Run script:**
+```bash
+python src/analysis/dashboard.py
+```
+
 ### Playlist Builder
 
 The dashboard includes an interactive playlist builder that lets you create a custom playlist by accepting or rejecting songs one by one based on similarity to a seed song.
@@ -363,26 +383,6 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 4. Review each song offered and click "Accept" or "Reject"
 5. Continue until you reach your target size
 6. Click "Export Playlist to CSV" when complete
-
-### Interactive Dashboard
-
-The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard for finding similar songs using K-nearest neighbors:
-
-- **Song Search**: Searchable dropdown with ~5,000 songs sorted by title (format: "Song - Artist")
-- **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
-- **Number of Songs**: Configure how many similar songs to return (default: 10)
-- **Results Display**: Shows the seed song and similar songs with distance, popularity, and audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
-
-**Methodology:**
-
-- Uses Euclidean distance on standardized audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
-- Valence (mood) weighted 1.5x in the distance calculation to prioritize mood similarity
-- Songs are deduplicated by normalizing song names (removing "(feat. ...)", "(with ...)", "(ft. ...)" patterns and trailing punctuation) and keeping the earliest release
-
-**Run script:**
-```bash
-python src/analysis/dashboard.py
-```
 
 **Dashboard Screenshot:**
 
