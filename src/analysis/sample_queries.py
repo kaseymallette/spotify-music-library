@@ -82,5 +82,17 @@ for row in results:
     print(f"{row[0]}|{row[1]}|{row[2]}|{row[3]}")
 print()
 
+# Get harmonic mixing transitions for key 1A
+print("Get harmonic mixing transitions for key 1A:")
+cursor = conn.execute("""
+    SELECT target_key, mix_type
+    FROM mixing_rules
+    WHERE starting_key = '1A';
+""")
+results = cursor.fetchall()
+for row in results:
+    print(f"{row[0]} ({row[1]})")
+print()
+
 conn.close()
 print("=== End of Sample Queries ===")

@@ -6,7 +6,7 @@ import os
 # Get the root directory (two levels up from src/db/)
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 db_path = os.path.join(root_dir, 'spotify_music_library.db')
-data_folder = os.path.join(root_dir, 'data')
+data_folder = os.path.join(root_dir, 'data', 'playlists')
 
 conn = sqlite3.connect(db_path)
 

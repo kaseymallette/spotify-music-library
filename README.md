@@ -25,6 +25,8 @@ This project ingests 50 Spotify playlists into a SQLite database, deduplicates t
 .
 ├── README.md
 ├── data/
+│   ├── playlists/
+│   └── harmonic_mixing_rules.csv
 ├── images/
 ├── requirements.txt
 ├── results/
@@ -39,6 +41,7 @@ This project ingests 50 Spotify playlists into a SQLite database, deduplicates t
     └── db/
         ├── create_artist_playlist_count.py
         ├── create_custom_playlists.py
+        ├── create_mixing_rules.py
         ├── create_playlists.py
         ├── create_song_playlist_count.py
         ├── create_tracks.py

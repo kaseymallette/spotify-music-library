@@ -27,13 +27,13 @@ conn = sqlite3.connect(db_path)
 
 # Query tracks data
 df_metadata = pd.read_sql("""
-    SELECT Track_Key, Song, Artist, Album_Year, Popularity
+    SELECT Track_Key, Song, Artist, Album_Year, Popularity, Camelot
     FROM tracks
     WHERE Album_Year IS NOT NULL
 """, conn)
 
 df_features = pd.read_sql("""
-    SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db, Album_Year, Popularity
+    SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db, Album_Year, Popularity, Camelot
     FROM tracks
     WHERE Album_Year IS NOT NULL
 """, conn)
@@ -42,6 +42,37 @@ df_features = pd.read_sql("""
 for col in FEATURES:
     if col in df_features.columns:
         df_features[col] = pd.to_numeric(df_features[col], errors='coerce')
+
+# Parse Camelot key to extract position (1-12) and mode (minor=0, major=1)
+def parse_camelot(camelot):
+    """Parse Camelot notation (e.g., '11A', '9B') to position and mode."""
+    if pd.isna(camelot) or not isinstance(camelot, str):
+        return None, None
+    
+    # Extract number (position) and letter (mode)
+    camelot = camelot.strip()
+    if len(camelot) < 2:
+        return None, None
+    
+    try:
+        # Position is the numeric part (1-12)
+        position = int(''.join(filter(str.isdigit, camelot)))
+        # Mode: A = minor (0), B = major (1)
+        mode = 1 if 'B' in camelot.upper() else 0
+        
+        return position, mode
+    except:
+        return None, None
+
+# Apply parsing to Camelot column
+df_features['key_position'], df_features['is_major'] = zip(*df_features['Camelot'].apply(parse_camelot))
+
+# Drop rows with missing key data
+df_metadata = df_metadata[df_features['key_position'].notna()]
+df_features = df_features[df_features['key_position'].notna()]
+
+# Add key columns to FEATURES list
+FEATURES.extend(['key_position', 'is_major'])
 
 # Set Track_Key as index for both dataframes
 df_metadata = df_metadata.set_index('Track_Key')
@@ -346,7 +377,7 @@ if __name__ == '__main__':
         print(f"0. {seed_row['song']} — {seed_row['artist']} ({seed_row['year']}) [ORIGINAL]")
         print(f"   Distance: 0.0000")
         print(f"   Popularity: {seed_row['popularity']}")
-        print(f"   Features: BPM={seed_features['BPM']}, Valence={seed_features['Valence']}, Dance={seed_features['Dance']}, Energy={seed_features['Energy']}, Acoustic={seed_features['Acoustic']}, Loud_Db={seed_features['Loud_Db']}")
+        print(f"   Features: BPM={seed_features['BPM']}, Valence={seed_features['Valence']}, Dance={seed_features['Dance']}, Energy={seed_features['Energy']}, Acoustic={seed_features['Acoustic']}, Loud_Db={seed_features['Loud_Db']}, Key={seed_features['key_position']}{'M' if seed_features['is_major'] else 'm'}")
         print()
         
         # Then display the neighbors
@@ -356,7 +387,7 @@ if __name__ == '__main__':
             print(f"   Popularity: {row['Popularity']}")
             # Get features for this song
             song_features = df_features.loc[idx]
-            print(f"   Features: BPM={song_features['BPM']}, Valence={song_features['Valence']}, Dance={song_features['Dance']}, Energy={song_features['Energy']}, Acoustic={song_features['Acoustic']}, Loud_Db={song_features['Loud_Db']}")
+            print(f"   Features: BPM={song_features['BPM']}, Valence={song_features['Valence']}, Dance={song_features['Dance']}, Energy={song_features['Energy']}, Acoustic={song_features['Acoustic']}, Loud_Db={song_features['Loud_Db']}, Key={song_features['key_position']}{'M' if song_features['is_major'] else 'm'}")
             print()
     else:
         print("No seed songs found. Please check the song names and artists.")
