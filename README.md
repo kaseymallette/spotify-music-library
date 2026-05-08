@@ -99,33 +99,44 @@ Running create_playlists.py...
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9617
+Row count: 9633
 ✓ create_playlists.py completed successfully
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 5795
-Unique Track_Keys: 5268
-Unique Artists: 2051
-Removed: 527 duplicate tracks (same song, different Track_ID)
+Unique Track_IDs: 5804
+Unique Track_Keys: 5276
+Unique Artists: 2057
+Removed: 528 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5264
-Songs in multiple playlists: 2276
+Total unique songs: 5272
+Songs in multiple playlists: 2283
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
 
 --- Create artist playlist count table ---
 Running create_artist_playlist_count.py...
-Total unique artists: 2051
-Artists in multiple playlists: 1073
+Total unique artists: 2057
+Artists in multiple playlists: 1074
 Maximum playlists per artist: 19
 Artist playlist count table created successfully.
 ✓ create_artist_playlist_count.py completed successfully
+
+--- Create custom playlists table ---
+Running create_custom_playlists.py...
+Custom playlists tables created successfully.
+✓ create_custom_playlists.py completed successfully
+
+--- Create harmonic mixing rules table ---
+Running create_mixing_rules.py...
+Mixing rules table created successfully.
+Total transitions loaded: 192
+✓ create_mixing_rules.py completed successfully
 
 === Database Setup Complete ===
 All database tables have been created successfully.
@@ -143,10 +154,10 @@ python src/analysis/sample_queries.py
 50
 
 **Get number of unique artists:**
-2051
+2057
 
 **Get number of unique songs:**
-5264
+5272
 
 **Get top five artists with song count:**
 ```
@@ -191,16 +202,28 @@ The Fray: 16 playlists
 12|Middle|DJ Snake,Bipolar Sunshine|2015
 ```
 
+**Get harmonic mixing transitions for key 1A:**
+```
+12A (minus_1_mix)
+12B (diagonal_mix)
+1A (perfect_mix)
+1B (scale_change)
+2A (plus_1_mix)
+3A (energy_boost)
+4B (mood_shifter)
+8A (jaws_mix)
+```   
+
 ## Analysis
 
 ### Data Distribution
 
 The `src/analysis/visualize_distributions.py` script generates charts to analyze the library's composition and identify patterns:
 
-- **Artist Distribution:** 47.7% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
-- **Track Distribution:** 56.8% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
+- **Artist Distribution:** 47.8% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
+- **Track Distribution:** 56.7% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
 - **Playlist Composition:**
-  - Artist density: 44% of playlists contain fewer than 50 unique artists, while 6% of playlists contain more than 200 unique artists.
+  - Artist density: 42% of playlists contain fewer than 50 unique artists, while 6% of playlists contain more than 200 unique artists.
   - Track volume: 16% of playlists have 50 or fewer songs and 8% of playlists exceed 500 tracks; the majority vary in size, between 51-500 songs.
 
 **Run script:**
