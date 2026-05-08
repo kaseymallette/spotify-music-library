@@ -298,10 +298,16 @@ python src/analysis/knn_seed_songs.py --song "Song Name" --artist "Artist Name" 
 - `--artist`: Artist name (required if not using default)
 - `--year-range`: Maximum year difference from seed song (optional, e.g., 10 for songs within 10 years)
 - `--num-songs`: Number of similar songs to find (optional, default: 10)
+- `--harmonic-filter`: Filter results to only include harmonically compatible keys based on Camelot wheel (optional)
+
+**Features:**
+- **BPM Weighting**: BPM is weighted 2x in the distance calculation to prioritize tempo similarity
+- **Valence Weighting**: Valence is weighted 1.5x to prioritize mood separation
+- **Harmonic Filtering**: When enabled, filters results to only include songs with Camelot keys that are harmonically compatible with the seed song (Perfect Mix, -1 Mix, +1 Mix, Energy Boost, Scale Change, Diagonal Mix, Jaw's Mix, Mood Shifter)
 
 **Sample Command:**
 ```bash
-python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic Monkeys" --year-range 30 --num-songs 10
+python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic Monkeys" --harmonic-filter --num-songs 10
 ```
 
 **Sample Output:**
@@ -311,57 +317,57 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
 0. Snap Out Of It — Arctic Monkeys (2013) [ORIGINAL]
    Distance: 0.0000
    Popularity: 81
-   Features: BPM=130, Valence=87, Dance=73, Energy=64, Acoustic=25, Loud_Db=-6
+   Features: BPM=130, Valence=87, Dance=73, Energy=64, Acoustic=25, Loud_Db=-6, Key=4A
 
-1. Don't Be Stupid (You Know I Love You) — Shania Twain (1997)
-   Distance: 0.5279
-   Popularity: 49
-   Features: BPM=122, Valence=90, Dance=77, Energy=64, Acoustic=26, Loud_Db=-7
-
-2. Sweet Dreams (Are Made of This) - 2005 Remaster — Eurythmics,Annie Lennox,Dave Stewart (1983)
-   Distance: 0.5721
+1. Sweet Dreams (Are Made of This) - 2005 Remaster — Eurythmics,Annie Lennox,Dave Stewart (1983)
+   Distance: 0.6485
    Popularity: 86
-   Features: BPM=125, Valence=88, Dance=69, Energy=71, Acoustic=23, Loud_Db=-7
+   Features: BPM=125, Valence=88, Dance=69, Energy=71, Acoustic=23, Loud_Db=-7, Key=5A
 
-3. I Know I Know I Know — Tegan and Sara (2004)
-   Distance: 0.6029
+2. Floor It — Bear Hands (2024)
+   Distance: 0.6873
+   Popularity: 0
+   Features: BPM=132, Valence=79, Dance=76, Energy=72, Acoustic=26, Loud_Db=-6, Key=4B
+
+3. Shut Your Eyes — Snow Patrol (2006)
+   Distance: 0.7947
+   Popularity: 0
+   Features: BPM=125, Valence=84, Dance=69, Energy=74, Acoustic=15, Loud_Db=-6, Key=3B
+
+4. Pumped Up Kicks — Foster The People (2011)
+   Distance: 0.8505
+   Popularity: 87
+   Features: BPM=128, Valence=97, Dance=73, Energy=71, Acoustic=14, Loud_Db=-6, Key=4A
+
+5. Where the Party At (feat. Nelly) — Jagged Edge,Nelly (2001)
+   Distance: 0.8766
+   Popularity: 66
+   Features: BPM=129, Valence=86, Dance=60, Energy=66, Acoustic=31, Loud_Db=-6, Key=4A
+
+6. West Coast — OneRepublic (2024)
+   Distance: 0.9190
+   Popularity: 55
+   Features: BPM=134, Valence=90, Dance=69, Energy=70, Acoustic=36, Loud_Db=-8, Key=11A
+
+7. That Don't Impress Me Much - Edit — Shania Twain (2022)
+   Distance: 0.9386
+   Popularity: 27
+   Features: BPM=125, Valence=96, Dance=74, Energy=77, Acoustic=27, Loud_Db=-6, Key=3B
+
+8. Whose Bed Have Your Boots Been Under? — Shania Twain (2022)
+   Distance: 0.9858
+   Popularity: 21
+   Features: BPM=132, Valence=80, Dance=71, Energy=74, Acoustic=9, Loud_Db=-5, Key=7B
+
+9. I Know I Know I Know — Tegan and Sara (2004)
+   Distance: 0.9959
    Popularity: 41
-   Features: BPM=117, Valence=85, Dance=72, Energy=66, Acoustic=16, Loud_Db=-6
+   Features: BPM=117, Valence=85, Dance=72, Energy=66, Acoustic=16, Loud_Db=-6, Key=4B
 
-4. Underneath It All — No Doubt,Lady Saw (2001)
-   Distance: 0.6464
-   Popularity: 69
-   Features: BPM=138, Valence=84, Dance=73, Energy=73, Acoustic=24, Loud_Db=-5
-
-5. Floor It — Bear Hands (2024)
-   Distance: 0.6763
-   Popularity: 0
-   Features: BPM=132, Valence=79, Dance=76, Energy=72, Acoustic=26, Loud_Db=-6
-
-6. Somebody's Watching Me — Rockwell (2012)
-   Distance: 0.7049
-   Popularity: 57
-   Features: BPM=124, Valence=84, Dance=79, Energy=62, Acoustic=12, Loud_Db=-6
-
-7. Shut Your Eyes — Snow Patrol (2006)
-   Distance: 0.7337
-   Popularity: 0
-   Features: BPM=125, Valence=84, Dance=69, Energy=74, Acoustic=15, Loud_Db=-6
-
-8. Love Gets Me Every Time — Shania Twain (1997)
-   Distance: 0.7384
-   Popularity: 45
-   Features: BPM=123, Valence=96, Dance=74, Energy=69, Acoustic=26, Loud_Db=-7
-
-9. Manchild — Sabrina Carpenter (2025)
-   Distance: 0.7752
-   Popularity: 91
-   Features: BPM=123, Valence=84, Dance=73, Energy=69, Acoustic=10, Loud_Db=-5
-
-10. It's Five O'Clock Somewhere — Alan Jackson,Jimmy Buffett (2003)
-   Distance: 0.7753
-   Popularity: 70
-   Features: BPM=125, Valence=89, Dance=71, Energy=77, Acoustic=22, Loud_Db=-7
+10. Fool's Gold — Aaron Carter (2018)
+   Distance: 1.0580
+   Popularity: 33
+   Features: BPM=130, Valence=79, Dance=69, Energy=70, Acoustic=5, Loud_Db=-5, Key=4A
 ```
 
 ## Interactive Dashboard

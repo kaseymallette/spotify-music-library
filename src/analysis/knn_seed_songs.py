@@ -43,37 +43,6 @@ for col in FEATURES:
     if col in df_features.columns:
         df_features[col] = pd.to_numeric(df_features[col], errors='coerce')
 
-# Parse Camelot key to extract position (1-12) and mode (minor=0, major=1)
-def parse_camelot(camelot):
-    """Parse Camelot notation (e.g., '11A', '9B') to position and mode."""
-    if pd.isna(camelot) or not isinstance(camelot, str):
-        return None, None
-    
-    # Extract number (position) and letter (mode)
-    camelot = camelot.strip()
-    if len(camelot) < 2:
-        return None, None
-    
-    try:
-        # Position is the numeric part (1-12)
-        position = int(''.join(filter(str.isdigit, camelot)))
-        # Mode: A = minor (0), B = major (1)
-        mode = 1 if 'B' in camelot.upper() else 0
-        
-        return position, mode
-    except:
-        return None, None
-
-# Apply parsing to Camelot column
-df_features['key_position'], df_features['is_major'] = zip(*df_features['Camelot'].apply(parse_camelot))
-
-# Drop rows with missing key data
-df_metadata = df_metadata[df_features['key_position'].notna()]
-df_features = df_features[df_features['key_position'].notna()]
-
-# Add key columns to FEATURES list
-FEATURES.extend(['key_position', 'is_major'])
-
 # Set Track_Key as index for both dataframes
 df_metadata = df_metadata.set_index('Track_Key')
 df_features = df_features.set_index('Track_Key')
@@ -171,6 +140,11 @@ def find_k_nearest_neighbors(df_playlist_metadata, df_playlist_features, seed_fe
     df_audio_scaled[:, valence_idx] *= 1.5
     seed_audio_scaled = scaler.transform([seed_audio])[0]
     seed_audio_scaled[valence_idx] *= 1.5
+    
+    # Apply BPM weighting (2x) to prioritize tempo similarity
+    bpm_idx = AUDIO_FEATURES.index('BPM')
+    df_audio_scaled[:, bpm_idx] *= 2
+    seed_audio_scaled[bpm_idx] *= 2
     
     # Calculate distances
     distances = []
@@ -310,6 +284,7 @@ if __name__ == '__main__':
     parser.add_argument('--artist', type=str, help='Artist name')
     parser.add_argument('--num-songs', type=int, default=10, help='Number of similar songs to find (default: 10)')
     parser.add_argument('--year-range', type=int, default=None, help='Maximum year difference from seed song (e.g., 10 for songs within 10 years)')
+    parser.add_argument('--harmonic-filter', action='store_true', help='Filter results to only include harmonically compatible keys')
     args = parser.parse_args()
     
     # Define seed songs (song_name: artist_name)
@@ -321,7 +296,7 @@ if __name__ == '__main__':
             "Snap Out Of It": "Arctic Monkeys"
         }
         print("No arguments provided. Using default seed song: 'Snap Out Of It' by 'Arctic Monkeys'")
-        print("Usage: python src/analysis/knn_seed_songs.py --song 'Song Name' --artist 'Artist Name' [--num-songs N] [--year-range N]\n")
+        print("Usage: python src/analysis/knn_seed_songs.py --song 'Song Name' --artist 'Artist Name' [--num-songs N] [--year-range N] [--harmonic-filter]\n")
     
     print("=== SEED SONG ANALYSIS ===")
     print(f"Seed songs: {seed_songs_dict}")
@@ -338,6 +313,7 @@ if __name__ == '__main__':
         seed_features = seed_row[FEATURES].tolist()
         seed_index = seed_row['index']
         seed_year = seed_row['year']
+        seed_bpm = seed_row['BPM']
         num_songs = args.num_songs
         year_range = args.year_range
         
@@ -345,12 +321,35 @@ if __name__ == '__main__':
         print(f"FINDING {num_songs} NEAREST NEIGHBORS")
         if year_range:
             print(f"Year filter: songs within {year_range} years of {seed_year}")
+        if args.harmonic_filter:
+            print("Harmonic filter: Only harmonically compatible keys")
         print("="*50)
         
-        # Request more neighbors to account for year filtering
+        # Get valid harmonic keys if harmonic filter is enabled
+        valid_keys = None
+        if args.harmonic_filter:
+            seed_camelot = df_metadata.loc[seed_index, 'Camelot']
+            if pd.notna(seed_camelot):
+                conn = sqlite3.connect(db_path)
+                try:
+                    df_valid_keys = pd.read_sql(
+                        "SELECT DISTINCT target_key FROM mixing_rules WHERE starting_key = ?",
+                        conn,
+                        params=(seed_camelot,)
+                    )
+                    valid_keys = set(df_valid_keys['target_key'].tolist())
+                    print(f"Valid harmonic keys for {seed_camelot}: {sorted(valid_keys)}")
+                finally:
+                    conn.close()
+            else:
+                print("Warning: Seed song has no Camelot key, harmonic filter disabled")
+        
+        # Request more neighbors to account for year and harmonic filtering
         k_request = num_songs + 1
         if year_range:
             k_request = num_songs * 3 + 1  # Request more to account for filtering
+        if args.harmonic_filter:
+            k_request = max(k_request, num_songs * 5 + 1)  # Request even more for harmonic filtering
         
         neighbors = find_k_nearest_neighbors(df_metadata, df_features, seed_features, k=k_request)
         
@@ -365,6 +364,11 @@ if __name__ == '__main__':
             ]
             print(f"After year filter: {len(neighbors)} songs remaining")
         
+        # Apply harmonic filter if specified
+        if valid_keys:
+            neighbors = neighbors[neighbors['Camelot'].isin(valid_keys)]
+            print(f"After harmonic filter: {len(neighbors)} songs remaining")
+        
         # Ensure we have enough songs
         if len(neighbors) < num_songs:
             print(f"Warning: Only {len(neighbors)} songs found within criteria (requested {num_songs})")
@@ -374,10 +378,11 @@ if __name__ == '__main__':
         
         # First, display the original seed song
         seed_features = df_features.loc[seed_index]
+        seed_camelot = df_metadata.loc[seed_index, 'Camelot']
         print(f"0. {seed_row['song']} — {seed_row['artist']} ({seed_row['year']}) [ORIGINAL]")
         print(f"   Distance: 0.0000")
         print(f"   Popularity: {seed_row['popularity']}")
-        print(f"   Features: BPM={seed_features['BPM']}, Valence={seed_features['Valence']}, Dance={seed_features['Dance']}, Energy={seed_features['Energy']}, Acoustic={seed_features['Acoustic']}, Loud_Db={seed_features['Loud_Db']}, Key={seed_features['key_position']}{'M' if seed_features['is_major'] else 'm'}")
+        print(f"   Features: BPM={seed_features['BPM']}, Valence={seed_features['Valence']}, Dance={seed_features['Dance']}, Energy={seed_features['Energy']}, Acoustic={seed_features['Acoustic']}, Loud_Db={seed_features['Loud_Db']}, Key={seed_camelot}")
         print()
         
         # Then display the neighbors
@@ -387,7 +392,8 @@ if __name__ == '__main__':
             print(f"   Popularity: {row['Popularity']}")
             # Get features for this song
             song_features = df_features.loc[idx]
-            print(f"   Features: BPM={song_features['BPM']}, Valence={song_features['Valence']}, Dance={song_features['Dance']}, Energy={song_features['Energy']}, Acoustic={song_features['Acoustic']}, Loud_Db={song_features['Loud_Db']}, Key={song_features['key_position']}{'M' if song_features['is_major'] else 'm'}")
+            song_camelot = df_metadata.loc[idx, 'Camelot']
+            print(f"   Features: BPM={song_features['BPM']}, Valence={song_features['Valence']}, Dance={song_features['Dance']}, Energy={song_features['Energy']}, Acoustic={song_features['Acoustic']}, Loud_Db={song_features['Loud_Db']}, Key={song_camelot}")
             print()
     else:
         print("No seed songs found. Please check the song names and artists.")
