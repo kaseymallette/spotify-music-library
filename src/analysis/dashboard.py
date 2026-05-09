@@ -157,7 +157,12 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_playlists):
                 """, conn)
                 if not df_exclude.empty:
                     excluded_track_keys = set(df_exclude['track_key'].tolist())
-                    print(f"Excluded {len(excluded_track_keys)} track keys from last {exclude_playlists} playlists")
+                    # Map excluded track keys to current normalized track keys
+                    # Get all track keys from tracks table
+                    df_all_tracks = pd.read_sql("SELECT Track_Key FROM tracks", conn)
+                    all_track_keys = set(df_all_tracks['Track_Key'].tolist())
+                    # Filter to only include track keys that exist in current tracks table
+                    excluded_track_keys = excluded_track_keys & all_track_keys
             except Exception as e:
                 print(f"Error getting excluded playlists: {e}")
                 excluded_track_keys = set()
@@ -177,6 +182,9 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_playlists):
         
         df_metadata = df_metadata.set_index('Track_Key')
         df_features = df_features.set_index('Track_Key')
+        
+        # Add Track_Key back as a column for filtering
+        df_metadata['Track_Key'] = df_metadata.index
         
         seed_key = f"{selected_artist}|{selected_song}"
         if seed_key not in df_metadata.index:
@@ -226,9 +234,6 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_playlists):
         
         # Filter out excluded songs
         if excluded_track_keys:
-            # Check if songs have Track_Key, if not use the key they have
-            if knn_results and 'Track_Key' not in knn_results[0]:
-                print(f"Warning: Songs in knn_results don't have 'Track_Key' key. Available keys: {list(knn_results[0].keys())}")
             knn_results = [song for song in knn_results if song.get('Track_Key') not in excluded_track_keys]
         
         return knn_results, 0, [], []
