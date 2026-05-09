@@ -537,7 +537,7 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     # Get seed song data from database
     conn = sqlite3.connect(db_path)
     seed_data = pd.read_sql(
-        "SELECT Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity FROM tracks WHERE Track_Key = ?",
+        "SELECT Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key = ?",
         conn,
         params=(f"{seed_artist}|{seed_song}",)
     )
@@ -546,7 +546,7 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     accepted_track_keys = [f"{song['Artist']}|{song['Song']}" for song in accepted_songs]
     if accepted_track_keys:
         accepted_features = pd.read_sql(
-            f"SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
+            f"SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
             conn,
             params=accepted_track_keys
         )
@@ -559,22 +559,22 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     # Create CSV content
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(['Track_Number', 'Track_Key', 'Track_ID', 'Song', 'Artist', 'Album', 'Year', 'BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Distance', 'Popularity'])
+    writer.writerow(['Track_Number', 'Track_Key', 'Track_ID', 'Song', 'Artist', 'Album', 'Year', 'BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Camelot', 'Distance', 'Popularity'])
     
     # Write seed song
     if not seed_data.empty:
         row = seed_data.iloc[0]
-        writer.writerow([1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Acoustic'], row['Loud_Db'], 0.0000, row['Popularity']])
+        writer.writerow([1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Acoustic'], row['Loud_Db'], row['Camelot'], 0.0000, row['Popularity']])
     
     # Write accepted songs
     for i, song in enumerate(accepted_songs, 2):
         track_key = f"{song['Artist']}|{song['Song']}"
         if track_key in accepted_features.index:
             features = accepted_features.loc[track_key]
-            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Acoustic'], features['Loud_Db'], song['distance'], features['Popularity']])
+            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Acoustic'], features['Loud_Db'], features['Camelot'], song['distance'], features['Popularity']])
         else:
             # Fallback if features not found
-            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], 0, 0, 0, 0, 0, 0, song['distance'], song['Popularity']])
+            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], 0, 0, 0, 0, 0, 0, '', song['distance'], song['Popularity']])
     
     output.seek(0)
     

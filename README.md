@@ -348,7 +348,7 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Popularity: 55
    Features: BPM=134, Valence=90, Dance=69, Energy=70, Acoustic=36, Loud_Db=-8, Key=11A
 
-7. Whose Bed Have Your Boots Been Under — Shania Twain (1995)
+7. Whose Bed Have Your Boots Been Under — Shania Twain (2022)
    Distance: 0.9858
    Popularity: 21
    Features: BPM=132, Valence=80, Dance=71, Energy=74, Acoustic=9, Loud_Db=-5, Key=7B
