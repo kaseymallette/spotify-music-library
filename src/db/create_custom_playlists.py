@@ -42,6 +42,7 @@ cursor.execute('''
         energy REAL,
         acoustic REAL,
         loud_db REAL,
+        camelot TEXT,
         distance REAL,
         popularity INTEGER,
         FOREIGN KEY (playlist_id) REFERENCES custom_playlists(id) ON DELETE CASCADE

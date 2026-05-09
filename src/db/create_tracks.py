@@ -53,6 +53,9 @@ df_deduped = df_deduped.sort_values(['Artist', 'Song'])
 # Replace Song column with normalized version
 df_deduped['Song'] = df_deduped['Song_Normalized']
 
+# Rebuild Track_Key with normalized Song
+df_deduped['Track_Key'] = df_deduped['Artist'] + '|' + df_deduped['Song']
+
 # Create a tracks table with deduplicated data
 df_deduped.to_sql('tracks', conn, if_exists='replace', index=False)
 

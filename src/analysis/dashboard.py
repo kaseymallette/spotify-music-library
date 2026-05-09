@@ -398,7 +398,7 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         
         # Get audio features for seed song
         seed_data = pd.read_sql(
-            "SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity FROM tracks WHERE Track_Key = ?",
+            "SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key = ?",
             conn,
             params=(f"{seed_artist}|{seed_song}",)
         )
@@ -407,15 +407,15 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         if not seed_data.empty:
             row = seed_data.iloc[0]
             cursor.execute('''
-                INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, acoustic, loud_db, distance, popularity)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (playlist_id, 1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Acoustic'], row['Loud_Db'], 0.0, row['Popularity']))
+                INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, acoustic, loud_db, camelot, distance, popularity)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (playlist_id, 1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Acoustic'], row['Loud_Db'], row['Camelot'], 0.0, row['Popularity']))
         
         # Get audio features for accepted songs
         accepted_track_keys = [f"{song['Artist']}|{song['Song']}" for song in accepted_songs]
         if accepted_track_keys:
             accepted_features = pd.read_sql(
-                f"SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
+                f"SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
                 conn,
                 params=accepted_track_keys
             )
@@ -427,9 +427,9 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
                 if track_key in accepted_features.index:
                     features = accepted_features.loc[track_key]
                     cursor.execute('''
-                        INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, acoustic, loud_db, distance, popularity)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (playlist_id, i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Acoustic'], features['Loud_Db'], song['distance'], features['Popularity']))
+                        INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, acoustic, loud_db, camelot, distance, popularity)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (playlist_id, i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Acoustic'], features['Loud_Db'], features['Camelot'], song['distance'], features['Popularity']))
         
         conn.commit()
         conn.close()
