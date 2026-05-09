@@ -144,17 +144,23 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_playlists):
         # Get Track_Keys to exclude from last N playlists
         excluded_track_keys = set()
         if exclude_playlists and exclude_playlists > 0:
-            df_exclude = pd.read_sql(f"""
-                SELECT DISTINCT cps.track_key
-                FROM custom_playlist_songs cps
-                JOIN custom_playlists cp ON cps.playlist_id = cp.id
-                WHERE cp.id IN (
-                    SELECT id FROM custom_playlists
-                    ORDER BY created_date DESC
-                    LIMIT {exclude_playlists}
-                )
-            """, conn)
-            excluded_track_keys = set(df_exclude['track_key'].tolist())
+            try:
+                df_exclude = pd.read_sql(f"""
+                    SELECT DISTINCT cps.track_key
+                    FROM custom_playlist_songs cps
+                    JOIN custom_playlists cp ON cps.playlist_id = cp.id
+                    WHERE cp.id IN (
+                        SELECT id FROM custom_playlists
+                        ORDER BY created_date DESC
+                        LIMIT {exclude_playlists}
+                    )
+                """, conn)
+                if not df_exclude.empty:
+                    excluded_track_keys = set(df_exclude['track_key'].tolist())
+                    print(f"Excluded {len(excluded_track_keys)} track keys from last {exclude_playlists} playlists")
+            except Exception as e:
+                print(f"Error getting excluded playlists: {e}")
+                excluded_track_keys = set()
         
         df_metadata = pd.read_sql("""
             SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, Popularity, Camelot
@@ -220,7 +226,10 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_playlists):
         
         # Filter out excluded songs
         if excluded_track_keys:
-            knn_results = [song for song in knn_results if song['Track_Key'] not in excluded_track_keys]
+            # Check if songs have Track_Key, if not use the key they have
+            if knn_results and 'Track_Key' not in knn_results[0]:
+                print(f"Warning: Songs in knn_results don't have 'Track_Key' key. Available keys: {list(knn_results[0].keys())}")
+            knn_results = [song for song in knn_results if song.get('Track_Key') not in excluded_track_keys]
         
         return knn_results, 0, [], []
     
