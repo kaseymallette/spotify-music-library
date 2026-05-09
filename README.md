@@ -369,6 +369,8 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Features: BPM=125, Valence=89, Dance=76, Energy=64, Acoustic=0, Loud_Db=-6, Key=11A
 ```
 
+**Note:** The album year displayed reflects the release date of the album in the database, which may not always be the song's original release year. For example, "Whose Bed Have Your Boots Been Under" by Shania Twain appears as 2022 from the album "Not Just A Girl (The Highlights)" (a re-release compilation), but the song was originally released in 1995. This can happen when artists re-release songs on compilation albums or re-issues.
+
 ## Interactive Dashboard
 
 The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashboard for finding similar songs using K-nearest neighbors:
