@@ -105,16 +105,16 @@ Row count: 9633
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
 Unique Track_IDs: 5804
-Unique Track_Keys: 5276
+Unique Track_Keys: 5271
 Unique Artists: 2057
-Removed: 528 duplicate tracks (same song, different Track_ID)
+Removed: 533 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5272
-Songs in multiple playlists: 2283
+Total unique songs: 5271
+Songs in multiple playlists: 2282
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
@@ -157,7 +157,7 @@ python src/analysis/sample_queries.py
 2057
 
 **Get number of unique songs:**
-5272
+5271
 
 **Get top five artists with song count:**
 ```
@@ -285,18 +285,17 @@ The `src/analysis/knn_seed_songs.py` script finds similar songs to a given seed 
 
 - **Similarity Metric**: Uses Euclidean distance on standardized audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
 - **Valence Weighting**: Valence (mood) is weighted 1.5x in the distance calculation to prioritize mood similarity
-- **Year Filter**: Optional filter to exclude songs outside a specified year range from the seed song's release year
+- **BPM Weighting**: BPM is weighted 2x in the distance calculation to prioritize tempo similarity
 - **Deduplication**: Songs are deduplicated by normalizing song names (removing "(feat. ...)", "(with ...)", "(ft. ...)" patterns and trailing punctuation) and keeping the earliest release
 
 **Run script:**
 ```bash
-python src/analysis/knn_seed_songs.py --song "Song Name" --artist "Artist Name" [--year-range N] [--num-songs N]
+python src/analysis/knn_seed_songs.py --song "Song Name" --artist "Artist Name" [--num-songs N] [--harmonic-filter]
 ```
 
 **Arguments:**
 - `--song`: Song name (required if not using default)
 - `--artist`: Artist name (required if not using default)
-- `--year-range`: Maximum year difference from seed song (optional, e.g., 10 for songs within 10 years)
 - `--num-songs`: Number of similar songs to find (optional, default: 10)
 - `--harmonic-filter`: Filter results to only include harmonically compatible keys based on Camelot wheel (optional)
 
@@ -325,7 +324,7 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Features: BPM=125, Valence=88, Dance=69, Energy=71, Acoustic=23, Loud_Db=-7, Key=5A
 
 2. Floor It — Bear Hands (2024)
-   Distance: 0.6873
+   Distance: 0.6874
    Popularity: 0
    Features: BPM=132, Valence=79, Dance=76, Energy=72, Acoustic=26, Loud_Db=-6, Key=4B
 
@@ -335,39 +334,39 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Features: BPM=125, Valence=84, Dance=69, Energy=74, Acoustic=15, Loud_Db=-6, Key=3B
 
 4. Pumped Up Kicks — Foster The People (2011)
-   Distance: 0.8505
+   Distance: 0.8506
    Popularity: 87
    Features: BPM=128, Valence=97, Dance=73, Energy=71, Acoustic=14, Loud_Db=-6, Key=4A
 
-5. Where the Party At (feat. Nelly) — Jagged Edge,Nelly (2001)
+5. Where the Party At — Jagged Edge,Nelly (2001)
    Distance: 0.8766
    Popularity: 66
    Features: BPM=129, Valence=86, Dance=60, Energy=66, Acoustic=31, Loud_Db=-6, Key=4A
 
 6. West Coast — OneRepublic (2024)
-   Distance: 0.9190
+   Distance: 0.9189
    Popularity: 55
    Features: BPM=134, Valence=90, Dance=69, Energy=70, Acoustic=36, Loud_Db=-8, Key=11A
 
-7. That Don't Impress Me Much - Edit — Shania Twain (2022)
-   Distance: 0.9386
-   Popularity: 27
-   Features: BPM=125, Valence=96, Dance=74, Energy=77, Acoustic=27, Loud_Db=-6, Key=3B
-
-8. Whose Bed Have Your Boots Been Under? — Shania Twain (2022)
+7. Whose Bed Have Your Boots Been Under — Shania Twain (1995)
    Distance: 0.9858
    Popularity: 21
    Features: BPM=132, Valence=80, Dance=71, Energy=74, Acoustic=9, Loud_Db=-5, Key=7B
 
-9. I Know I Know I Know — Tegan and Sara (2004)
-   Distance: 0.9959
+8. I Know I Know I Know — Tegan and Sara (2004)
+   Distance: 0.9958
    Popularity: 41
    Features: BPM=117, Valence=85, Dance=72, Energy=66, Acoustic=16, Loud_Db=-6, Key=4B
 
-10. Fool's Gold — Aaron Carter (2018)
+9. Fool's Gold — Aaron Carter (2018)
    Distance: 1.0580
    Popularity: 33
    Features: BPM=130, Valence=79, Dance=69, Energy=70, Acoustic=5, Loud_Db=-5, Key=4A
+
+10. can't get over you — BLACKWELL (2024)
+   Distance: 1.0654
+   Popularity: 43
+   Features: BPM=125, Valence=89, Dance=76, Energy=64, Acoustic=0, Loud_Db=-6, Key=11A
 ```
 
 ## Interactive Dashboard

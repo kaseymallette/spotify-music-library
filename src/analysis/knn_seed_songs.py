@@ -283,7 +283,6 @@ if __name__ == '__main__':
     parser.add_argument('--song', type=str, help='Song name')
     parser.add_argument('--artist', type=str, help='Artist name')
     parser.add_argument('--num-songs', type=int, default=10, help='Number of similar songs to find (default: 10)')
-    parser.add_argument('--year-range', type=int, default=None, help='Maximum year difference from seed song (e.g., 10 for songs within 10 years)')
     parser.add_argument('--harmonic-filter', action='store_true', help='Filter results to only include harmonically compatible keys')
     args = parser.parse_args()
     
@@ -296,7 +295,7 @@ if __name__ == '__main__':
             "Snap Out Of It": "Arctic Monkeys"
         }
         print("No arguments provided. Using default seed song: 'Snap Out Of It' by 'Arctic Monkeys'")
-        print("Usage: python src/analysis/knn_seed_songs.py --song 'Song Name' --artist 'Artist Name' [--num-songs N] [--year-range N] [--harmonic-filter]\n")
+        print("Usage: python src/analysis/knn_seed_songs.py --song 'Song Name' --artist 'Artist Name' [--num-songs N] [--harmonic-filter]\n")
     
     print("=== SEED SONG ANALYSIS ===")
     print(f"Seed songs: {seed_songs_dict}")
@@ -312,15 +311,11 @@ if __name__ == '__main__':
         seed_row = df_seeds.iloc[0]
         seed_features = seed_row[FEATURES].tolist()
         seed_index = seed_row['index']
-        seed_year = seed_row['year']
         seed_bpm = seed_row['BPM']
         num_songs = args.num_songs
-        year_range = args.year_range
         
         print("\n" + "="*50)
         print(f"FINDING {num_songs} NEAREST NEIGHBORS")
-        if year_range:
-            print(f"Year filter: songs within {year_range} years of {seed_year}")
         if args.harmonic_filter:
             print("Harmonic filter: Only harmonically compatible keys")
         print("="*50)
@@ -344,10 +339,8 @@ if __name__ == '__main__':
             else:
                 print("Warning: Seed song has no Camelot key, harmonic filter disabled")
         
-        # Request more neighbors to account for year and harmonic filtering
+        # Request more neighbors to account for harmonic filtering
         k_request = num_songs + 1
-        if year_range:
-            k_request = num_songs * 3 + 1  # Request more to account for filtering
         if args.harmonic_filter:
             k_request = max(k_request, num_songs * 5 + 1)  # Request even more for harmonic filtering
         
@@ -355,14 +348,6 @@ if __name__ == '__main__':
         
         # Remove the seed song itself if it's in the results
         neighbors = neighbors[neighbors.index != seed_index]
-        
-        # Apply year filter if specified
-        if year_range:
-            neighbors = neighbors[
-                (neighbors['Album_Year'] >= seed_year - year_range) & 
-                (neighbors['Album_Year'] <= seed_year + year_range)
-            ]
-            print(f"After year filter: {len(neighbors)} songs remaining")
         
         # Apply harmonic filter if specified
         if valid_keys:

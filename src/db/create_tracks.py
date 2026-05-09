@@ -21,6 +21,10 @@ df['Song_Normalized'] = df['Song_Normalized'].str.replace(r'\s*\(ft\.\s*[^)]*\)'
 df['Song_Normalized'] = df['Song_Normalized'].str.replace(r'[?!\.]+$', '', regex=True)
 df['Song_Normalized'] = df['Song_Normalized'].str.strip()
 
+# Remove - Edit suffix (but not - Remix, - Version, etc. as those could be different songs)
+df['Song_Normalized'] = df['Song_Normalized'].str.replace(r'\s*-\s*Edit\s*$', '', regex=True, case=False)
+df['Song_Normalized'] = df['Song_Normalized'].str.strip()
+
 # Create normalized Track_Key for deduplication
 df['Track_Key_Normalized'] = df['Artist'] + '|' + df['Song_Normalized']
 
@@ -35,7 +39,7 @@ df_deduped = df.drop_duplicates(subset='Track_Key_Normalized', keep='first')
 
 # Display stats
 unique_track_ids = df['Track_ID'].nunique()
-unique_track_keys = df['Track_Key'].nunique()
+unique_track_keys = df_deduped['Track_Key'].nunique()
 unique_artists = df['Artist'].nunique()
 
 print(f"Unique Track_IDs: {unique_track_ids}")
@@ -45,6 +49,9 @@ print(f"Removed: {unique_track_ids - unique_track_keys} duplicate tracks (same s
 
 # Sort by Artist, Song for the tracks table
 df_deduped = df_deduped.sort_values(['Artist', 'Song'])
+
+# Replace Song column with normalized version
+df_deduped['Song'] = df_deduped['Song_Normalized']
 
 # Create a tracks table with deduplicated data
 df_deduped.to_sql('tracks', conn, if_exists='replace', index=False)

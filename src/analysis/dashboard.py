@@ -16,7 +16,7 @@ conn = sqlite3.connect(db_path)
 
 # Query artists and songs for KNN dropdowns
 df_songs = pd.read_sql("SELECT Song, Artist FROM tracks ORDER BY Song, Artist", conn)
-song_options = [{'label': f"{row['Song']} - {row['Artist']}", 'value': f"{row['Song']}|{row['Artist']}"} for _, row in df_songs.iterrows()]
+song_options = [{'label': f"{row['Song']} - {row['Artist']}", 'value': f"{row['Artist']}|{row['Song']}"} for _, row in df_songs.iterrows()]
 
 conn.close()
 
@@ -24,50 +24,7 @@ conn.close()
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.H1("Spotify Music Library Dashboard"),
-    
-    html.Hr(),
-    html.H2("K-Nearest Neighbors (KNN) Seed Songs"),
-    
-    html.Div([
-        html.Label("Select Song:"),
-        dcc.Dropdown(
-            id='knn-song-dropdown',
-            options=song_options,
-            value=None,
-            placeholder="Search for a song...",
-            searchable=True
-        ),
-    ], style={'marginBottom': '15px'}),
-    
-    html.Div([
-        html.Label("Year Range (years from seed song):"),
-        dcc.Input(
-            id='knn-year-range',
-            type='number',
-            value=10,
-            min=0,
-            step=5,
-            style={'width': '150px'}
-        ),
-    ], style={'marginBottom': '15px'}),
-    
-    html.Div([
-        html.Label("Number of Songs:"),
-        dcc.Input(
-            id='knn-num-songs',
-            type='number',
-            value=10,
-            min=1,
-            max=100,
-            step=1,
-            style={'width': '150px'}
-        ),
-    ], style={'marginBottom': '15px'}),
-    
-    html.Button('Find Similar Songs', id='knn-button', n_clicks=0, style={'marginBottom': '20px'}),
-    
-    html.Div(id='knn-results'),
+    html.H1("Spotify Playlist Builder"),
     
     html.Hr(),
     html.H2("Playlist Builder"),
@@ -80,18 +37,6 @@ app.layout = html.Div([
             value=None,
             placeholder="Search for a song...",
             searchable=True
-        ),
-    ], style={'marginBottom': '15px'}),
-    
-    html.Div([
-        html.Label("Year Range (years from seed song):"),
-        dcc.Input(
-            id='pb-year-range-input',
-            type='number',
-            value=10,
-            min=0,
-            step=5,
-            style={'width': '150px'}
         ),
     ], style={'marginBottom': '15px'}),
     
@@ -175,136 +120,24 @@ app.layout = html.Div([
     dcc.Store(id='pb-knn-results'),
     dcc.Store(id='pb-current-index'),
     dcc.Store(id='pb-accepted-songs'),
-    dcc.Store(id='pb-rejected-songs'),
-    dcc.Store(id='pb-year-range')
+    dcc.Store(id='pb-rejected-songs')
 ])
-
-@app.callback(
-    Output('knn-results', 'children'),
-    Input('knn-button', 'n_clicks'),
-    Input('knn-song-dropdown', 'value'),
-    Input('knn-year-range', 'value'),
-    Input('knn-num-songs', 'value')
-)
-def update_knn_results(n_clicks, selected_song_artist, year_range, num_songs):
-    if n_clicks == 0 or not selected_song_artist:
-        return html.Div("Select a song to find similar tracks.")
-    
-    try:
-        # Parse song and artist from selected value
-        selected_song, selected_artist = selected_song_artist.split('|')
-        # Load data for KNN
-        conn = sqlite3.connect(db_path)
-        df_metadata = pd.read_sql("""
-            SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, Popularity
-            FROM tracks
-            WHERE Album_Year IS NOT NULL
-        """, conn)
-        
-        df_features = pd.read_sql("""
-            SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db, Album_Year, Popularity
-            FROM tracks
-            WHERE Album_Year IS NOT NULL
-        """, conn)
-        conn.close()
-        
-        # Set index
-        df_metadata = df_metadata.set_index('Track_Key')
-        df_features = df_features.set_index('Track_Key')
-        
-        # Find seed song
-        seed_key = f"{selected_artist}|{selected_song}"
-        if seed_key not in df_metadata.index:
-            return html.Div(f"Song '{selected_song}' by '{selected_artist}' not found in database.")
-        
-        seed_row = df_metadata.loc[seed_key]
-        seed_year = seed_row['Album_Year']
-        
-        # Features for KNN
-        FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db']
-        
-        # Standardize features
-        scaler = StandardScaler()
-        df_features_scaled = scaler.fit_transform(df_features[FEATURES])
-        
-        # Apply valence weighting
-        valence_idx = FEATURES.index('Valence')
-        df_features_scaled[:, valence_idx] *= 1.5
-        
-        # Get seed features
-        seed_idx = df_features.index.get_loc(seed_key)
-        seed_features = df_features_scaled[seed_idx]
-        
-        # Calculate distances
-        from sklearn.metrics.pairwise import euclidean_distances
-        distances = euclidean_distances([seed_features], df_features_scaled)[0]
-        
-        # Add distances to metadata
-        df_metadata['distance'] = distances
-        
-        # Sort by distance
-        df_metadata = df_metadata.sort_values('distance')
-        
-        # Remove seed song
-        df_metadata = df_metadata[df_metadata.index != seed_key]
-        
-        # Apply year filter if specified
-        if year_range and year_range > 0:
-            df_metadata = df_metadata[
-                (df_metadata['Album_Year'] >= seed_year - year_range) & 
-                (df_metadata['Album_Year'] <= seed_year + year_range)
-            ]
-        
-        # Get top N results
-        df_results = df_metadata.head(num_songs)
-        
-        # Build results display
-        results_html = [
-            html.H3(f"{num_songs} songs most similar to '{selected_song}' by '{selected_artist}':"),
-            html.P(f"Seed song year: {seed_year}, Year filter: ±{year_range} years" if year_range else f"Seed song year: {seed_year}"),
-            html.Hr(),
-            html.Div([
-                html.P(f"0. {seed_row['Song']} — {seed_row['Artist']} ({seed_row['Album_Year']}) [ORIGINAL]", style={'fontWeight': 'bold'}),
-                html.P(f"   Distance: 0.0000"),
-                html.P(f"   Popularity: {seed_row['Popularity']}"),
-                html.P(f"   Features: BPM={df_features.loc[seed_key, 'BPM']}, Valence={df_features.loc[seed_key, 'Valence']}, Dance={df_features.loc[seed_key, 'Dance']}, Energy={df_features.loc[seed_key, 'Energy']}, Acoustic={df_features.loc[seed_key, 'Acoustic']}, Loud_Db={df_features.loc[seed_key, 'Loud_Db']}"),
-                html.Hr()
-            ])
-        ]
-        
-        for i, (idx, row) in enumerate(df_results.iterrows(), 1):
-            results_html.append(html.Div([
-                html.P(f"{i}. {row['Song']} — {row['Artist']} ({row['Album_Year']})", style={'fontWeight': 'bold'}),
-                html.P(f"   Distance: {row['distance']:.4f}"),
-                html.P(f"   Popularity: {row['Popularity']}"),
-                html.P(f"   Features: BPM={df_features.loc[idx, 'BPM']}, Valence={df_features.loc[idx, 'Valence']}, Dance={df_features.loc[idx, 'Dance']}, Energy={df_features.loc[idx, 'Energy']}, Acoustic={df_features.loc[idx, 'Acoustic']}, Loud_Db={df_features.loc[idx, 'Loud_Db']}"),
-                html.Hr()
-            ]))
-        
-        return html.Div(results_html)
-    
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return html.Div(f"Error: {str(e)}")
 
 @app.callback(
     Output('pb-knn-results', 'data'),
     Output('pb-current-index', 'data'),
     Output('pb-accepted-songs', 'data'),
     Output('pb-rejected-songs', 'data'),
-    Output('pb-year-range', 'data'),
     Input('pb-start-button', 'n_clicks'),
     State('pb-song-dropdown', 'value'),
-    State('pb-year-range-input', 'value'),
     State('pb-exclude-playlists', 'value')
 )
-def start_playlist_builder(n_clicks, selected_song_artist, year_range, exclude_playlists):
+def start_playlist_builder(n_clicks, selected_song_artist, exclude_playlists):
     if n_clicks == 0 or not selected_song_artist:
-        return None, 0, [], [], None
+        return None, 0, [], []
     
     try:
-        selected_song, selected_artist = selected_song_artist.split('|')
+        selected_artist, selected_song = selected_song_artist.split('|')
         
         conn = sqlite3.connect(db_path)
         
@@ -324,7 +157,7 @@ def start_playlist_builder(n_clicks, selected_song_artist, year_range, exclude_p
             excluded_track_keys = set(df_exclude['track_key'].tolist())
         
         df_metadata = pd.read_sql("""
-            SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, Popularity
+            SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, Popularity, Camelot
             FROM tracks
             WHERE Album_Year IS NOT NULL
         """, conn)
@@ -344,7 +177,7 @@ def start_playlist_builder(n_clicks, selected_song_artist, year_range, exclude_p
             return None, 0, [], []
         
         seed_row = df_metadata.loc[seed_key]
-        seed_year = seed_row['Album_Year']
+        seed_camelot = seed_row['Camelot']
         
         FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db']
         scaler = StandardScaler()
@@ -352,6 +185,10 @@ def start_playlist_builder(n_clicks, selected_song_artist, year_range, exclude_p
         
         valence_idx = FEATURES.index('Valence')
         df_features_scaled[:, valence_idx] *= 1.5
+        
+        # Apply BPM weighting (2x) to prioritize tempo similarity
+        bpm_idx = FEATURES.index('BPM')
+        df_features_scaled[:, bpm_idx] *= 2
         
         seed_idx = df_features.index.get_loc(seed_key)
         seed_features = df_features_scaled[seed_idx]
@@ -361,11 +198,22 @@ def start_playlist_builder(n_clicks, selected_song_artist, year_range, exclude_p
         df_metadata = df_metadata.sort_values('distance')
         df_metadata = df_metadata[df_metadata.index != seed_key]
         
-        if year_range and year_range > 0:
-            df_metadata = df_metadata[
-                (df_metadata['Album_Year'] >= seed_year - year_range) & 
-                (df_metadata['Album_Year'] <= seed_year + year_range)
-            ]
+        # Apply harmonic filter (always enabled)
+        valid_keys = None
+        if pd.notna(seed_camelot):
+            conn = sqlite3.connect(db_path)
+            try:
+                df_valid_keys = pd.read_sql(
+                    "SELECT DISTINCT target_key FROM mixing_rules WHERE starting_key = ?",
+                    conn,
+                    params=(seed_camelot,)
+                )
+                valid_keys = set(df_valid_keys['target_key'].tolist())
+                df_metadata = df_metadata[df_metadata['Camelot'].isin(valid_keys)]
+            finally:
+                conn.close()
+        else:
+            print("Warning: Seed song has no Camelot key, harmonic filter disabled")
         
         # Convert to dict for storage
         knn_results = df_metadata.to_dict('records')
@@ -374,12 +222,12 @@ def start_playlist_builder(n_clicks, selected_song_artist, year_range, exclude_p
         if excluded_track_keys:
             knn_results = [song for song in knn_results if song['Track_Key'] not in excluded_track_keys]
         
-        return knn_results, 0, [], [], year_range
+        return knn_results, 0, [], []
     
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return None, 0, [], [], None
+        return None, 0, [], []
 
 @app.callback(
     Output('pb-playlist-name', 'value'),
@@ -388,7 +236,7 @@ def start_playlist_builder(n_clicks, selected_song_artist, year_range, exclude_p
 def update_playlist_name(selected_song_artist):
     if not selected_song_artist:
         return ''
-    seed_song, seed_artist = selected_song_artist.split('|')
+    seed_artist, seed_song = selected_song_artist.split('|')
     # Generate default playlist name: "Snap Out Of It"
     return seed_song
 
@@ -400,11 +248,10 @@ def update_playlist_name(selected_song_artist):
     Input('pb-current-index', 'data'),
     Input('pb-accepted-songs', 'data'),
     Input('pb-rejected-songs', 'data'),
-    Input('pb-target-size', 'value'),
-    State('pb-song-dropdown', 'value')
+    Input('pb-target-size', 'value')
 )
-def update_current_song(knn_results, current_index, accepted_songs, rejected_songs, target_size, seed_song_artist):
-    if not knn_results or not seed_song_artist:
+def update_current_song(knn_results, current_index, accepted_songs, rejected_songs, target_size):
+    if not knn_results:
         return html.Div("Select a seed song and click 'Start Playlist Builder' to begin."), True, True
     
     current_count = 1 + len(accepted_songs) if accepted_songs else 1
@@ -417,7 +264,7 @@ def update_current_song(knn_results, current_index, accepted_songs, rejected_son
     current_song = knn_results[current_index]
     
     return html.Div([
-        html.H3(f"Song {current_index + 1}:"),
+        html.H3(f"Song {current_index + 2}:"),
         html.P(f"{current_song['Song']} — {current_song['Artist']} ({current_song['Album_Year']})", style={'fontSize': '20px', 'fontWeight': 'bold'}),
         html.P(f"Distance: {current_song['distance']:.4f}"),
         html.P(f"Popularity: {current_song['Popularity']}")
@@ -489,7 +336,7 @@ def update_progress_playlist(accepted_songs, target_size, seed_song_artist):
     
     # Add seed song
     if seed_song_artist:
-        seed_song, seed_artist = seed_song_artist.split('|')
+        seed_artist, seed_song = seed_song_artist.split('|')
         playlist_html.append(html.Div([
             html.P(f"1. {seed_song} — {seed_artist} [SEED]", style={'fontWeight': 'bold', 'color': '#4CAF50'}),
             html.Hr()
@@ -511,18 +358,17 @@ def update_progress_playlist(accepted_songs, target_size, seed_song_artist):
     State('pb-accepted-songs', 'data'),
     State('pb-song-dropdown', 'value'),
     State('pb-playlist-name', 'value'),
-    State('pb-year-range', 'data'),
     State('pb-target-size', 'value'),
     prevent_initial_call=True
 )
-def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_name, year_range, target_size):
+def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_name, target_size):
     if not accepted_songs or not seed_song_artist or not playlist_name:
         return html.Div("Please enter a playlist name and complete the playlist first.", style={'color': 'red'})
     
     try:
         from datetime import datetime
         
-        seed_song, seed_artist = seed_song_artist.split('|')
+        seed_artist, seed_song = seed_song_artist.split('|')
         
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
@@ -530,9 +376,9 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         # Insert playlist metadata
         created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         cursor.execute('''
-            INSERT INTO custom_playlists (playlist_name, seed_song, seed_artist, year_range, target_size, created_date)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ''', (playlist_name, seed_song, seed_artist, year_range, target_size, created_date))
+            INSERT INTO custom_playlists (playlist_name, seed_song, seed_artist, target_size, created_date)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (playlist_name, seed_song, seed_artist, target_size, created_date))
         
         playlist_id = cursor.lastrowid
         
@@ -682,7 +528,7 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     import io
     import csv
     
-    seed_song, seed_artist = seed_song_artist.split('|')
+    seed_artist, seed_song = seed_song_artist.split('|')
     
     # Generate filename: snap_out_of_it.csv
     seed_song_filename = seed_song.lower().replace(' ', '_').replace('?', '').replace('!', '').replace('.', '')

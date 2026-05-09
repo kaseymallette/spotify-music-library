@@ -42,7 +42,7 @@ print()
 # Get top 5 songs by playlist count
 print("Get top 5 songs by playlist count:")
 cursor = conn.execute("""
-    SELECT Track_Key, Track_ID, playlist_count
+    SELECT Track_Key, playlist_count
     FROM song_playlist_count
     ORDER BY playlist_count DESC
     LIMIT 5;
@@ -53,7 +53,7 @@ for row in results:
     parts = row[0].split('|')
     artist = parts[0] if len(parts) > 0 else 'Unknown'
     song = parts[1] if len(parts) > 1 else 'Unknown'
-    print(f"{artist} - {song}: {row[2]} playlists")
+    print(f"{artist} - {song}: {row[1]} playlists")
 print()
 
 # Get top 5 artists by playlist count

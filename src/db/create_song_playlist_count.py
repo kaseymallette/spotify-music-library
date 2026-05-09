@@ -9,14 +9,14 @@ db_path = os.path.join(root_dir, 'spotify_music_library.db')
 # Connect to the database
 conn = sqlite3.connect(db_path)
 
-# Query to count how many playlists each song (Track_Key) appears in and get Track_ID
+# Query to count how many playlists each song (Track_Key) appears in
+# Query by joining playlists with tracks to get the correct Track_Keys
 df = pd.read_sql("""
-    SELECT p.Track_Key,
-           t.Track_ID,
+    SELECT t.Track_Key,
            COUNT(DISTINCT p.playlist_name) as playlist_count
     FROM playlists p
     JOIN tracks t ON p.Track_Key = t.Track_Key
-    GROUP BY p.Track_Key, t.Track_ID
+    GROUP BY t.Track_Key
     ORDER BY playlist_count DESC
 """, conn)
 

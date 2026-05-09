@@ -15,7 +15,7 @@ conn = sqlite3.connect(db_path)
 df_artist_playlist_raw = pd.read_sql("SELECT Artist, playlist_count FROM artist_playlist_count", conn)
 
 # Query raw song playlist count
-df_song_playlist_raw = pd.read_sql("SELECT Track_ID, playlist_count FROM song_playlist_count", conn)
+df_song_playlist_raw = pd.read_sql("SELECT Track_Key, playlist_count FROM song_playlist_count", conn)
 
 # Query unique artists per playlist
 df_artists_per_playlist_raw = pd.read_sql("""
