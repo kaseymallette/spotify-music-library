@@ -99,22 +99,22 @@ Running create_playlists.py...
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9633
+Row count: 9637
 ✓ create_playlists.py completed successfully
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 5804
-Unique Track_Keys: 5271
+Unique Track_IDs: 5808
+Unique Track_Keys: 5273
 Unique Artists: 2057
-Removed: 533 duplicate tracks (same song, different Track_ID)
+Removed: 535 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5271
-Songs in multiple playlists: 2282
+Total unique songs: 5273
+Songs in multiple playlists: 2285
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
@@ -157,7 +157,7 @@ python src/analysis/sample_queries.py
 2057
 
 **Get number of unique songs:**
-5271
+5273
 
 **Get top five artists with song count:**
 ```
@@ -170,11 +170,12 @@ Daughter|58
 
 **Get top 5 songs by playlist count:**
 ```
+Get top 5 songs by playlist count:
 Kenny Loggins - Danger Zone - From  Top Gun  Original Soundtrack: 11 playlists
 The Fray - Singing Low: 10 playlists
 50 Cent,Justin Timberlake,Timbaland - Ayo Technology: 8 playlists
-Arctic Monkeys - Do I Wanna Know?: 8 playlists
-Blue Foundation - Eyes on Fire: 8 playlists
+Matchbox Twenty - Bright Lights: 8 playlists
+Flo Rida,T-Pain - Low: 8 playlists
 ```
 
 **Get top 5 artists by playlist count:**

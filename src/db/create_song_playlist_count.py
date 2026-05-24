@@ -9,16 +9,43 @@ db_path = os.path.join(root_dir, 'spotify_music_library.db')
 # Connect to the database
 conn = sqlite3.connect(db_path)
 
-# Query to count how many playlists each song (Track_Key) appears in
-# Query by joining playlists with tracks to get the correct Track_Keys
-df = pd.read_sql("""
-    SELECT t.Track_Key,
-           COUNT(DISTINCT p.playlist_name) as playlist_count
-    FROM playlists p
-    JOIN tracks t ON p.Track_Key = t.Track_Key
-    GROUP BY t.Track_Key
-    ORDER BY playlist_count DESC
-""", conn)
+# Load playlists and tracks
+df_playlists = pd.read_sql(
+    "SELECT Artist, Song, playlist_name FROM playlists",
+    conn
+)
+df_tracks = pd.read_sql(
+    "SELECT DISTINCT Track_Key FROM tracks",
+    conn
+)
+
+# Normalize playlist song names the same way as create_tracks.py
+df_playlists['Song_Normalized'] = df_playlists['Song'].str.replace(r'\s*\(feat\.\s*[^)]*\)', '', regex=True, case=False)
+df_playlists['Song_Normalized'] = df_playlists['Song_Normalized'].str.replace(r'\s*\(with\s*[^)]*\)', '', regex=True, case=False)
+df_playlists['Song_Normalized'] = df_playlists['Song_Normalized'].str.replace(r'\s*\(ft\.\s*[^)]*\)', '', regex=True, case=False)
+df_playlists['Song_Normalized'] = df_playlists['Song_Normalized'].str.replace(r'[?!\.]+$', '', regex=True)
+df_playlists['Song_Normalized'] = df_playlists['Song_Normalized'].str.replace(r'\s*-\s*Edit\s*$', '', regex=True, case=False)
+df_playlists['Song_Normalized'] = df_playlists['Song_Normalized'].str.strip()
+df_playlists['Track_Key_Normalized'] = df_playlists['Artist'] + '|' + df_playlists['Song_Normalized']
+
+# Count playlist appearances by normalized Track_Key
+df_counts = (
+    df_playlists
+    .groupby('Track_Key_Normalized')['playlist_name']
+    .nunique()
+    .reset_index(name='playlist_count')
+)
+
+# Ensure output includes every unique track from tracks table
+df = df_tracks.merge(
+    df_counts,
+    left_on='Track_Key',
+    right_on='Track_Key_Normalized',
+    how='left'
+)
+df = df.drop(columns=['Track_Key_Normalized'])
+df['playlist_count'] = df['playlist_count'].fillna(0).astype(int)
+df = df.sort_values('playlist_count', ascending=False)
 
 # Create the song_playlist_count table
 df.to_sql('song_playlist_count', conn, if_exists='replace', index=False)
