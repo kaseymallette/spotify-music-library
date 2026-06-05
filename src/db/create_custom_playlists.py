@@ -1,6 +1,5 @@
 import sqlite3
 import os
-from datetime import datetime
 
 # Get the root directory (two levels up from src/db/)
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -40,11 +39,10 @@ cursor.execute('''
         valence REAL,
         dance REAL,
         energy REAL,
-        acoustic REAL,
-        loud_db REAL,
-        camelot TEXT,
+        key TEXT,
         distance REAL,
-        popularity INTEGER,
+        mood_score REAL,
+        key_step INTEGER,
         FOREIGN KEY (playlist_id) REFERENCES custom_playlists(id) ON DELETE CASCADE
     )
 ''')

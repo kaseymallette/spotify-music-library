@@ -10,8 +10,11 @@ data_folder = os.path.join(root_dir, 'data', 'playlists')
 
 conn = sqlite3.connect(db_path)
 
+# Build one unified dataframe so mixed CSV schemas don't break inserts
+all_playlists = []
+
 # Loop through all files in the data folder
-for filename in os.listdir(data_folder):
+for filename in sorted(os.listdir(data_folder)):
     if filename.endswith('.csv'):
         file_path = os.path.join(data_folder, filename)
         
@@ -36,9 +39,16 @@ for filename in os.listdir(data_folder):
         # Add playlist metadata as columns
         df['playlist_number'] = playlist_number
         df['playlist_name'] = playlist_name
-        
-        # Append the data to the playlists table
-        df.to_sql('playlists', conn, if_exists='append', index=False)
+
+        all_playlists.append(df)
+
+if not all_playlists:
+    raise ValueError(f"No playlist CSV files found in {data_folder}")
+
+df_all = pd.concat(all_playlists, ignore_index=True, sort=False)
+
+# Create/replace the playlists table in one write with unified columns
+df_all.to_sql('playlists', conn, if_exists='replace', index=False)
 
 # Display database statistics
 df_stats = pd.read_sql('SELECT COUNT(DISTINCT playlist_name) as playlist_count, COUNT(*) as total_rows FROM playlists', conn)

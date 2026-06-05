@@ -99,30 +99,30 @@ Running create_playlists.py...
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9637
+Row count: 9655
 ✓ create_playlists.py completed successfully
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 5808
-Unique Track_Keys: 5273
-Unique Artists: 2057
+Unique Track_IDs: 5821
+Unique Track_Keys: 5286
+Unique Artists: 2063
 Removed: 535 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5273
-Songs in multiple playlists: 2285
+Total unique songs: 5286
+Songs in multiple playlists: 2288
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
 
 --- Create artist playlist count table ---
 Running create_artist_playlist_count.py...
-Total unique artists: 2057
-Artists in multiple playlists: 1074
+Total unique artists: 2063
+Artists in multiple playlists: 1075
 Maximum playlists per artist: 19
 Artist playlist count table created successfully.
 ✓ create_artist_playlist_count.py completed successfully
@@ -154,10 +154,10 @@ python src/analysis/sample_queries.py
 50
 
 **Get number of unique artists:**
-2057
+2063
 
 **Get number of unique songs:**
-5273
+5286
 
 **Get top five artists with song count:**
 ```
@@ -173,9 +173,9 @@ Daughter|58
 Get top 5 songs by playlist count:
 Kenny Loggins - Danger Zone - From  Top Gun  Original Soundtrack: 11 playlists
 The Fray - Singing Low: 10 playlists
-50 Cent,Justin Timberlake,Timbaland - Ayo Technology: 8 playlists
-Matchbox Twenty - Bright Lights: 8 playlists
+Shania Twain - That Don't Impress Me Much: 8 playlists
 Flo Rida,T-Pain - Low: 8 playlists
+Britney Spears - Breathe on Me: 8 playlists
 ```
 
 **Get top 5 artists by playlist count:**
@@ -221,7 +221,7 @@ The Fray: 16 playlists
 
 The `src/analysis/visualize_distributions.py` script generates charts to analyze the library's composition and identify patterns:
 
-- **Artist Distribution:** 47.8% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
+- **Artist Distribution:** 47.9% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
 - **Track Distribution:** 56.7% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
 - **Playlist Composition:**
   - Artist density: 42% of playlists contain fewer than 50 unique artists, while 6% of playlists contain more than 200 unique artists.
@@ -241,11 +241,9 @@ python src/analysis/visualize_distributions.py
 
 The `src/analysis/feature_analysis.py` script analyzes audio features from the tracks table and generates visualizations:
 
-- **Feature Statistics**: Displays mean, standard deviation, min, max, and quartiles for audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness, Album Year, Popularity).
+- **Feature Statistics**: Displays mean, standard deviation, min, max, and quartiles for the selected features (BPM, Valence, Dance, Energy).
 - **Feature Distributions**: Plots histogram + KDE for each feature showing the distribution and summary statistics.
 - **Correlation Matrix**: Shows the correlation between audio features as a heatmap to identify relationships.
-
-Note: Speechiness, Liveness, and Time Signature were excluded due to low variance and limited discriminative value across the library.
 
 **Run script:**
 ```bash
@@ -257,21 +255,15 @@ python src/analysis/feature_analysis.py
 
 ![Correlation Matrix](images/correlation_matrix.png)
 
-**Feature Insights:**
-
-- **Energy vs. Loudness**: Despite their 0.74 correlation, both features are retained. Energy is perceptual; Loudness (dB) is physical amplitude. They diverge on fast acoustic passages (high energy, low loudness) and sustained drones (low energy, high loudness), and keeping both intentionally up-weights intensity — a primary axis of separation in the library.
-- **Acousticness**: Acousticness correlates negatively with both Energy (-0.66) and Loudness (-0.55), positioning it as the inverse pole of the intensity axis rather than an independent dimension. It's retained because it captures the acoustic/non-acoustic distinction more directly than either intensity feature alone, and because its right-skewed distribution (median 8, mean 19.7) means a meaningful subset of the library sits at the high-acoustic end where Energy and Loudness lose resolution.
-- **Scaling**: All features are standardized via StandardScaler before clustering to prevent the dB scale from dominating the distance metric.
-
 **Clustering Methodology:**
 
 The script performs K-means clustering on audio features with the following approach:
 
-- **Valence Weighting**: Valence (mood) is weighted 1.5x before clustering to prioritize mood separation. This prevents mixing sad songs with happy songs within the same cluster, which would kill the mood in playlists.
+- **Valence Weighting**: Valence (mood) is weighted 2.5x before clustering to prioritize mood separation. This prevents mixing sad songs with happy songs within the same cluster, which would kill the mood in playlists.
 - **Feature Standardization**: All features are standardized using StandardScaler to ensure equal contribution to the distance metric.
 - **Elbow Method**: The optimal number of clusters is determined using the elbow method, which plots inertia (within-cluster sum of squares) against the number of clusters. The elbow point is detected by finding the point with maximum distance from the line connecting the first and last points on the curve.
-- **Cluster Selection**: The algorithm tests cluster counts from 3 to 10. The elbow method detected 5 clusters as the optimal number.
-- **Visualization**: Clusters are visualized using feature pairs (Valence vs Energy, Valence vs Dance, Valence vs Acoustic, Valence vs BPM) to show how songs group by mood and other characteristics.
+- **Cluster Selection**: The algorithm tests cluster counts from 3 to 10. The elbow method detected 6 clusters as the optimal number.
+- **Visualization**: Clusters are visualized using feature pairs (Valence vs Energy, Valence vs Dance, Dance vs Energy, Valence vs BPM) to show how songs group by mood and rhythm/tempo characteristics.
 
 **Output:**
 ![Elbow Method](images/elbow_method.png)
@@ -284,30 +276,34 @@ The `src/analysis/knn_seed_songs.py` script finds similar songs to a given seed 
 
 **Methodology:**
 
-- **Similarity Metric**: Uses Euclidean distance on standardized audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
-- **Valence Weighting**: Valence (mood) is weighted 1.5x in the distance calculation to prioritize mood similarity
-- **BPM Weighting**: BPM is weighted 2x in the distance calculation to prioritize tempo similarity
-- **Deduplication**: Songs are deduplicated by normalizing song names (removing "(feat. ...)", "(with ...)", "(ft. ...)" patterns and trailing punctuation) and keeping the earliest release
+- **Core Features**: Uses `BPM`, `Valence`, `Dance`, and `Energy` from the `tracks` table.
+- **Mood Score**: Computes `mood_score = Valence + Dance + Energy` for each song.
+- **Harmonic Key Step**: Reads `data/harmonic_mixing_rules.csv` and converts Camelot compatibility into grouped numeric steps:
+  - Group 1: `Perfect Mix`, `-1 Mix`, `+1 Mix`
+  - Group 2: `Energy Boost`, `Scale Change`
+  - Group 3: `Diagonal Mix`
+  - Group 4: `Jaw's Mix`
+  - Group 5: `Mood Shifter`
+- **Distance Formula**: Standardizes and computes Euclidean distance on three variables: `BPM`, `mood_score`, and `key_step`.
 
 **Run script:**
 ```bash
-python src/analysis/knn_seed_songs.py --song "Song Name" --artist "Artist Name" [--num-songs N] [--harmonic-filter]
+python src/analysis/knn_seed_songs.py --song "Song Name" --artist "Artist Name" [--num-songs N]
 ```
 
 **Arguments:**
 - `--song`: Song name (required if not using default)
 - `--artist`: Artist name (required if not using default)
 - `--num-songs`: Number of similar songs to find (optional, default: 10)
-- `--harmonic-filter`: Filter results to only include harmonically compatible keys based on Camelot wheel (optional)
 
-**Features:**
-- **BPM Weighting**: BPM is weighted 2x in the distance calculation to prioritize tempo similarity
-- **Valence Weighting**: Valence is weighted 1.5x to prioritize mood separation
-- **Harmonic Filtering**: When enabled, filters results to only include songs with Camelot keys that are harmonically compatible with the seed song (Perfect Mix, -1 Mix, +1 Mix, Energy Boost, Scale Change, Diagonal Mix, Jaw's Mix, Mood Shifter)
+**Output fields:**
+- `Distance` (overall KNN distance)
+- `Features` (`BPM`, `Valence`, `Dance`, `Energy`, `Key`)
+- `Mood Score (Valence+Dance+Energy)`
 
 **Sample Command:**
 ```bash
-python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic Monkeys" --harmonic-filter --num-songs 10
+python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic Monkeys" --num-songs 10
 ```
 
 **Sample Output:**
@@ -316,58 +312,58 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
 
 0. Snap Out Of It — Arctic Monkeys (2013) [ORIGINAL]
    Distance: 0.0000
-   Popularity: 81
-   Features: BPM=130, Valence=87, Dance=73, Energy=64, Acoustic=25, Loud_Db=-6, Key=4A
+   Features: BPM=130, Mood Score=224.0, Key Step=1
+   Core Features: BPM=130, Valence=87, Energy=64, Dance=73, Key=4A
 
-1. Sweet Dreams (Are Made of This) - 2005 Remaster — Eurythmics,Annie Lennox,Dave Stewart (1983)
-   Distance: 0.6485
-   Popularity: 86
-   Features: BPM=125, Valence=88, Dance=69, Energy=71, Acoustic=23, Loud_Db=-7, Key=5A
+1. You're Not in on the Joke — Cobra Starship (2009)
+   Distance: 0.0000
+   Features: BPM=130, Mood Score=224.0, Key Step=1
+   Core Features: BPM=130, Valence=85, Energy=77, Dance=62, Key=5A
 
-2. Floor It — Bear Hands (2024)
-   Distance: 0.6874
-   Popularity: 0
-   Features: BPM=132, Valence=79, Dance=76, Energy=72, Acoustic=26, Loud_Db=-6, Key=4B
+2. Don't Phunk With My Heart — Black Eyed Peas (2005)
+   Distance: 0.0419
+   Features: BPM=131, Mood Score=223.0, Key Step=1
+   Core Features: BPM=131, Valence=61, Energy=93, Dance=69, Key=4A
 
-3. Shut Your Eyes — Snow Patrol (2006)
-   Distance: 0.7947
-   Popularity: 0
-   Features: BPM=125, Valence=84, Dance=69, Energy=74, Acoustic=15, Loud_Db=-6, Key=3B
+3. It's Not Right But It's Okay — Mr. Belt & Wezol (2024)
+   Distance: 0.0704
+   Features: BPM=128, Mood Score=224.0, Key Step=1
+   Core Features: BPM=128, Valence=62, Energy=86, Dance=76, Key=4A
 
-4. Pumped Up Kicks — Foster The People (2011)
-   Distance: 0.8506
-   Popularity: 87
-   Features: BPM=128, Valence=97, Dance=73, Energy=71, Acoustic=14, Loud_Db=-6, Key=4A
+4. Handshake — Two Door Cinema Club (2012)
+   Distance: 0.0768
+   Features: BPM=131, Mood Score=221.0, Key Step=1
+   Core Features: BPM=131, Valence=82, Energy=83, Dance=56, Key=5A
 
-5. Where the Party At — Jagged Edge,Nelly (2001)
-   Distance: 0.8766
-   Popularity: 66
-   Features: BPM=129, Valence=86, Dance=60, Energy=66, Acoustic=31, Loud_Db=-6, Key=4A
+5. Kacey Talk — YoungBoy Never Broke Again (2020)
+   Distance: 0.1150
+   Features: BPM=127, Mood Score=226.0, Key Step=1
+   Core Features: BPM=127, Valence=77, Energy=61, Dance=88, Key=3A
 
-6. West Coast — OneRepublic (2024)
-   Distance: 0.9189
-   Popularity: 55
-   Features: BPM=134, Valence=90, Dance=69, Energy=70, Acoustic=36, Loud_Db=-8, Key=11A
+6. Fool's Gold — Aaron Carter (2018)
+   Distance: 0.1364
+   Features: BPM=130, Mood Score=218.0, Key Step=1
+   Core Features: BPM=130, Valence=79, Energy=70, Dance=69, Key=4A
 
-7. Whose Bed Have Your Boots Been Under — Shania Twain (2022)
-   Distance: 0.9858
-   Popularity: 21
-   Features: BPM=132, Valence=80, Dance=71, Energy=74, Acoustic=9, Loud_Db=-5, Key=7B
+7. In the Ayer — Flo Rida,will.i.am (2008)
+   Distance: 0.1426
+   Features: BPM=126, Mood Score=223.0, Key Step=1
+   Core Features: BPM=126, Valence=65, Energy=75, Dance=83, Key=4A
 
-8. I Know I Know I Know — Tegan and Sara (2004)
-   Distance: 0.9958
-   Popularity: 41
-   Features: BPM=117, Valence=85, Dance=72, Energy=66, Acoustic=16, Loud_Db=-6, Key=4B
+8. Kiss — Presley Regier (2025)
+   Distance: 0.1760
+   Features: BPM=125, Mood Score=224.0, Key Step=1
+   Core Features: BPM=125, Valence=76, Energy=57, Dance=91, Key=4A
 
-9. Fool's Gold — Aaron Carter (2018)
-   Distance: 1.0580
-   Popularity: 33
-   Features: BPM=130, Valence=79, Dance=69, Energy=70, Acoustic=5, Loud_Db=-5, Key=4A
+9. Beautiful — Akon,Colby O'Donis,Kardinal Offishall (2008)
+   Distance: 0.1819
+   Features: BPM=130, Mood Score=232.0, Key Step=1
+   Core Features: BPM=130, Valence=63, Energy=95, Dance=74, Key=5A
 
-10. can't get over you — BLACKWELL (2024)
-   Distance: 1.0654
-   Popularity: 43
-   Features: BPM=125, Valence=89, Dance=76, Energy=64, Acoustic=0, Loud_Db=-6, Key=11A
+10. I Like It — Enrique Iglesias,Pitbull (2010)
+   Distance: 0.1853
+   Features: BPM=129, Mood Score=232.0, Key Step=1
+   Core Features: BPM=129, Valence=73, Energy=94, Dance=65, Key=3A
 ```
 
 **Note:** The album year displayed reflects the release date of the album in the database, which may not always be the song's original release year. For example, "Whose Bed Have Your Boots Been Under" by Shania Twain appears as 2022 from the album "Not Just A Girl (The Highlights)" (a re-release compilation), but the song was originally released in 1995. This can happen when artists re-release songs on compilation albums or re-issues.
@@ -379,13 +375,18 @@ The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashbo
 - **Song Search**: Searchable dropdown with ~5,300 songs sorted by title (format: "Song - Artist")
 - **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
 - **Number of Songs**: Configure how many similar songs to return (default: 10)
-- **Results Display**: Shows the seed song and similar songs with distance, popularity, and audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
+- **Results Display**: Shows the seed song and similar songs with distance, `Features` (`BPM`, `Mood Score`, `Key Step`) and `Core Features` (`BPM`, `Valence`, `Energy`, `Dance`, `Key`)
 
 **Methodology:**
 
-- Uses Euclidean distance on standardized audio features (BPM, Valence, Dance, Energy, Acoustic, Loudness)
-- Valence (mood) weighted 1.5x in the distance calculation to prioritize mood similarity
-- Songs are deduplicated by normalizing song names (removing "(feat. ...)", "(with ...)", "(ft. ...)" patterns and trailing punctuation) and keeping the earliest release
+- Uses Euclidean distance on standardized `BPM`, `mood_score`, and `key_step`
+- Computes `mood_score = Valence + Dance + Energy`
+- Computes grouped `key_step` from `data/harmonic_mixing_rules.csv`:
+  - Group 1: `Perfect Mix`, `-1 Mix`, `+1 Mix`
+  - Group 2: `Energy Boost`, `Scale Change`
+  - Group 3: `Diagonal Mix`
+  - Group 4: `Jaw's Mix`
+  - Group 5: `Mood Shifter`
 
 **Run script:**
 ```bash
@@ -406,7 +407,7 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 - **Accept/Reject**: Accept songs to add to your playlist, or reject to skip
 - **Progress Tracking**: Real-time progress display (e.g., "1/50" when seed selected, "25/50" after accepting 24 songs)
 - **Save to Database**: Save completed playlists to the database with playlist name, seed song, and timestamp
-- **Export**: Export your completed playlist to CSV with Track_Number, Track_Key, Track_ID, Song, Artist, Album, Year, audio features (BPM, Valence, Dance, Energy, Acoustic, Loud_Db), Distance, and Popularity
+- **Export**: Export your completed playlist to CSV with Track_Number, Track_Key, Track_ID, Song, Artist, Album, Year, `Distance`, `BPM`, `Valence`, `Energy`, `Dance`, `Key`, `Mood_Score`, and `Key_Step`
 - **View Saved Playlists**: Dropdown to select and view songs from previously saved playlists
 
 **Methodology:**

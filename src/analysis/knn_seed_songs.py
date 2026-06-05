@@ -14,13 +14,43 @@ from adjustText import adjust_text
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 db_path = os.path.join(root_dir, 'spotify_music_library.db')
 images_dir = os.path.join(root_dir, 'images')
+harmonic_rules_path = os.path.join(root_dir, 'data', 'harmonic_mixing_rules.csv')
 os.makedirs(images_dir, exist_ok=True)
 
-# Features for clustering
-FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Album_Year', 'Popularity']
+# Features used for clustering and KNN similarity
+FEATURES = ['BPM', 'Valence', 'Dance', 'Energy']
 
-# Audio features for KNN similarity (exclude year and popularity)
-AUDIO_FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db']
+# Audio features for KNN similarity
+AUDIO_FEATURES = ['BPM', 'Valence', 'Dance', 'Energy']
+
+# Harmonic rule columns in priority order for step scoring
+HARMONIC_RULE_COLUMNS = [
+    'Perfect Mix',
+    '-1 Mix',
+    '+1 Mix',
+    'Energy Boost',
+    'Scale Change',
+    'Diagonal Mix',
+    "Jaw's Mix",
+    'Mood Shifter'
+]
+
+# Grouped harmonic key steps:
+# Group 1: Perfect/-1/+1
+# Group 2: Energy Boost/Scale Change
+# Group 3: Diagonal Mix
+# Group 4: Jaw's Mix
+# Group 5: Mood Shifter
+HARMONIC_RULE_GROUPS = {
+    'Perfect Mix': 1,
+    '-1 Mix': 1,
+    '+1 Mix': 1,
+    'Energy Boost': 2,
+    'Scale Change': 2,
+    'Diagonal Mix': 3,
+    "Jaw's Mix": 4,
+    'Mood Shifter': 5,
+}
 
 # Connect to the database
 conn = sqlite3.connect(db_path)
@@ -33,7 +63,7 @@ df_metadata = pd.read_sql("""
 """, conn)
 
 df_features = pd.read_sql("""
-    SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db, Album_Year, Popularity, Camelot
+    SELECT Track_Key, BPM, Valence, Dance, Energy
     FROM tracks
     WHERE Album_Year IS NOT NULL
 """, conn)
@@ -51,6 +81,9 @@ conn.close()
 
 print(f"Total tracks: {len(df_metadata)}")
 print(f"Features shape: {df_features.shape}")
+
+# Load harmonic rules once for key-step lookup
+df_harmonic_rules = pd.read_csv(harmonic_rules_path)
 
 # === HELPER FUNCTIONS: SEED SONGS ===
 
@@ -116,7 +149,51 @@ def get_song_features(df_playlist_metadata, df_playlist_features, song_name, art
         'index': idx
     }
 
-def find_k_nearest_neighbors(df_playlist_metadata, df_playlist_features, seed_features, k=10):
+def parse_camelot(camelot):
+    """Convert Camelot key string (e.g., '4A') into (number, mode_int)."""
+    if pd.isna(camelot):
+        return None, None
+
+    key = str(camelot).strip().upper()
+    if len(key) < 2:
+        return None, None
+
+    mode = key[-1]
+    number_part = key[:-1]
+
+    if mode not in {'A', 'B'}:
+        return None, None
+
+    try:
+        number = int(number_part)
+    except ValueError:
+        return None, None
+
+    if number < 1 or number > 12:
+        return None, None
+
+    mode_int = 0 if mode == 'A' else 1
+    return number, mode_int
+
+def build_key_step_lookup(seed_camelot):
+    """Map each target key to a grouped step based on harmonic CSV columns."""
+    if pd.isna(seed_camelot):
+        return {}
+
+    row = df_harmonic_rules[df_harmonic_rules['Starting Key'] == seed_camelot]
+    if row.empty:
+        return {}
+
+    row = row.iloc[0]
+    step_lookup = {}
+    for column in HARMONIC_RULE_COLUMNS:
+        target_key = row[column]
+        if pd.notna(target_key):
+            step_lookup[str(target_key)] = HARMONIC_RULE_GROUPS[column]
+
+    return step_lookup
+
+def find_k_nearest_neighbors(df_playlist_metadata, df_playlist_features, seed_features, seed_track_key=None, k=10):
     """
     Find k nearest neighbors to a seed song using Euclidean distance.
     
@@ -127,48 +204,75 @@ def find_k_nearest_neighbors(df_playlist_metadata, df_playlist_features, seed_fe
     Returns:
     - DataFrame with k nearest neighbors
     """
-    # Use only audio features for similarity
-    df_audio = df_playlist_features[AUDIO_FEATURES]
-    seed_audio = [seed_features[i] for i, f in enumerate(FEATURES) if f in AUDIO_FEATURES]
-    
-    # Scale features
+    # Build cumulative mood score from raw Valence + Dance + Energy
+    mood_features = ['Valence', 'Dance', 'Energy']
+    df_mood_scores = df_playlist_features[mood_features].sum(axis=1)
+    seed_feature_map = {f: seed_features[i] for i, f in enumerate(FEATURES)}
+    seed_mood_score = float(sum(seed_feature_map[f] for f in mood_features))
+
+    if seed_track_key is None or seed_track_key not in df_playlist_metadata.index:
+        seed_track_key = df_playlist_features.index[0]
+
+    seed_camelot = df_playlist_metadata.loc[seed_track_key, 'Camelot']
+    key_step_lookup = build_key_step_lookup(seed_camelot)
+    default_key_step = len(HARMONIC_RULE_COLUMNS) + 1
+    df_key_steps = df_playlist_metadata['Camelot'].apply(lambda k: key_step_lookup.get(str(k), default_key_step))
+    seed_key_step = key_step_lookup.get(str(seed_camelot), 1)
+
+    # Distance on three variables: BPM, mood_score, and key step
+    df_distance_features = pd.DataFrame({
+        'BPM': df_playlist_features['BPM'],
+        'Mood_Score': df_mood_scores,
+        'Key_Step': df_key_steps
+    })
+
+    # Equal-weight Euclidean distance on standardized features
     scaler = StandardScaler()
-    df_audio_scaled = scaler.fit_transform(df_audio)
-    
-    # Apply valence weighting (1.5x) to prioritize mood separation
-    valence_idx = AUDIO_FEATURES.index('Valence')
-    df_audio_scaled[:, valence_idx] *= 1.5
-    seed_audio_scaled = scaler.transform([seed_audio])[0]
-    seed_audio_scaled[valence_idx] *= 1.5
-    
-    # Apply BPM weighting (2x) to prioritize tempo similarity
-    bpm_idx = AUDIO_FEATURES.index('BPM')
-    df_audio_scaled[:, bpm_idx] *= 2
-    seed_audio_scaled[bpm_idx] *= 2
-    
-    # Calculate distances
+    df_distance_scaled = scaler.fit_transform(df_distance_features)
+
+    seed_distance_df = pd.DataFrame([
+        {
+            'BPM': seed_feature_map['BPM'],
+            'Mood_Score': seed_mood_score,
+            'Key_Step': seed_key_step
+        }
+    ])
+    seed_distance_scaled = scaler.transform(seed_distance_df)[0]
+
     distances = []
-    for i, row in enumerate(df_audio_scaled):
-        dist = np.linalg.norm(row - seed_audio_scaled)
-        distances.append((i, dist))
+    for i, track_key in enumerate(df_playlist_features.index):
+        euclidean_distance = float(np.linalg.norm(df_distance_scaled[i] - seed_distance_scaled))
+        mood_distance = abs(df_mood_scores.loc[track_key] - seed_mood_score)
+        key_step_distance = abs(df_key_steps.loc[track_key] - seed_key_step)
+        mood_score = float(df_mood_scores.loc[track_key])
+        key_step = int(df_key_steps.loc[track_key])
+        distances.append((track_key, euclidean_distance, mood_distance, key_step_distance, mood_score, key_step))
     
     # Sort by distance and get top k
     distances.sort(key=lambda x: x[1])
     top_k = distances[:k]
     
     # Get metadata for top k songs
-    neighbor_indices = [df_playlist_features.index[idx] for idx, dist in top_k]
-    neighbor_distances = [dist for idx, dist in top_k]
+    neighbor_indices = [track_key for track_key, dist, mood_dist, key_step_dist, mood_score, key_step in top_k]
+    neighbor_distances = [dist for track_key, dist, mood_dist, key_step_dist, mood_score, key_step in top_k]
+    neighbor_mood_distances = [mood_dist for track_key, dist, mood_dist, key_step_dist, mood_score, key_step in top_k]
+    neighbor_key_step_distances = [key_step_dist for track_key, dist, mood_dist, key_step_dist, mood_score, key_step in top_k]
+    neighbor_mood_scores = [mood_score for track_key, dist, mood_dist, key_step_dist, mood_score, key_step in top_k]
+    neighbor_key_steps = [key_step for track_key, dist, mood_dist, key_step_dist, mood_score, key_step in top_k]
     
     neighbors = df_playlist_metadata.loc[neighbor_indices].copy()
     neighbors['distance'] = neighbor_distances
+    neighbors['mood_distance'] = neighbor_mood_distances
+    neighbors['key_step_distance'] = neighbor_key_step_distances
+    neighbors['mood_score'] = neighbor_mood_scores
+    neighbors['key_step'] = neighbor_key_steps
     
     return neighbors
 
 def visualize_seeds(df_playlist_features, df_seeds):
     """
     Visualize seed placement in feature space using pairwise feature plots.
-    Clusters in the original 8-dimensional space, no PCA reduction.
+    Clusters in the original feature space, no PCA reduction.
     """
     # --- Scale features ---
     scaler = StandardScaler()
@@ -205,10 +309,8 @@ def visualize_seeds(df_playlist_features, df_seeds):
     # --- Plot setup ---
     feature_names = df_playlist_features.columns.tolist()
     plot_pairs = [
-        ('Energy', 'Acoustic'),
         ('Valence', 'Energy'),
         ('BPM', 'Dance'),
-        ('Loud_Db', 'Energy'),
         ('Valence', 'Dance'),
         ('BPM', 'Valence'),
     ]
@@ -216,12 +318,9 @@ def visualize_seeds(df_playlist_features, df_seeds):
     # Map feature names to our actual column names
     feature_mapping = {
         'Energy': 'Energy',
-        'Acoustic': 'Acoustic',
         'Valence': 'Valence',
         'BPM': 'BPM',
-        'Dance': 'Dance',
-        'Loud (Db)': 'Loud_Db',
-        'Loud_Db': 'Loud_Db'
+        'Dance': 'Dance'
     }
     
     pairs = []
@@ -283,7 +382,6 @@ if __name__ == '__main__':
     parser.add_argument('--song', type=str, help='Song name')
     parser.add_argument('--artist', type=str, help='Artist name')
     parser.add_argument('--num-songs', type=int, default=10, help='Number of similar songs to find (default: 10)')
-    parser.add_argument('--harmonic-filter', action='store_true', help='Filter results to only include harmonically compatible keys')
     args = parser.parse_args()
     
     # Define seed songs (song_name: artist_name)
@@ -295,7 +393,7 @@ if __name__ == '__main__':
             "Snap Out Of It": "Arctic Monkeys"
         }
         print("No arguments provided. Using default seed song: 'Snap Out Of It' by 'Arctic Monkeys'")
-        print("Usage: python src/analysis/knn_seed_songs.py --song 'Song Name' --artist 'Artist Name' [--num-songs N] [--harmonic-filter]\n")
+        print("Usage: python src/analysis/knn_seed_songs.py --song 'Song Name' --artist 'Artist Name' [--num-songs N]\n")
     
     print("=== SEED SONG ANALYSIS ===")
     print(f"Seed songs: {seed_songs_dict}")
@@ -311,48 +409,24 @@ if __name__ == '__main__':
         seed_row = df_seeds.iloc[0]
         seed_features = seed_row[FEATURES].tolist()
         seed_index = seed_row['index']
-        seed_bpm = seed_row['BPM']
         num_songs = args.num_songs
         
         print("\n" + "="*50)
         print(f"FINDING {num_songs} NEAREST NEIGHBORS")
-        if args.harmonic_filter:
-            print("Harmonic filter: Only harmonically compatible keys")
         print("="*50)
-        
-        # Get valid harmonic keys if harmonic filter is enabled
-        valid_keys = None
-        if args.harmonic_filter:
-            seed_camelot = df_metadata.loc[seed_index, 'Camelot']
-            if pd.notna(seed_camelot):
-                conn = sqlite3.connect(db_path)
-                try:
-                    df_valid_keys = pd.read_sql(
-                        "SELECT DISTINCT target_key FROM mixing_rules WHERE starting_key = ?",
-                        conn,
-                        params=(seed_camelot,)
-                    )
-                    valid_keys = set(df_valid_keys['target_key'].tolist())
-                    print(f"Valid harmonic keys for {seed_camelot}: {sorted(valid_keys)}")
-                finally:
-                    conn.close()
-            else:
-                print("Warning: Seed song has no Camelot key, harmonic filter disabled")
-        
-        # Request more neighbors to account for harmonic filtering
+
         k_request = num_songs + 1
-        if args.harmonic_filter:
-            k_request = max(k_request, num_songs * 5 + 1)  # Request even more for harmonic filtering
         
-        neighbors = find_k_nearest_neighbors(df_metadata, df_features, seed_features, k=k_request)
+        neighbors = find_k_nearest_neighbors(
+            df_metadata,
+            df_features,
+            seed_features,
+            seed_track_key=seed_index,
+            k=k_request
+        )
         
         # Remove the seed song itself if it's in the results
         neighbors = neighbors[neighbors.index != seed_index]
-        
-        # Apply harmonic filter if specified
-        if valid_keys:
-            neighbors = neighbors[neighbors['Camelot'].isin(valid_keys)]
-            print(f"After harmonic filter: {len(neighbors)} songs remaining")
         
         # Ensure we have enough songs
         if len(neighbors) < num_songs:
@@ -364,21 +438,23 @@ if __name__ == '__main__':
         # First, display the original seed song
         seed_features = df_features.loc[seed_index]
         seed_camelot = df_metadata.loc[seed_index, 'Camelot']
+        seed_mood_score = seed_features['Valence'] + seed_features['Dance'] + seed_features['Energy']
+        seed_key_step = build_key_step_lookup(seed_camelot).get(str(seed_camelot), 1)
         print(f"0. {seed_row['song']} — {seed_row['artist']} ({seed_row['year']}) [ORIGINAL]")
         print(f"   Distance: 0.0000")
-        print(f"   Popularity: {seed_row['popularity']}")
-        print(f"   Features: BPM={seed_features['BPM']}, Valence={seed_features['Valence']}, Dance={seed_features['Dance']}, Energy={seed_features['Energy']}, Acoustic={seed_features['Acoustic']}, Loud_Db={seed_features['Loud_Db']}, Key={seed_camelot}")
+        print(f"   Features: BPM={seed_features['BPM']}, Mood Score={seed_mood_score:.1f}, Key Step={seed_key_step}")
+        print(f"   Core Features: BPM={seed_features['BPM']}, Valence={seed_features['Valence']}, Energy={seed_features['Energy']}, Dance={seed_features['Dance']}, Key={seed_camelot}")
         print()
         
         # Then display the neighbors
         for i, (idx, row) in enumerate(neighbors.head(num_songs).iterrows(), 1):
             print(f"{i}. {row['Song']} — {row['Artist']} ({row['Album_Year']})")
             print(f"   Distance: {row['distance']:.4f}")
-            print(f"   Popularity: {row['Popularity']}")
             # Get features for this song
             song_features = df_features.loc[idx]
             song_camelot = df_metadata.loc[idx, 'Camelot']
-            print(f"   Features: BPM={song_features['BPM']}, Valence={song_features['Valence']}, Dance={song_features['Dance']}, Energy={song_features['Energy']}, Acoustic={song_features['Acoustic']}, Loud_Db={song_features['Loud_Db']}, Key={song_camelot}")
+            print(f"   Features: BPM={song_features['BPM']}, Mood Score={row['mood_score']:.1f}, Key Step={int(row['key_step'])}")
+            print(f"   Core Features: BPM={song_features['BPM']}, Valence={song_features['Valence']}, Energy={song_features['Energy']}, Dance={song_features['Dance']}, Key={song_camelot}")
             print()
     else:
         print("No seed songs found. Please check the song names and artists.")

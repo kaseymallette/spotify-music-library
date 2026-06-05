@@ -22,11 +22,7 @@ df = pd.read_sql("""
         BPM,
         Valence,
         Dance,
-        Energy,
-        Acoustic,
-        `Loud (Db)` as Loud_Db,
-        Album_Year,
-        Popularity
+        Energy
     FROM tracks
 """, conn)
 
@@ -34,7 +30,7 @@ conn.close()
 
 # Define metadata and feature columns
 METADATA = ['Track_Key']
-FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Album_Year', 'Popularity']
+FEATURES = ['BPM', 'Valence', 'Dance', 'Energy']
 
 # Separate metadata and features
 df_metadata = df[METADATA]
@@ -129,12 +125,7 @@ plt.show()
 print("\n=== Clustering Analysis ===")
 scaler = StandardScaler()
 df_features_scaled = scaler.fit_transform(df_features)
-
-# Apply higher weight to Valence to prioritize mood separation
-valence_idx = FEATURES.index('Valence')
-df_features_scaled[:, valence_idx] *= 1.5  # Give valence 1.5x weight
 print("Features standardized using StandardScaler")
-print("Valence weighted 1.5x to prioritize mood separation")
 
 # Run k-means clustering with different cluster numbers and evaluate using elbow method
 n_clusters_range = range(3, 11)
@@ -203,7 +194,7 @@ print("\n=== Cluster Visualization ===")
 feature_pairs = [
     ('Valence', 'Energy'),
     ('Valence', 'Dance'),
-    ('Valence', 'Acoustic'),
+    ('Dance', 'Energy'),
     ('Valence', 'BPM')
 ]
 

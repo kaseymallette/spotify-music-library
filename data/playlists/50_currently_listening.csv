@@ -1,85 +1,101 @@
-#,Song,Artist,BPM,Camelot,Energy,Added At,Duration,Popularity,Genres,Album,Album Date,Dance,Acoustic,Instrumental,Valence,Speech,Live,Loud (Db),Key,Time Signature,Spotify Track Id,ISRC
-1,"MakeDamnSure - Live From Orensanz, New York, NY / 2010","Taking Back Sunday",125,2B,78,2026-04-25,04:09,29,"emo, pop punk, screamo, post-hardcore, punk","Live From Orensanz",2010-08-17,50,7,0,46,0,80,-7,F#/G♭ Major,4,3kprNlCNkGDpE6CeTb52vy,USWB11001684
-2,"Cute Without The E - Cut From The Team","Taking Back Sunday",77,12B,32,2026-04-25,04:26,36,"emo, pop punk, screamo, post-hardcore, punk","Punk Goes Acoustic",2004-04-20,42,81,0,26,0,10,-9,E Major,4,3Gx7jAdpTsJzYpANTvlq3m,USADD0330510
-3,"Vulnerable","Secondhand Serenade",180,8B,52,2026-04-25,03:20,55,"emo","Awake",2007-00-00,42,55,0,36,0,10,-6,C Major,4,1JJOL5EhixrtlbXDWKS0yj,TCABI1231057
-4,"Your Biggest Fan","Never Shout Never",125,8B,31,2026-04-25,03:30,45,"emo","Me and My Uke",2009-11-03,74,94,0,53,0,10,-7,C Major,4,0L3di3gB5KlamEABLJK8KK,USSCU0800159
-5,"New American Classic","Taking Back Sunday",88,9B,34,2026-04-25,04:35,42,"emo, pop punk, screamo, post-hardcore, punk","Where You Want To Be",2004-07-27,31,28,0,17,0,10,-9,G Major,4,7ElBuVj3aaxCizPgK1avW4,USVIC0422806
-6,"Lyrical Lies","Cute Is What We Aim For",107,10B,27,2026-04-25,03:33,35,"pop punk, emo","The Same Old Blood Rush With A New Touch",2006-06-19,69,83,0,35,0,10,-10,D Major,4,2tQWm5Xvo87waN5CZmNm9f,US56V0608710
-7,"The Best Deceptions","Dashboard Confessional",172,3B,40,2026-04-25,04:14,47,"emo, pop punk","The Places You Have Come to Fear the Most",2001-03-20,46,80,0,36,0,10,-9,C♯/D♭ Major,4,6yJl0W1IVV1DsTr0vfDY2e,USVR90235403
-8,"Heregoesnothin","Never Shout Never",170,5B,98,2026-04-25,03:26,48,"emo","The Yippee EP",2009-07-03,49,13,0,26,40,10,-5,D#/E♭ Major,4,4eaLY5pOPsgKzs37woeTRz,US4K30800107
-9,"All Fall Down","OneRepublic",92,9B,77,2026-04-25,04:06,36,"soft pop","Dreaming Out Loud (Deluxe Edition)",2026-03-20,52,19,0,44,0,10,-7,G Major,4,40QsFxz100z2qWqV20zuvz,USUM70758796
-10,"All We Are","OneRepublic",158,10B,80,2026-04-25,04:27,34,"soft pop","Dreaming Out Loud (Deluxe Edition)",2026-03-20,41,5,0,38,0,20,-7,D Major,4,0kdXJVkOLJ2WvBswHSQOJ9,USUM70758797
-11,"Just A Feeling","Maroon 5",150,5B,62,2026-04-25,03:46,49,"pop","Hands All Over (Deluxe)",2010-00-00,60,15,0,30,0,10,-5,D#/E♭ Major,4,2t2CoOfwakFAexhvMmWtTb,USUM71019661
-12,"All Around Me - Acoustic","Flyleaf",147,11B,37,2026-04-25,03:20,31,"christian rock, christian alternative rock, emo","Flyleaf (Deluxe Edition)",2022-11-04,54,79,0,41,0,10,-6,A Major,4,6SgAezKm0d5BTRhhRxS4As,USUM70753920
-13,"When I'm Small","Phantogram",92,6B,76,2026-04-25,04:09,73,"","Eyelid Movies",2010-00-00,65,19,10,42,0,10,-4,A#/B♭ Major,4,1U3BASc885MPCYOzYwOIpO,USBS50931058
-14,"Someone Else's Bed","Hole",152,2A,72,2026-04-25,04:27,39,"riot grrrl, grunge","Nobody's Daughter",2010-01-01,31,0,0,40,0,10,-5,D#/E♭ Minor,4,1fTmjkJgR6k70qr4UJ1Aie,USUM71007986
-15,"I Want You To Want Me","Letters To Cleo",104,8B,80,2026-04-25,03:25,60,"riot grrrl","10 Things I Hate About You (Original Motion Picture Soundtrack)",1999-04-06,49,2,0,66,0,0,-3,C Major,4,3JSlThUtSZKbwhO9dURnxB,USHR10215178
-16,"Vindicated","Dashboard Confessional",86,4B,80,2026-04-25,03:21,64,"emo, pop punk","Dusk And Summer",2006-00-00,52,3,0,29,0,0,-3,G#/A♭ Major,4,1EotcFbWTbMCXeKFVEtX6Y,USVR90400024
-17,"Cringe","Matt Maeson",126,7B,47,2026-04-25,03:36,70,"","Bank On The Funeral",2019-04-05,73,7,0,44,0,0,-8,F Major,4,12rhvKDK2FfHTZZ1sSAHDG,USAT21603312
-18,"God Needs The Devil","Jonah Kagen",81,8A,53,2026-04-25,03:12,80,"folk pop","God Needs The Devil",2024-05-03,55,64,0,29,0,0,-8,A Minor,4,3nEotpBFeXq0OJstuHzwDP,USAR12400126
-19,"Devil Like Me - Audiotree Live Version","Rainbow Kitten Surprise,Audiotree",118,9A,38,2026-04-25,03:11,34,"math rock","Rainbow Kitten Surprise on Audiotree Live",2017-02-09,80,44,0,34,0,10,-11,E Minor,4,1nR4y4D5imW4jQfPV3TCd2,QM99V1700201
-20,"First Class","Rainbow Kitten Surprise",90,3B,34,2026-04-25,05:43,65,"","Seven + Mary",2013-11-13,55,58,0,22,0,0,-10,C♯/D♭ Major,4,0uQxV7ysuBPhbfUkW1WOCp,TCABT1491600
-21,"labour","Paris Paloma",84,10A,57,2026-04-25,03:57,73,"","labour",2023-03-23,65,40,0,44,10,30,-10,B Minor,4,2Ggr9IfS70wYQacW8nZKPG,CAN112300498
-22,"Cut Deep (Live)","Matt Maeson",163,9B,65,2026-04-25,03:12,24,"","That's My Cue: A Solo Experience",2024-09-27,54,41,0,77,10,80,-5,G Major,4,3WUzvLaGXKB3I4SNNzmCGq,USAT22405422
-23,"Lonely As You","Matt Maeson",172,7B,69,2026-04-25,03:25,39,"","Never Had to Leave",2022-08-26,55,1,0,76,0,10,-5,F Major,4,2IGEPotTBIcmxM5SOFot6V,USAT22207425
-24,"Black Out Days - Future Islands Remix","Phantogram,Future Islands",170,9A,48,2026-04-25,04:08,65,"","Black Out Days (Future Islands Remix)",2017-09-01,48,0,78,12,0,10,-9,E Minor,4,3kxkjirben9RVm9NqYa6rm,USUM71415944
-25,"Call Me When You're Sober","Evanescence",93,9B,88,2026-04-25,03:34,76,"alternative metal","The Open Door",2006-01-01,45,0,0,33,0,20,-4,G Major,4,663Karu2rvKLdnY0eo1n3M,USWU30600102
-26,"My Happy Ending","Avril Lavigne",170,10B,94,2026-04-25,04:02,76,"","Under My Skin",2004-00-00,41,0,0,74,0,30,-2,D Major,4,6sqNctd7MlJoKDOxPVCAvU,USAR10400486
-27,"Bruised - 2015 Remaster","Jack's Mannequin",136,5B,92,2026-04-25,04:02,46,"pop punk","Everything In Transit",2005-00-00,48,1,0,36,0,10,-5,D#/E♭ Major,4,12ettGOse4b5vko513KTuX,USWB11507813
-28,"Smelyalata","Never Shout Never",155,8B,56,2026-04-25,02:35,58,"emo","The Yippee EP",2009-07-03,38,49,0,45,0,10,-6,C Major,4,0yw5Mh0FqvrzWNMp7GH8wv,US4K30800109
-29,"She Says","Howie Day",93,8B,49,2026-04-25,04:34,40,"","Australia",2000-11-01,44,49,0,24,0,10,-10,C Major,4,2MtlU2e5PmuKSrX5mhSjOO,QM7YK1500164
-30,"How's It Going to Be","Third Eye Blind",80,7B,59,2026-04-25,04:13,74,"","Third Eye Blind",1997-04-08,56,0,0,57,0,10,-9,F Major,4,3Uvx1TO0Kg5HgGPk58lHXv,USEE19701206
-31,"This Photograph Is Proof (I Know You Know)","Taking Back Sunday",158,9B,86,2026-04-25,04:11,54,"emo, pop punk, screamo, post-hardcore, punk","Where You Want To Be",2004-07-27,54,0,0,52,10,0,-5,G Major,3,3m1OyPw3fzMPAwDMcYcM6Z,USVIC0422804
-32,"Dirty Diana - 2012 Remaster","Michael Jackson",131,5B,82,2026-05-04,04:40,85,"","Bad (Remastered)",1987-08-31,74,19,0,35,0,30,-4,D#/E♭ Major,4,0AcgKF7kbSoCkh3n7vlHwK,USSM11204988
-33,"Smooth Criminal - 2012 Remaster","Michael Jackson",118,4B,98,2026-05-04,04:17,88,"","Bad (Remastered)",1987-08-31,85,25,47,60,0,30,-4,G#/A♭ Major,4,5T7ywazdGIydr6JCW6t02j,USSM11204989
-34,"They Don't Care About Us","Michael Jackson",90,5A,91,2026-05-04,04:44,89,"","HIStory - PAST, PRESENT AND FUTURE - BOOK I",1995-06-16,86,21,1,73,10,30,-6,C Minor,4,3wuCCNCnBhJlwkIJTBZFiv,USSM19500629
-35,"Beat It","Michael Jackson",139,2A,71,2026-05-04,04:18,92,"","Thriller",1982-11-30,78,2,0,90,0,20,-9,D#/E♭ Minor,4,3BovdzfaX4jb5KFQwoPfAw,USSM19902990
-36,"Wanna Be Startin' Somethin'","Michael Jackson",122,11B,87,2026-05-04,06:03,83,"","Thriller",1982-11-30,84,3,42,91,0,0,-8,A Major,4,1hu2s7qkm5bo03eODpRQO3,USSM19902986
-37,"Don't Stop 'Til You Get Enough","Michael Jackson",119,1B,82,2026-05-04,06:04,90,"","Off the Wall",1979-08-10,88,13,5,95,0,10,-10,B Major,4,46eu3SBuFCXWsPT39Yg3tJ,USSM17900816
-38,"Victim Of Luck","Metric",101,5B,77,2026-05-04,03:23,55,"","Romanticize The Dive",2026-04-24,54,0,1,46,0,40,-6,D#/E♭ Major,4,3RD653TC0ewVZZNELdV79h,QMFMG2532673
-39,"Wild Rut","Metric",156,11B,76,2026-05-04,03:11,54,"","Romanticize The Dive",2026-04-24,42,0,10,47,0,20,-6,A Major,4,4skS0nACMaKGTPsrO4OLCO,QMFMG2532663
-40,"Time Is A Bomb","Metric",137,6A,83,2026-05-04,04:24,54,"","Romanticize The Dive",2026-04-24,53,2,0,38,0,10,-6,G Minor,4,2hrTEv28VPdDPnwbFMokyz,QMFMG2532664
-41,"Antigravity","Metric",168,6A,67,2026-05-04,03:39,52,"","Romanticize The Dive",2026-04-24,55,1,4,50,0,30,-8,G Minor,4,6WhS6vq4SFDnyFogNSgwsc,QMFMG2532670
-42,"drop dead","Olivia Rodrigo",130,4B,74,2026-05-04,03:44,94,"","drop dead",2026-04-17,58,22,0,68,0,20,-6,G#/A♭ Major,4,6gkbtMtioHgtyGjrMel6ei,USUG12601721
-43,"Fake It","Seether",132,4B,95,2026-05-04,03:13,36,"post-grunge, alternative metal, rock","Finding Beauty In Negative Spaces (Bonus Track Version)",2007-01-01,61,0,0,65,0,0,-4,G#/A♭ Major,4,1aItKhUXwDGVNQIMdsEv5u,USWU30700144
-44,"Loneliest","Incubus",138,12A,57,2026-05-04,03:37,43,"nu metal, funk rock, alternative metal, alternative rock","8",2017-04-21,64,6,0,38,0,10,-6,C♯/D♭ Minor,4,1ShxNSFFxy1rSbnopgYpvx,USUG11700295
-45,".intoodeep.","Dead Poet Society",125,4B,68,2026-05-04,03:39,56,"","-!- (Deluxe)",2021-12-03,60,0,0,49,0,30,-6,G#/A♭ Major,4,54jvLVojOWiQRubRfKmZ2k,GBUM72003959
-46,"My Way","Limp Bizkit",97,2B,86,2026-05-04,04:32,81,"nu metal, rap metal, alternative metal, rap rock","Chocolate Starfish And The Hot Dog Flavored Water",2000-10-17,58,2,0,61,0,60,-4,F#/G♭ Major,4,2gSVKxPDww9Eep5rdvtdem,USIR10001177
-47,"Fine Again","Seether",176,11A,86,2026-05-04,04:03,78,"post-grunge, alternative metal, rock","Disclaimer",2002-01-01,44,0,1,36,0,20,-3,F#/G♭ Minor,4,4eTIe5eqds88bA9ua6p5p6,USWU30200015
-48,"Let It Out","Hoobastank",140,2B,97,2026-05-04,03:18,37,"nu metal","The Reason (20th Anniversary)",2024-01-12,45,3,0,48,10,20,-3,F#/G♭ Major,4,6mzOcLeJAgzszTUcaoXo5v,USIR20300698
-49,"Running In Circles","Dead Poet Society",142,5B,84,2026-05-04,03:53,61,"","FISSION",2024-01-26,62,0,0,64,0,30,-3,D#/E♭ Major,4,4pEU0NT64oiem9lDT7nuJn,GBPVV2305351
-50,"Proud Daddy","Seether",180,4B,58,2026-05-04,03:54,57,"post-grunge, alternative metal, rock","Beneath The Surface",2026-04-17,60,0,3,53,0,0,-6,G#/A♭ Major,4,7GYhyz8hQ8btugI4Uj0wZH,USC4R2445115
-51,"Words As Weapons","Seether",110,4A,90,2026-05-04,04:00,68,"post-grunge, alternative metal, rock","Isolate And Medicate (Deluxe Edition)",2014-01-01,59,1,0,61,0,0,-6,F Minor,4,0aYQsp1vZZcX0JBEJvKF7N,QMFMK1400003
-52,"Hot Goblin","Em Beihold",123,9A,68,2026-05-04,02:38,52,"","Hot Goblin",2025-09-05,79,39,0,46,0,0,-4,E Minor,4,1AQlvpcPh79BKnoKe1E6Nw,USUM72509409
-53,"Static Breather","Hamster",95,2B,46,2026-05-04,02:59,49,"","Static Breather",2026-01-02,87,23,1,45,0,0,-11,F#/G♭ Major,4,03Vy06Lbzt0prVs7Gu3SpY,QZFYX2664590
-54,"We Bad, We Know","ZOI,Byfox",112,9B,59,2026-05-04,02:30,59,"","We Bad, We Know",2019-10-23,74,17,12,41,0,20,-7,G Major,4,2gGCt2yXxDxDITx19sxwJJ,TCAEM1913225
-55,"Made You Look","ittibitti,Anna Graceman",112,11B,75,2026-05-04,02:46,55,"","Made You Look",2024-08-12,87,9,0,64,10,0,-6,A Major,4,76rB8JQ88jTJ7tNwh33faG,QZZ7S2554340
-56,"PUMP THE BREAK","MORGXN",102,3B,54,2026-05-04,03:12,41,"","MERIDIAN",2022-02-16,80,4,0,39,0,30,-5,C♯/D♭ Major,4,7baoqD2YuFgFTqdBwf72PC,QM24S2008278
-57,"Crazy Like Me","Emmit Fenn",130,6B,43,2026-05-04,03:00,49,"","Crazy Like Me",2022-04-13,82,45,11,66,10,0,-10,A#/B♭ Major,4,2htdXXYYVmNsnMyukJWcGD,GBKPL2290692
-58,"CIGARETTES","Amir Obe",144,11A,38,2026-05-04,03:10,57,"","None Of The Clocks Work",2017-03-30,66,4,0,24,0,10,-8,F#/G♭ Minor,4,3TfTZ3fGLYtR1azsY8iEp4,USUM71701296
-59,"Heroine","Maroon 5",121,9B,51,2026-05-04,02:35,70,"pop","Heroine",2026-05-01,88,4,0,92,0,10,-6,G Major,4,04OCeDuqT4ympbgDZ8dcfT,USUM72602831
-60,"Punching the Flowers","Death Cab for Cutie",148,8A,94,2026-05-04,03:11,60,"","Punching the Flowers",2026-04-28,65,3,4,96,0,0,-4,A Minor,4,56es3ImztwXSwpYmtS6c4A,USEP42604002
-61,"She Does It Right","The Black Keys",123,9B,71,2026-05-04,03:43,64,"blues rock, garage rock, modern blues, rock","Peaches!",2026-05-01,46,0,0,52,0,20,-5,G Major,4,1pO3dqvwGvCQzRQV67xfZd,USWB12504974
-62,"You Got to Lose","The Black Keys",188,11B,93,2026-05-04,03:17,56,"blues rock, garage rock, modern blues, rock","Peaches!",2026-05-01,26,1,0,53,0,30,-5,A Major,4,3kGEzVNvgUCaHS1QiAHxXs,USWB12504972
-63,"jupiter","almost monday",104,2A,82,2026-05-08,03:02,64,"","DIVE",2024-09-25,65,1,0,93,0,0,-5,D#/E♭ Minor,4,4BiiGfe1QtSpsiZDvA4Pmd,USHR12448523
-64,"Pepper","Death Cab for Cutie",119,4B,74,2026-05-08,02:48,46,"","Asphalt Meadows",2022-09-16,79,2,1,69,0,10,-8,G#/A♭ Major,4,5p0bEz7DNsULez2X9yrNGa,USAT22204472
-65,"Here to Forever","Death Cab for Cutie",158,10B,77,2026-05-08,03:46,48,"","Asphalt Meadows",2022-09-16,62,7,0,93,0,10,-8,D Major,4,7Cva2EgJougx6O6M5xgWAq,USAT22204470
-66,"Picking Dragons' Pockets","Modest Mouse",180,1B,76,2026-05-08,04:36,59,"indie rock, indie, alternative rock","Picking Dragons' Pockets",2026-04-21,54,1,2,71,0,10,-5,B Major,4,2k1VofAVg8rdoXSG7p0oWW,USA2P2609800
-67,"Outrun This Feeling","Elle Coves",120,9B,72,2026-05-08,02:56,33,"","Selfishly Inclined",2024-03-13,67,3,0,30,0,10,-5,G Major,3,5pI9tVNPYhWrxBwV1IlfV8,US23A1578741
-68,"Animal","Miike Snow",118,12A,73,2026-05-08,04:24,62,"alternative dance","Miike Snow (Deluxe Edition)",2009-05-22,77,1,0,69,0,0,-7,C♯/D♭ Minor,4,0X9wubEYVnWE6S4p03ezrx,GBARL0900399
-69,"Don't Dance","3OH!3",80,7A,76,2026-05-08,03:16,39,"","3OH!3",2007-07-23,57,19,0,70,20,0,-3,D Minor,4,53BirqAVvxjDPQCH316BNM,TCABN1385334
-70,"Hey","Lil Jon,3OH!3",132,8B,76,2026-05-08,03:35,43,"crunk, ","Crunk Rock (Deluxe)",2010-01-01,69,0,0,51,0,10,-4,C Major,4,5l9D0ugfAeQ6cgiYb2ay65,USUM71013761
-71,"Keep On Lookin'","Ciara",129,10A,45,2026-05-08,03:17,24,"","Ciara",2013-07-08,86,25,0,45,30,10,-6,B Minor,4,21ovuLfg5iT583UEgeEYQb,USSM11301901
-72,"Sophomore","Ciara",148,6A,74,2026-05-08,03:44,29,"","Ciara",2013-07-08,64,1,0,38,0,10,-7,G Minor,4,4SdjXwZjsg6HQrXXhdGClj,USSM11301776
-73,"Overdose","Ciara",107,4B,70,2026-05-08,03:47,41,"","Ciara",2013-07-08,77,1,1,79,0,0,-6,G#/A♭ Major,4,7jzjN8awsBYLjFqlsSCJ1j,USSM11301271
-74,"Leave Me Alone","Chris Brown",92,10A,55,2026-05-08,06:03,44,"r&b","BROWN",2026-05-08,66,4,0,24,0,10,-8,B Minor,4,6XqByEYtFrbH2OPwQuGn8q,USRC12600762
-75,"It Depends (feat. Bryson Tiller)","Chris Brown,Bryson Tiller",136,3B,49,2026-05-08,04:31,37,"r&b, trap soul","BROWN",2026-05-08,63,3,0,33,0,0,-8,C♯/D♭ Major,4,1mIYDLcLe8SLW2pCI4BMKh,USRC12501295
-76,"Fallin' (feat. Leon Thomas)","Chris Brown,Leon Thomas",156,11A,64,2026-05-08,04:26,37,"r&b, ","BROWN",2026-05-08,49,18,0,50,0,10,-6,F#/G♭ Minor,3,40GjjsfvHz6hdeBbd8jSdG,USRC12600738
-77,"Red Rum (feat. YoungBoy Never Broke Again)","Chris Brown,YoungBoy Never Broke Again",94,4A,66,2026-05-08,03:32,39,"r&b, ","BROWN",2026-05-08,63,2,0,15,0,10,-6,F Minor,4,3jpMXlXpPaGJd9IX5kahvQ,USRC12600756
-78,"Bombs in the Ville/Hit the Gas","J. Cole",131,3B,38,2026-05-08,04:06,74,"rap","The Fall-Off",2026-02-06,54,22,0,33,0,10,-11,C♯/D♭ Major,4,0Awr3NZMkRHQFabkMxW1VT,USUG12600545
-79,"Stem the Flow","Paris Paloma",129,11B,86,2026-05-09,04:03,47,"","Stem the Flow",2026-05-06,57,3,0,23,10,20,-7,A Major,4,2NEJSUekQg1nVvTI0ctJeA,CAN112600495
-80,"Miyazaki","Paris Paloma",107,9B,84,2026-05-09,03:24,37,"","Stem the Flow",2026-05-06,58,14,0,47,0,20,-5,G Major,4,2fF9j7eLr6DuZiGtH3n8jY,CAN112600323
-81,"Good Girl","Paris Paloma",129,9B,77,2026-05-09,04:23,35,"","Stem the Flow",2026-05-06,62,14,0,27,20,10,-6,G Major,4,65ePCwT7ikG44F4DF4hlgN,CAN112600070
-82,"Good Boy","Paris Paloma",124,12B,78,2026-05-09,03:42,34,"","Stem the Flow",2026-05-06,63,20,0,37,10,20,-7,E Major,4,7CjLktPwi64JfCfnZYFtnl,CAN112501780
-83,"Outside Today","YoungBoy Never Broke Again",134,10A,67,2026-05-09,02:09,74,"","Until Death Call My Name",2018-04-27,85,14,0,6,0,10,-5,B Minor,4,5PIfH6BzcmH04RDmtzF0BN,USAT21800223
-84,"Ric Flair Drip (with Metro Boomin)","Offset,Metro Boomin",100,11B,43,2026-05-09,02:52,83,"","Without Warning",2017-10-30,88,15,0,33,20,10,-8,A Major,4,7sO5G9EABYOXQKNPNiE9NR,QZ45A1700064
+#,Song,Artist,BPM,Camelot,Energy,Added At,Duration,Popularity,Genres,Album,Album Date,Dance,Acoustic,Instrumental,Valence,Speech,Live,Loud (Db),Key,Time Signature,Spotify Track Id,ISRC,Explicit
+1,"MakeDamnSure - Live From Orensanz, New York, NY / 2010","Taking Back Sunday",125,2B,78,2026-04-25,04:09,30,"emo, pop punk, screamo, post-hardcore, punk","Live From Orensanz",2010-08-17,50,7,0,46,0,80,-7,F#/G♭ Major,4,3kprNlCNkGDpE6CeTb52vy,USWB11001684,no
+2,"Cute Without The E - Cut From The Team","Taking Back Sunday",77,12B,32,2026-04-25,04:26,37,"emo, pop punk, screamo, post-hardcore, punk","Punk Goes Acoustic",2004-04-20,42,81,0,26,0,10,-9,E Major,4,3Gx7jAdpTsJzYpANTvlq3m,USADD0330510,no
+3,"Vulnerable","Secondhand Serenade",180,8B,52,2026-04-25,03:20,56,"emo","Awake",2007-00-00,42,55,0,36,0,10,-6,C Major,4,1JJOL5EhixrtlbXDWKS0yj,TCABI1231057,no
+4,"Your Biggest Fan","Never Shout Never",125,8B,31,2026-04-25,03:30,45,"emo","Me and My Uke",2009-11-03,74,94,0,53,0,10,-7,C Major,4,0L3di3gB5KlamEABLJK8KK,USSCU0800159,no
+5,"New American Classic","Taking Back Sunday",88,9B,34,2026-04-25,04:35,42,"emo, pop punk, screamo, post-hardcore, punk","Where You Want To Be",2004-07-27,31,28,0,17,0,10,-9,G Major,4,7ElBuVj3aaxCizPgK1avW4,USVIC0422806,no
+6,"Lyrical Lies","Cute Is What We Aim For",107,10B,27,2026-04-25,03:33,36,"pop punk, emo","The Same Old Blood Rush With A New Touch",2006-06-19,69,83,0,35,0,10,-10,D Major,4,2tQWm5Xvo87waN5CZmNm9f,US56V0608710,no
+7,"The Best Deceptions","Dashboard Confessional",172,3B,40,2026-04-25,04:14,47,"emo, pop punk","The Places You Have Come to Fear the Most",2001-03-20,46,80,0,36,0,10,-9,C♯/D♭ Major,4,6yJl0W1IVV1DsTr0vfDY2e,USVR90235403,no
+8,"Heregoesnothin","Never Shout Never",170,5B,98,2026-04-25,03:26,48,"emo","The Yippee EP",2009-07-03,49,13,0,26,40,10,-5,D#/E♭ Major,4,4eaLY5pOPsgKzs37woeTRz,US4K30800107,no
+9,"All Fall Down","OneRepublic",92,9B,77,2026-04-25,04:06,34,"soft pop","Dreaming Out Loud (Deluxe Edition)",2026-03-20,52,19,0,44,0,10,-7,G Major,4,40QsFxz100z2qWqV20zuvz,USUM70758796,no
+10,"All We Are","OneRepublic",158,10B,80,2026-04-25,04:27,32,"soft pop","Dreaming Out Loud (Deluxe Edition)",2026-03-20,41,5,0,38,0,20,-7,D Major,4,0kdXJVkOLJ2WvBswHSQOJ9,USUM70758797,no
+11,"Just A Feeling","Maroon 5",150,5B,62,2026-04-25,03:46,49,"pop","Hands All Over (Deluxe)",2010-00-00,60,15,0,30,0,10,-5,D#/E♭ Major,4,2t2CoOfwakFAexhvMmWtTb,USUM71019661,no
+12,"All Around Me - Acoustic","Flyleaf",147,11B,37,2026-04-25,03:20,31,"christian rock, christian alternative rock, emo","Flyleaf (Deluxe Edition)",2022-11-04,54,79,0,41,0,10,-6,A Major,4,6SgAezKm0d5BTRhhRxS4As,USUM70753920,no
+13,"When I'm Small","Phantogram",92,6B,76,2026-04-25,04:09,74,"","Eyelid Movies",2010-00-00,65,19,10,42,0,10,-4,A#/B♭ Major,4,1U3BASc885MPCYOzYwOIpO,USBS50931058,no
+14,"Someone Else's Bed","Hole",152,2A,72,2026-04-25,04:27,40,"riot grrrl, grunge","Nobody's Daughter",2010-01-01,31,0,0,40,0,10,-5,D#/E♭ Minor,4,1fTmjkJgR6k70qr4UJ1Aie,USUM71007986,no
+15,"I Want You To Want Me","Letters To Cleo",104,8B,80,2026-04-25,03:25,57,"riot grrrl","10 Things I Hate About You (Original Motion Picture Soundtrack)",1999-04-06,49,2,0,66,0,0,-3,C Major,4,3JSlThUtSZKbwhO9dURnxB,USHR10215178,no
+16,"Vindicated","Dashboard Confessional",86,4B,80,2026-04-25,03:21,64,"emo, pop punk","Dusk And Summer",2006-00-00,52,3,0,29,0,0,-3,G#/A♭ Major,4,1EotcFbWTbMCXeKFVEtX6Y,USVR90400024,no
+17,"Cringe","Matt Maeson",126,7B,47,2026-04-25,03:36,71,"","Bank On The Funeral",2019-04-05,73,7,0,44,0,0,-8,F Major,4,12rhvKDK2FfHTZZ1sSAHDG,USAT21603312,no
+18,"God Needs The Devil","Jonah Kagen",81,8A,53,2026-04-25,03:12,80,"folk pop","God Needs The Devil",2024-05-03,55,64,0,29,0,0,-8,A Minor,4,3nEotpBFeXq0OJstuHzwDP,USAR12400126,yes
+19,"Devil Like Me - Audiotree Live Version","Rainbow Kitten Surprise,Audiotree",118,9A,38,2026-04-25,03:11,34,"math rock","Rainbow Kitten Surprise on Audiotree Live",2017-02-09,80,44,0,34,0,10,-11,E Minor,4,1nR4y4D5imW4jQfPV3TCd2,QM99V1700201,yes
+20,"First Class","Rainbow Kitten Surprise",90,3B,34,2026-04-25,05:43,67,"","Seven + Mary",2013-11-13,55,58,0,22,0,0,-10,C♯/D♭ Major,4,0uQxV7ysuBPhbfUkW1WOCp,TCABT1491600,yes
+21,"labour","Paris Paloma",84,10A,57,2026-04-25,03:57,73,"","labour",2023-03-23,65,40,0,44,10,30,-10,B Minor,4,2Ggr9IfS70wYQacW8nZKPG,CAN112300498,yes
+22,"Cut Deep (Live)","Matt Maeson",163,9B,65,2026-04-25,03:12,25,"","That's My Cue: A Solo Experience",2024-09-27,54,41,0,77,10,80,-5,G Major,4,3WUzvLaGXKB3I4SNNzmCGq,USAT22405422,no
+23,"Lonely As You","Matt Maeson",172,7B,69,2026-04-25,03:25,39,"","Never Had to Leave",2022-08-26,55,1,0,76,0,10,-5,F Major,4,2IGEPotTBIcmxM5SOFot6V,USAT22207425,yes
+24,"Black Out Days - Future Islands Remix","Phantogram,Future Islands",170,9A,48,2026-04-25,04:08,66,"","Black Out Days (Future Islands Remix)",2017-09-01,48,0,78,12,0,10,-9,E Minor,4,3kxkjirben9RVm9NqYa6rm,USUM71415944,no
+25,"Call Me When You're Sober","Evanescence",93,9B,88,2026-04-25,03:34,76,"alternative metal","The Open Door",2006-01-01,45,0,0,33,0,20,-4,G Major,4,663Karu2rvKLdnY0eo1n3M,USWU30600102,no
+26,"My Happy Ending","Avril Lavigne",170,10B,94,2026-04-25,04:02,76,"","Under My Skin",2004-00-00,41,0,0,74,0,30,-2,D Major,4,6sqNctd7MlJoKDOxPVCAvU,USAR10400486,yes
+27,"Bruised - 2015 Remaster","Jack's Mannequin",136,5B,92,2026-04-25,04:02,47,"pop punk","Everything In Transit",2005-00-00,48,1,0,36,0,10,-5,D#/E♭ Major,4,12ettGOse4b5vko513KTuX,USWB11507813,no
+28,"Smelyalata","Never Shout Never",155,8B,56,2026-04-25,02:35,59,"emo","The Yippee EP",2009-07-03,38,49,0,45,0,10,-6,C Major,4,0yw5Mh0FqvrzWNMp7GH8wv,US4K30800109,no
+29,"She Says","Howie Day",93,8B,49,2026-04-25,04:34,41,"","Australia",2000-11-01,44,49,0,24,0,10,-10,C Major,4,2MtlU2e5PmuKSrX5mhSjOO,QM7YK1500164,no
+30,"How's It Going to Be","Third Eye Blind",80,7B,59,2026-04-25,04:13,75,"","Third Eye Blind",1997-04-08,56,0,0,57,0,10,-9,F Major,4,3Uvx1TO0Kg5HgGPk58lHXv,USEE19701206,no
+31,"This Photograph Is Proof (I Know You Know)","Taking Back Sunday",158,9B,86,2026-04-25,04:11,55,"emo, pop punk, screamo, post-hardcore, punk","Where You Want To Be",2004-07-27,54,0,0,52,10,0,-5,G Major,3,3m1OyPw3fzMPAwDMcYcM6Z,USVIC0422804,no
+32,"Dirty Diana - 2012 Remaster","Michael Jackson",131,5B,82,2026-05-04,04:40,89,"","Bad (Remastered)",1987-08-31,74,19,0,35,0,30,-4,D#/E♭ Major,4,0AcgKF7kbSoCkh3n7vlHwK,USSM11204988,no
+33,"Smooth Criminal - 2012 Remaster","Michael Jackson",118,4B,98,2026-05-04,04:17,92,"","Bad (Remastered)",1987-08-31,85,25,47,60,0,30,-4,G#/A♭ Major,4,5T7ywazdGIydr6JCW6t02j,USSM11204989,no
+34,"They Don't Care About Us","Michael Jackson",90,5A,91,2026-05-04,04:44,92,"","HIStory - PAST, PRESENT AND FUTURE - BOOK I",1995-06-16,86,21,1,73,10,30,-6,C Minor,4,3wuCCNCnBhJlwkIJTBZFiv,USSM19500629,no
+35,"Beat It","Michael Jackson",139,2A,71,2026-05-04,04:18,96,"","Thriller",1982-11-30,78,2,0,90,0,20,-9,D#/E♭ Minor,4,3BovdzfaX4jb5KFQwoPfAw,USSM19902990,no
+36,"Wanna Be Startin' Somethin'","Michael Jackson",122,11B,87,2026-05-04,06:03,87,"","Thriller",1982-11-30,84,3,42,91,0,0,-8,A Major,4,1hu2s7qkm5bo03eODpRQO3,USSM19902986,no
+37,"Don't Stop 'Til You Get Enough","Michael Jackson",119,1B,82,2026-05-04,06:04,95,"","Off the Wall",1979-08-10,88,13,5,95,0,10,-10,B Major,4,46eu3SBuFCXWsPT39Yg3tJ,USSM17900816,no
+38,"Victim Of Luck","Metric",101,5B,77,2026-05-04,03:23,54,"","Romanticize The Dive",2026-04-24,54,0,1,46,0,40,-6,D#/E♭ Major,4,3RD653TC0ewVZZNELdV79h,QMFMG2532673,yes
+39,"Wild Rut","Metric",156,11B,76,2026-05-04,03:11,52,"","Romanticize The Dive",2026-04-24,42,0,10,47,0,20,-6,A Major,4,4skS0nACMaKGTPsrO4OLCO,QMFMG2532663,no
+40,"Time Is A Bomb","Metric",137,6A,83,2026-05-04,04:24,53,"","Romanticize The Dive",2026-04-24,53,2,0,38,0,10,-6,G Minor,4,2hrTEv28VPdDPnwbFMokyz,QMFMG2532664,no
+41,"Antigravity","Metric",168,6A,67,2026-05-04,03:39,53,"","Romanticize The Dive",2026-04-24,55,1,4,50,0,30,-8,G Minor,4,6WhS6vq4SFDnyFogNSgwsc,QMFMG2532670,no
+42,"drop dead","Olivia Rodrigo",130,4B,74,2026-05-04,03:44,93,"","drop dead",2026-04-17,58,22,0,68,0,20,-6,G#/A♭ Major,4,6gkbtMtioHgtyGjrMel6ei,USUG12601721,no
+43,"Fake It","Seether",132,4B,95,2026-05-04,03:13,37,"post-grunge, alternative metal, rock","Finding Beauty In Negative Spaces (Bonus Track Version)",2007-01-01,61,0,0,65,0,0,-4,G#/A♭ Major,4,1aItKhUXwDGVNQIMdsEv5u,USWU30700144,no
+44,"Loneliest","Incubus",138,12A,57,2026-05-04,03:37,44,"nu metal, funk rock, alternative metal, alternative rock","8",2017-04-21,64,6,0,38,0,10,-6,C♯/D♭ Minor,4,1ShxNSFFxy1rSbnopgYpvx,USUG11700295,no
+45,".intoodeep.","Dead Poet Society",125,4B,68,2026-05-04,03:39,57,"","-!- (Deluxe)",2021-12-03,60,0,0,49,0,30,-6,G#/A♭ Major,4,54jvLVojOWiQRubRfKmZ2k,GBUM72003959,yes
+46,"My Way","Limp Bizkit",97,2B,86,2026-05-04,04:32,82,"nu metal, rap metal, alternative metal, rap rock","Chocolate Starfish And The Hot Dog Flavored Water",2000-10-17,58,2,0,61,0,60,-4,F#/G♭ Major,4,2gSVKxPDww9Eep5rdvtdem,USIR10001177,yes
+47,"Fine Again","Seether",176,11A,86,2026-05-04,04:03,79,"post-grunge, alternative metal, rock","Disclaimer",2002-01-01,44,0,1,36,0,20,-3,F#/G♭ Minor,4,4eTIe5eqds88bA9ua6p5p6,USWU30200015,no
+48,"Let It Out","Hoobastank",140,2B,97,2026-05-04,03:18,37,"nu metal","The Reason (20th Anniversary)",2024-01-12,45,3,0,48,10,20,-3,F#/G♭ Major,4,6mzOcLeJAgzszTUcaoXo5v,USIR20300698,no
+49,"Running In Circles","Dead Poet Society",142,5B,84,2026-05-04,03:53,62,"","FISSION",2024-01-26,62,0,0,64,0,30,-3,D#/E♭ Major,4,4pEU0NT64oiem9lDT7nuJn,GBPVV2305351,yes
+50,"Proud Daddy","Seether",180,4B,58,2026-05-04,03:54,54,"post-grunge, alternative metal, rock","Beneath The Surface",2026-04-17,60,0,3,53,0,0,-6,G#/A♭ Major,4,7GYhyz8hQ8btugI4Uj0wZH,USC4R2445115,no
+51,"Words As Weapons","Seether",110,4A,90,2026-05-04,04:00,68,"post-grunge, alternative metal, rock","Isolate And Medicate (Deluxe Edition)",2014-01-01,59,1,0,61,0,0,-6,F Minor,4,0aYQsp1vZZcX0JBEJvKF7N,QMFMK1400003,no
+52,"Hot Goblin","Em Beihold",123,9A,68,2026-05-04,02:38,52,"","Hot Goblin",2025-09-05,79,39,0,46,0,0,-4,E Minor,4,1AQlvpcPh79BKnoKe1E6Nw,USUM72509409,no
+53,"Static Breather","Hamster",95,2B,46,2026-05-04,02:59,51,"","Static Breather",2026-01-02,87,23,1,45,0,0,-11,F#/G♭ Major,4,03Vy06Lbzt0prVs7Gu3SpY,QZFYX2664590,no
+54,"We Bad, We Know","ZOI,Byfox",112,9B,59,2026-05-04,02:30,60,"","We Bad, We Know",2019-10-23,74,17,12,41,0,20,-7,G Major,4,2gGCt2yXxDxDITx19sxwJJ,TCAEM1913225,no
+55,"Made You Look","ittibitti,Anna Graceman",112,11B,75,2026-05-04,02:46,58,"","Made You Look",2024-08-12,87,9,0,64,10,0,-6,A Major,4,76rB8JQ88jTJ7tNwh33faG,QZZ7S2554340,no
+56,"PUMP THE BREAK","MORGXN",102,3B,54,2026-05-04,03:12,42,"","MERIDIAN",2022-02-16,80,4,0,39,0,30,-5,C♯/D♭ Major,4,7baoqD2YuFgFTqdBwf72PC,QM24S2008278,no
+57,"Crazy Like Me","Emmit Fenn",130,6B,43,2026-05-04,03:00,50,"","Crazy Like Me",2022-04-13,82,45,11,66,10,0,-10,A#/B♭ Major,4,2htdXXYYVmNsnMyukJWcGD,GBKPL2290692,no
+58,"CIGARETTES","Amir Obe",144,11A,38,2026-05-04,03:10,57,"","None Of The Clocks Work",2017-03-30,66,4,0,24,0,10,-8,F#/G♭ Minor,4,3TfTZ3fGLYtR1azsY8iEp4,USUM71701296,yes
+59,"Heroine","Maroon 5",121,9B,51,2026-05-04,02:35,71,"pop","Heroine",2026-05-01,88,4,0,92,0,10,-6,G Major,4,04OCeDuqT4ympbgDZ8dcfT,USUM72602831,yes
+60,"Punching the Flowers","Death Cab for Cutie",148,8A,94,2026-05-04,03:11,60,"","Punching the Flowers",2026-04-28,65,3,4,96,0,0,-4,A Minor,4,56es3ImztwXSwpYmtS6c4A,USEP42604002,no
+61,"She Does It Right","The Black Keys",123,9B,71,2026-05-04,03:43,64,"blues rock, garage rock, modern blues, rock","Peaches!",2026-05-01,46,0,0,52,0,20,-5,G Major,4,1pO3dqvwGvCQzRQV67xfZd,USWB12504974,no
+62,"You Got to Lose","The Black Keys",188,11B,93,2026-05-04,03:17,57,"blues rock, garage rock, modern blues, rock","Peaches!",2026-05-01,26,1,0,53,0,30,-5,A Major,4,3kGEzVNvgUCaHS1QiAHxXs,USWB12504972,no
+63,"jupiter","almost monday",104,2A,82,2026-05-08,03:02,65,"","DIVE",2024-09-25,65,1,0,93,0,0,-5,D#/E♭ Minor,4,4BiiGfe1QtSpsiZDvA4Pmd,USHR12448523,no
+64,"Pepper","Death Cab for Cutie",119,4B,74,2026-05-08,02:48,46,"","Asphalt Meadows",2022-09-16,79,2,1,69,0,10,-8,G#/A♭ Major,4,5p0bEz7DNsULez2X9yrNGa,USAT22204472,no
+65,"Here to Forever","Death Cab for Cutie",158,10B,77,2026-05-08,03:46,49,"","Asphalt Meadows",2022-09-16,62,7,0,93,0,10,-8,D Major,4,7Cva2EgJougx6O6M5xgWAq,USAT22204470,no
+66,"Picking Dragons' Pockets","Modest Mouse",180,1B,76,2026-05-08,04:36,58,"indie rock, indie, alternative rock","Picking Dragons' Pockets",2026-04-21,54,1,2,71,0,10,-5,B Major,4,2k1VofAVg8rdoXSG7p0oWW,USA2P2609800,no
+67,"Outrun This Feeling","Elle Coves",120,9B,72,2026-05-08,02:56,35,"","Selfishly Inclined",2024-03-13,67,3,0,30,0,10,-5,G Major,3,5pI9tVNPYhWrxBwV1IlfV8,US23A1578741,no
+68,"Animal","Miike Snow",118,12A,73,2026-05-08,04:24,63,"alternative dance","Miike Snow (Deluxe Edition)",2009-05-22,77,1,0,69,0,0,-7,C♯/D♭ Minor,4,0X9wubEYVnWE6S4p03ezrx,GBARL0900399,no
+69,"Don't Dance","3OH!3",80,7A,76,2026-05-08,03:16,39,"","3OH!3",2007-07-23,57,19,0,70,20,0,-3,D Minor,4,53BirqAVvxjDPQCH316BNM,TCABN1385334,no
+70,"Hey","Lil Jon,3OH!3",132,8B,76,2026-05-08,03:35,43,"crunk, ","Crunk Rock (Deluxe)",2010-01-01,69,0,0,51,0,10,-4,C Major,4,5l9D0ugfAeQ6cgiYb2ay65,USUM71013761,yes
+71,"Keep On Lookin'","Ciara",129,10A,45,2026-05-08,03:17,25,"","Ciara",2013-07-08,86,25,0,45,30,10,-6,B Minor,4,21ovuLfg5iT583UEgeEYQb,USSM11301901,yes
+72,"Sophomore","Ciara",148,6A,74,2026-05-08,03:44,30,"","Ciara",2013-07-08,64,1,0,38,0,10,-7,G Minor,4,4SdjXwZjsg6HQrXXhdGClj,USSM11301776,no
+73,"Overdose","Ciara",107,4B,70,2026-05-08,03:47,42,"","Ciara",2013-07-08,77,1,1,79,0,0,-6,G#/A♭ Major,4,7jzjN8awsBYLjFqlsSCJ1j,USSM11301271,no
+74,"Leave Me Alone","Chris Brown",92,10A,55,2026-05-08,06:03,74,"r&b","BROWN",2026-05-08,66,4,0,24,0,10,-8,B Minor,4,6XqByEYtFrbH2OPwQuGn8q,USRC12600762,no
+75,"It Depends (feat. Bryson Tiller)","Chris Brown,Bryson Tiller",136,3B,49,2026-05-08,04:31,74,"r&b, trap soul","BROWN",2026-05-08,63,3,0,33,0,0,-8,C♯/D♭ Major,4,1mIYDLcLe8SLW2pCI4BMKh,USRC12501295,yes
+76,"Fallin' (feat. Leon Thomas)","Chris Brown,Leon Thomas",156,11A,64,2026-05-08,04:26,76,"r&b, ","BROWN",2026-05-08,49,18,0,50,0,10,-6,F#/G♭ Minor,3,40GjjsfvHz6hdeBbd8jSdG,USRC12600738,yes
+77,"Red Rum (feat. YoungBoy Never Broke Again)","Chris Brown,YoungBoy Never Broke Again",94,4A,66,2026-05-08,03:32,71,"r&b, ","BROWN",2026-05-08,63,2,0,15,0,10,-6,F Minor,4,3jpMXlXpPaGJd9IX5kahvQ,USRC12600756,yes
+78,"Bombs in the Ville/Hit the Gas","J. Cole",131,3B,38,2026-05-08,04:06,74,"rap","The Fall-Off",2026-02-06,54,22,0,33,0,10,-11,C♯/D♭ Major,4,0Awr3NZMkRHQFabkMxW1VT,USUG12600545,yes
+79,"Stem the Flow","Paris Paloma",129,11B,86,2026-05-09,04:03,65,"","Stem the Flow",2026-05-06,57,3,0,23,10,20,-7,A Major,4,2NEJSUekQg1nVvTI0ctJeA,CAN112600495,yes
+80,"Miyazaki","Paris Paloma",107,9B,84,2026-05-09,03:24,45,"","Stem the Flow",2026-05-06,58,14,0,47,0,20,-5,G Major,4,2fF9j7eLr6DuZiGtH3n8jY,CAN112600323,no
+81,"Good Girl","Paris Paloma",129,9B,77,2026-05-09,04:23,43,"","Stem the Flow",2026-05-06,62,14,0,27,20,10,-6,G Major,4,65ePCwT7ikG44F4DF4hlgN,CAN112600070,no
+82,"Good Boy","Paris Paloma",124,12B,78,2026-05-09,03:42,43,"","Stem the Flow",2026-05-06,63,20,0,37,10,20,-7,E Major,4,7CjLktPwi64JfCfnZYFtnl,CAN112501780,no
+83,"Outside Today","YoungBoy Never Broke Again",134,10A,67,2026-05-09,02:09,75,"","Until Death Call My Name",2018-04-27,85,14,0,6,0,10,-5,B Minor,4,5PIfH6BzcmH04RDmtzF0BN,USAT21800223,yes
+84,"Ric Flair Drip (with Metro Boomin)","Offset,Metro Boomin",100,11B,43,2026-05-09,02:52,84,"","Without Warning",2017-10-30,88,15,0,33,20,10,-8,A Major,4,7sO5G9EABYOXQKNPNiE9NR,QZ45A1700064,yes
+85,"Sun","Derik Fein",100,11A,60,2026-05-10,03:02,56,"","Sun",2024-06-03,69,1,0,68,0,10,-6,F#/G♭ Minor,4,7Hybzi2nMsBsg2Fs2aKUh7,TCAIH2457879,no
+86,"Disorder - 2007 Remaster","Joy Division",85,3A,80,2026-05-26,03:29,71,"post-punk, gothic rock, new wave, darkwave, madchester, cold wave","Unknown Pleasures (Collector's Edition)",1979-06-01,32,0,69,74,10,10,-7,A#/B♭ Minor,4,5fbQCQt91LsVgXusFS0CCD,GBAAP0600160,no
+87,"Three Imaginary Boys - 2005 Remaster","The Cure",170,10A,63,2026-05-26,03:15,40,"new wave, post-punk, gothic rock, darkwave","Three Imaginary Boys (Deluxe Edition)",1979-05-11,60,8,0,48,0,0,-8,B Minor,4,660u9agQuREtEDmETVWSts,USEE10500811,no
+88,"Despues Del Choli","Jowell,Lennox,Dj Kelvin El Sacamostro",198,2B,93,2026-05-27,03:09,18,"reggaeton, mambo, merengue, ","Despues Del Choli",2021-12-11,69,2,0,55,10,20,-3,F#/G♭ Major,4,2Sd0Cq80A8shn0hQDwtU15,QZNWZ2128448,yes
+89,"DYNAMITE","Tyla,Wizkid",98,8B,78,2026-05-27,02:57,67,"afrobeats, afrobeat, afropop, azonto, afroswing, afro r&b, afropiano","DYNAMITE",2025-07-24,64,2,0,81,20,10,-3,C Major,4,1myE3bHoWoSO5hyr3MxdHJ,USSM12503269,no
+90,"Dangerous - Immortal Version","Michael Jackson",113,8A,68,2026-05-28,02:41,53,"","Immortal",2011-11-21,94,4,0,40,10,10,-7,A Minor,4,72QXcbzrCVYnWav6Xtuvaw,USSM11105961,no
+91,"Into The Groove (You Can Dance Remix Edit) - 2022 Remaster","Madonna",116,4B,80,2026-05-29,04:44,42,"","Finally Enough Love",2022-06-24,75,2,0,72,0,0,-4,G#/A♭ Major,4,3K6j52TvA5UgzBVEHnhmQp,USRH12102968,no
+92,"Is There Anybody Out There?","Pink Floyd",119,8A,7,2026-06-01,02:41,60,"progressive rock, psychedelic rock, classic rock, art rock, rock","The Wall",1979-11-30,31,72,32,4,0,10,-27,A Minor,4,5HAjss9faCAowGY8dM24r6,GBN9Y1100109,no
+93,"Another Brick in the Wall, Pt. 2","Pink Floyd",104,8B,39,2026-06-01,03:58,85,"progressive rock, psychedelic rock, classic rock, art rock, rock","The Wall",1979-11-30,69,8,0,72,0,20,-16,C Major,4,4gMgiXfqyzZLMhsksGmbQV,GBN9Y1100099,no
+94,"Comfortably Numb","Pink Floyd",127,10A,37,2026-06-01,06:22,82,"progressive rock, psychedelic rock, classic rock, art rock, rock","The Wall",1979-11-30,47,15,31,17,0,0,-13,B Minor,4,5HNCy40Ni5BZJFw1TKzRsC,GBN9Y1100113,no
+95,"Grinding Halt - 2005 Remaster","The Cure",173,11A,74,2026-06-01,02:49,40,"new wave, post-punk, gothic rock, darkwave","Three Imaginary Boys (Deluxe Edition)",1979-05-11,71,2,2,66,20,0,-8,F#/G♭ Minor,4,6liM7f1QwsPfwS1BkpMQ1M,USEE10500802,no
+96,"Meathook","The Cure",166,8B,46,2026-06-01,02:17,29,"new wave, post-punk, gothic rock, darkwave","Three Imaginary Boys (Deluxe Edition)",1979-05-11,64,39,0,61,40,10,-11,C Major,4,5MnOyYxgPVb2V6jv9c1en7,USEE10500807,no
+97,"Independent (feat. Boosie Badazz & Lil Phat)","Webbie,Boosie Badazz,Lil Phat",174,12A,43,2026-06-04,04:10,62,"southern hip hop, crunk, new orleans bounce","Savage Life 2",2008-02-25,73,0,0,20,0,10,-6,C♯/D♭ Minor,4,0tdjTo4xacmmF7eINqaM8z,USAT20705690,yes
+98,"Monster","Lady Gaga",120,8A,80,2026-06-04,04:09,73,"art pop, pop","The Fame Monster (Deluxe Edition)",2009-11-05,70,0,0,65,0,40,-5,A Minor,4,2WgyOP8Z1D6GQYumCwH4Dk,USUM70918597,yes
+99,"Fame is a Gun","Addison Rae",138,2A,40,2026-06-04,03:03,88,"","Addison",2025-06-06,69,17,0,41,0,10,-7,D#/E♭ Minor,4,7B3BwNecBhKvNwSMOOl7Gk,USSM12501572,no
+100,"On The Floor","Jennifer Lopez,Pitbull",130,2A,78,2026-06-04,04:44,90,"","Love?",2011-04-29,73,11,0,57,0,0,-5,D#/E♭ Minor,4,3C0nOe05EIt1390bVABLyN,USUM71104034,no

@@ -11,6 +11,29 @@ from sklearn.metrics.pairwise import euclidean_distances
 # Get the root directory (two levels up from src/analysis/)
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 db_path = os.path.join(root_dir, 'spotify_music_library.db')
+harmonic_rules_path = os.path.join(root_dir, 'data', 'harmonic_mixing_rules.csv')
+
+HARMONIC_RULE_COLUMNS = [
+    'Perfect Mix',
+    '-1 Mix',
+    '+1 Mix',
+    'Energy Boost',
+    'Scale Change',
+    'Diagonal Mix',
+    "Jaw's Mix",
+    'Mood Shifter'
+]
+
+HARMONIC_RULE_GROUPS = {
+    'Perfect Mix': 1,
+    '-1 Mix': 1,
+    '+1 Mix': 1,
+    'Energy Boost': 2,
+    'Scale Change': 2,
+    'Diagonal Mix': 3,
+    "Jaw's Mix": 4,
+    'Mood Shifter': 5,
+}
 
 # Connect to the database
 conn = sqlite3.connect(db_path)
@@ -21,6 +44,90 @@ song_options = [{'label': f"{row['Song']} - {row['Artist']}", 'value': f"{row['A
 artist_song_counts = df_songs.groupby('Artist')['Song'].nunique().to_dict()
 
 conn.close()
+
+df_harmonic_rules = pd.read_csv(harmonic_rules_path)
+
+def build_key_step_lookup(seed_camelot):
+    if pd.isna(seed_camelot):
+        return {}
+
+    row = df_harmonic_rules[df_harmonic_rules['Starting Key'] == seed_camelot]
+    if row.empty:
+        return {}
+
+    row = row.iloc[0]
+    step_lookup = {}
+    for column in HARMONIC_RULE_COLUMNS:
+        target_key = row[column]
+        if pd.notna(target_key):
+            step_lookup[str(target_key)] = HARMONIC_RULE_GROUPS[column]
+
+    return step_lookup
+
+def ensure_custom_playlist_tables(conn):
+    """Ensure custom playlist tables exist and have required columns for current output schema."""
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS custom_playlists (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            playlist_name TEXT NOT NULL,
+            seed_song TEXT NOT NULL,
+            seed_artist TEXT NOT NULL,
+            year_range INTEGER,
+            target_size INTEGER NOT NULL,
+            created_date TEXT NOT NULL,
+            csv_path TEXT
+        )
+    ''')
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS custom_playlist_songs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            playlist_id INTEGER NOT NULL,
+            track_number INTEGER NOT NULL,
+            track_key TEXT NOT NULL,
+            track_id TEXT NOT NULL,
+            song TEXT NOT NULL,
+            artist TEXT NOT NULL,
+            album TEXT,
+            year INTEGER,
+            bpm REAL,
+            valence REAL,
+            dance REAL,
+            energy REAL,
+            key TEXT,
+            distance REAL,
+            mood_score REAL,
+            key_step INTEGER,
+            FOREIGN KEY (playlist_id) REFERENCES custom_playlists(id) ON DELETE CASCADE
+        )
+    ''')
+
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_custom_playlist_songs_playlist_id
+        ON custom_playlist_songs(playlist_id)
+    ''')
+
+    existing_cols = {
+        row[1] for row in cursor.execute("PRAGMA table_info(custom_playlist_songs)").fetchall()
+    }
+    required_cols = {
+        'bpm': 'REAL',
+        'valence': 'REAL',
+        'energy': 'REAL',
+        'dance': 'REAL',
+        'key': 'TEXT',
+        'distance': 'REAL',
+        'mood_score': 'REAL',
+        'key_step': 'INTEGER'
+    }
+
+    for col_name, col_type in required_cols.items():
+        if col_name not in existing_cols:
+            cursor.execute(f"ALTER TABLE custom_playlist_songs ADD COLUMN {col_name} {col_type}")
+
+    conn.commit()
 
 # Create Dash app
 app = Dash(__name__)
@@ -164,6 +271,7 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_previous_play
         selected_artist, selected_song = selected_song_artist.split('|')
         
         conn = sqlite3.connect(db_path)
+        ensure_custom_playlist_tables(conn)
         
         # Get Track_Keys to exclude from all previous custom playlists
         excluded_track_keys = set()
@@ -190,13 +298,13 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_previous_play
         
         df_metadata = pd.read_sql("""
             SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, Popularity, Camelot,
-                   BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db
+                   BPM, Valence, Dance, Energy
             FROM tracks
             WHERE Album_Year IS NOT NULL
         """, conn)
         
         df_features = pd.read_sql("""
-            SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db
+            SELECT Track_Key, BPM, Valence, Dance, Energy
             FROM tracks
             WHERE Album_Year IS NOT NULL
         """, conn)
@@ -214,51 +322,45 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_previous_play
         
         seed_row = df_metadata.loc[seed_key]
         seed_camelot = seed_row['Camelot']
+        seed_mood_score = seed_row['Valence'] + seed_row['Dance'] + seed_row['Energy']
+        key_step_lookup = build_key_step_lookup(seed_camelot)
+        default_key_step = len(HARMONIC_RULE_GROUPS) + 1
+        seed_key_step = key_step_lookup.get(str(seed_camelot), 1)
 
         # Prepare seed song stats for display
         seed_stats = [
             html.H4("Seed Song Stats", style={'marginBottom': '8px'}),
             html.P(f"0. {seed_row['Song']} — {seed_row['Artist']} ({seed_row['Album_Year']}) [ORIGINAL]", style={'fontWeight': 'bold', 'fontSize': '18px'}),
             html.P(f"   Distance: 0.0000"),
-            html.P(f"   Popularity: {seed_row['Popularity']}"),
-            html.P(f"   Features: BPM={seed_row['BPM']}, Valence={seed_row['Valence']}, Dance={seed_row['Dance']}, Energy={seed_row['Energy']}, Acoustic={seed_row['Acoustic']}, Loud_Db={seed_row['Loud_Db']}, Key={seed_camelot}")
+            html.P(f"   Features: BPM={seed_row['BPM']}, Mood Score={seed_mood_score:.1f}, Key Step={seed_key_step}"),
+            html.P(f"   Core Features: BPM={seed_row['BPM']}, Valence={seed_row['Valence']}, Energy={seed_row['Energy']}, Dance={seed_row['Dance']}, Key={seed_camelot}")
         ]
-        
-        FEATURES = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db']
+
+        df_mood_scores = df_features[['Valence', 'Dance', 'Energy']].sum(axis=1)
+        df_key_steps = df_metadata['Camelot'].apply(lambda k: key_step_lookup.get(str(k), default_key_step))
+        df_metadata['mood_score'] = df_mood_scores
+        df_metadata['key_step'] = df_key_steps
+
+        df_distance_features = pd.DataFrame({
+            'BPM': df_features['BPM'],
+            'Mood_Score': df_mood_scores,
+            'Key_Step': df_key_steps
+        }, index=df_features.index)
+
         scaler = StandardScaler()
-        df_features_scaled = scaler.fit_transform(df_features[FEATURES])
-        
-        valence_idx = FEATURES.index('Valence')
-        df_features_scaled[:, valence_idx] *= 1.5
-        
-        # Apply BPM weighting (2x) to prioritize tempo similarity
-        bpm_idx = FEATURES.index('BPM')
-        df_features_scaled[:, bpm_idx] *= 2
-        
-        seed_idx = df_features.index.get_loc(seed_key)
-        seed_features = df_features_scaled[seed_idx]
-        
-        distances = euclidean_distances([seed_features], df_features_scaled)[0]
+        df_distance_scaled = scaler.fit_transform(df_distance_features)
+
+        seed_distance_df = pd.DataFrame([{
+            'BPM': seed_row['BPM'],
+            'Mood_Score': seed_mood_score,
+            'Key_Step': seed_key_step
+        }])
+        seed_distance_scaled = scaler.transform(seed_distance_df)[0]
+
+        distances = euclidean_distances([seed_distance_scaled], df_distance_scaled)[0]
         df_metadata['distance'] = distances
         df_metadata = df_metadata.sort_values('distance')
         df_metadata = df_metadata[df_metadata.index != seed_key]
-        
-        # Apply harmonic filter (always enabled)
-        valid_keys = None
-        if pd.notna(seed_camelot):
-            conn = sqlite3.connect(db_path)
-            try:
-                df_valid_keys = pd.read_sql(
-                    "SELECT DISTINCT target_key FROM mixing_rules WHERE starting_key = ?",
-                    conn,
-                    params=(seed_camelot,)
-                )
-                valid_keys = set(df_valid_keys['target_key'].tolist())
-                df_metadata = df_metadata[df_metadata['Camelot'].isin(valid_keys)]
-            finally:
-                conn.close()
-        else:
-            print("Warning: Seed song has no Camelot key, harmonic filter disabled")
 
         # Cap candidates to distance <= 3
         df_metadata = df_metadata[df_metadata['distance'] <= 3]
@@ -324,12 +426,12 @@ def show_nn_stats(n_clicks, selected_song_artist):
         conn = sqlite3.connect(db_path)
         df_metadata = pd.read_sql("""
             SELECT Track_Key, Song, Artist, Camelot,
-                   BPM, Valence, Dance, Energy, Acoustic, "Loud (DB)" as Loud_Db
+                   BPM, Valence, Dance, Energy
             FROM tracks
             WHERE Album_Year IS NOT NULL
         """, conn)
 
-        df_features = df_metadata[['Track_Key', 'BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db']].copy()
+        df_features = df_metadata[['Track_Key', 'BPM', 'Valence', 'Dance', 'Energy']].copy()
         df_metadata = df_metadata.set_index('Track_Key')
         df_features = df_features.set_index('Track_Key')
 
@@ -339,35 +441,37 @@ def show_nn_stats(n_clicks, selected_song_artist):
 
         seed_camelot = df_metadata.loc[seed_key]['Camelot']
 
-        features = ['BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db']
+        key_step_lookup = build_key_step_lookup(seed_camelot)
+        default_key_step = len(HARMONIC_RULE_GROUPS) + 1
+        df_mood_scores = df_features[['Valence', 'Dance', 'Energy']].sum(axis=1)
+        df_key_steps = df_metadata['Camelot'].apply(lambda k: key_step_lookup.get(str(k), default_key_step))
+
+        df_distance_features = pd.DataFrame({
+            'BPM': df_features['BPM'],
+            'Mood_Score': df_mood_scores,
+            'Key_Step': df_key_steps
+        }, index=df_features.index)
+
         scaler = StandardScaler()
-        df_features_scaled = scaler.fit_transform(df_features[features])
+        df_distance_scaled = scaler.fit_transform(df_distance_features)
 
-        valence_idx = features.index('Valence')
-        bpm_idx = features.index('BPM')
-        df_features_scaled[:, valence_idx] *= 1.5
-        df_features_scaled[:, bpm_idx] *= 2
+        seed_row = df_metadata.loc[seed_key]
+        seed_mood_score = seed_row['Valence'] + seed_row['Dance'] + seed_row['Energy']
+        seed_key_step = key_step_lookup.get(str(seed_camelot), 1)
+        seed_distance_df = pd.DataFrame([{
+            'BPM': seed_row['BPM'],
+            'Mood_Score': seed_mood_score,
+            'Key_Step': seed_key_step
+        }])
+        seed_distance_scaled = scaler.transform(seed_distance_df)[0]
 
-        seed_idx = df_features.index.get_loc(seed_key)
-        seed_features = df_features_scaled[seed_idx]
-
-        distances = euclidean_distances([seed_features], df_features_scaled)[0]
+        distances = euclidean_distances([seed_distance_scaled], df_distance_scaled)[0]
         df_metadata['distance'] = distances
         df_metadata = df_metadata[df_metadata.index != seed_key]
 
-        # Apply harmonic filter (always enabled in builder)
-        if pd.notna(seed_camelot):
-            df_valid_keys = pd.read_sql(
-                "SELECT DISTINCT target_key FROM mixing_rules WHERE starting_key = ?",
-                conn,
-                params=(seed_camelot,)
-            )
-            valid_keys = set(df_valid_keys['target_key'].tolist())
-            df_metadata = df_metadata[df_metadata['Camelot'].isin(valid_keys)]
-
         conn.close()
 
-        total_eligible_after_harmonic = int(len(df_metadata))
+        total_eligible = int(len(df_metadata))
         df_within_3 = df_metadata[df_metadata['distance'] <= 3]
         total_eligible_within_3 = int(len(df_within_3))
 
@@ -393,7 +497,7 @@ def show_nn_stats(n_clicks, selected_song_artist):
 
         return html.Div([
             html.H4("Nearest Neighbor Stats"),
-            html.P(f"Eligible songs after harmonic filtering: {total_eligible_after_harmonic}"),
+            html.P(f"Eligible songs: {total_eligible}"),
             html.P(f"Songs with Distance <= 3.0: {total_eligible_within_3}"),
             html.P(f"Distance 0-1: {bucket_counts['0-1']}"),
             html.P(f"Distance 1-2: {bucket_counts['1-2']}"),
@@ -462,8 +566,9 @@ def update_current_song(knn_results, current_index, accepted_songs, rejected_son
 
         batch_html.append(html.Div([
             html.P(f"{i}. {song['Song']} — {song['Artist']} ({song['Album_Year']})", style={'fontSize': '18px', 'fontWeight': 'bold', 'marginBottom': '2px'}),
-            html.P(f"Distance: {song['distance']:.4f} | Popularity: {song['Popularity']}", style={'marginBottom': '8px'}),
-            html.P(f"Features: BPM={song['BPM']}, Valence={song['Valence']}, Dance={song['Dance']}, Energy={song['Energy']}, Acoustic={song['Acoustic']}, Loud_Db={song['Loud_Db']}, Key={song['Camelot']}", style={'marginBottom': '8px'}),
+            html.P(f"Distance: {song['distance']:.4f}", style={'marginBottom': '6px'}),
+            html.P(f"Features: BPM={song['BPM']}, Mood Score={song['mood_score']:.1f}, Key Step={int(song['key_step'])}", style={'marginBottom': '4px'}),
+            html.P(f"Core Features: BPM={song['BPM']}, Valence={song['Valence']}, Energy={song['Energy']}, Dance={song['Dance']}, Key={song['Camelot']}", style={'marginBottom': '8px'}),
             html.Div([
                 html.Button(
                     select_label,
@@ -653,8 +758,9 @@ def update_artist_songs(knn_results, seed_song_artist, accepted_songs, rejected_
             section.append(html.Div([
                 html.P(f"{i}. {song['Song']} ({song['Album_Year']})", style={'fontWeight': 'bold', 'display': 'inline'}),
                 html.Span(status, style=status_style),
-                html.P(f"   Distance: {song['distance']:.4f}, Popularity: {song['Popularity']}"),
-                html.P(f"   Features: BPM={song['BPM']}, Valence={song['Valence']}, Dance={song['Dance']}, Energy={song['Energy']}, Acoustic={song['Acoustic']}, Loud_Db={song['Loud_Db']}, Key={song['Camelot']}"),
+                html.P(f"   Distance: {song['distance']:.4f}"),
+                html.P(f"   Features: BPM={song['BPM']}, Mood Score={song['mood_score']:.1f}, Key Step={int(song['key_step'])}"),
+                html.P(f"   Core Features: BPM={song['BPM']}, Valence={song['Valence']}, Energy={song['Energy']}, Dance={song['Dance']}, Key={song['Camelot']}"),
                 html.Hr()
             ]))
     else:
@@ -662,7 +768,7 @@ def update_artist_songs(knn_results, seed_song_artist, accepted_songs, rejected_
         if artist_total <= 1:
             section.append(html.P("No other songs by artist in library.", style={'fontStyle': 'italic'}))
         else:
-            section.append(html.P("No other songs by this artist in the eligible harmonic keys.", style={'fontStyle': 'italic'}))
+            section.append(html.P("No other songs by this artist in the current candidate set.", style={'fontStyle': 'italic'}))
 
     return html.Div(section)
 
@@ -718,8 +824,9 @@ def update_progress_playlist(accepted_songs, rejected_songs, target_size, seed_s
         move_down_disabled = accepted_idx == len(accepted_songs) - 1
         playlist_html.append(html.Div([
             html.P(f"{display_num}. {song['Song']} — {song['Artist']} ({song['Album_Year']})", style={'fontWeight': 'bold'}),
-            html.P(f"   Distance: {song['distance']:.4f}, Popularity: {song['Popularity']}"),
-            html.P(f"   Features: BPM={song['BPM']}, Valence={song['Valence']}, Dance={song['Dance']}, Energy={song['Energy']}, Acoustic={song['Acoustic']}, Loud_Db={song['Loud_Db']}, Key={song['Camelot']}"),
+            html.P(f"   Distance: {song['distance']:.4f}"),
+            html.P(f"   Features: BPM={song['BPM']}, Mood Score={song['mood_score']:.1f}, Key Step={int(song['key_step'])}"),
+            html.P(f"   Core Features: BPM={song['BPM']}, Valence={song['Valence']}, Energy={song['Energy']}, Dance={song['Dance']}, Key={song['Camelot']}"),
             html.Div([
                 html.Button(
                     'Up',
@@ -752,8 +859,9 @@ def update_progress_playlist(accepted_songs, rejected_songs, target_size, seed_s
         for song in rejected_songs:
             playlist_html.append(html.Div([
                 html.P(f"{song['Song']} — {song['Artist']} ({song['Album_Year']})", style={'fontWeight': 'bold', 'color': '#f44336'}),
-                html.P(f"   Distance: {song['distance']:.4f}, Popularity: {song['Popularity']}"),
-                html.P(f"   Features: BPM={song['BPM']}, Valence={song['Valence']}, Dance={song['Dance']}, Energy={song['Energy']}, Acoustic={song['Acoustic']}, Loud_Db={song['Loud_Db']}, Key={song['Camelot']}"),
+                html.P(f"   Distance: {song['distance']:.4f}"),
+                html.P(f"   Features: BPM={song['BPM']}, Mood Score={song['mood_score']:.1f}, Key Step={int(song['key_step'])}"),
+                html.P(f"   Core Features: BPM={song['BPM']}, Valence={song['Valence']}, Energy={song['Energy']}, Dance={song['Dance']}, Key={song['Camelot']}"),
                 html.Button(
                     'Add',
                     id={'type': 'pb-add-rejected', 'index': f"{song['Artist']}|{song['Song']}"},
@@ -918,6 +1026,7 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
+        ensure_custom_playlist_tables(conn)
         
         # Insert playlist metadata
         created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -930,7 +1039,7 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         
         # Get audio features for seed song
         seed_data = pd.read_sql(
-            "SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key = ?",
+            "SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Camelot FROM tracks WHERE Track_Key = ?",
             conn,
             params=(f"{seed_artist}|{seed_song}",)
         )
@@ -938,16 +1047,18 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         # Insert seed song
         if not seed_data.empty:
             row = seed_data.iloc[0]
+            seed_mood_score = row['Valence'] + row['Dance'] + row['Energy']
+            seed_key_step = build_key_step_lookup(row['Camelot']).get(str(row['Camelot']), 1)
             cursor.execute('''
-                INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, acoustic, loud_db, camelot, distance, popularity)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (playlist_id, 1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Acoustic'], row['Loud_Db'], row['Camelot'], 0.0, row['Popularity']))
+                INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, key, distance, mood_score, key_step)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (playlist_id, 1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Camelot'], 0.0, seed_mood_score, seed_key_step))
         
         # Get audio features for accepted songs
         accepted_track_keys = [f"{song['Artist']}|{song['Song']}" for song in accepted_songs]
         if accepted_track_keys:
             accepted_features = pd.read_sql(
-                f"SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
+                f"SELECT Track_Key, BPM, Valence, Dance, Energy, Camelot FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
                 conn,
                 params=accepted_track_keys
             )
@@ -958,10 +1069,12 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
                 track_key = f"{song['Artist']}|{song['Song']}"
                 if track_key in accepted_features.index:
                     features = accepted_features.loc[track_key]
+                    mood_score = features['Valence'] + features['Dance'] + features['Energy']
+                    key_step = int(song.get('key_step', build_key_step_lookup(features['Camelot']).get(str(features['Camelot']), len(HARMONIC_RULE_GROUPS) + 1)))
                     cursor.execute('''
-                        INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, acoustic, loud_db, camelot, distance, popularity)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (playlist_id, i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Acoustic'], features['Loud_Db'], features['Camelot'], song['distance'], features['Popularity']))
+                        INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, key, distance, mood_score, key_step)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (playlist_id, i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Camelot'], song['distance'], mood_score, key_step))
         
         conn.commit()
         conn.close()
@@ -981,6 +1094,7 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
 def update_playlist_dropdown(n_clicks):
     try:
         conn = sqlite3.connect(db_path)
+        ensure_custom_playlist_tables(conn)
         df_playlists = pd.read_sql("""
             SELECT id, playlist_name, seed_song, seed_artist, created_date
             FROM custom_playlists
@@ -1024,7 +1138,7 @@ def display_playlist_songs(selected_playlist_id):
         
         # Get songs
         df_songs = pd.read_sql("""
-            SELECT track_number, song, artist, album, year, distance, popularity
+            SELECT track_number, song, artist, album, year, distance, bpm, valence, energy, dance, key, mood_score, key_step
             FROM custom_playlist_songs
             WHERE playlist_id = ?
             ORDER BY track_number
@@ -1047,10 +1161,12 @@ def display_playlist_songs(selected_playlist_id):
         for _, song_row in df_songs.iterrows():
             # Convert binary data to integers if needed
             year_val = int.from_bytes(song_row['year'], byteorder='little', signed=False) if isinstance(song_row['year'], bytes) else song_row['year']
-            pop_val = int.from_bytes(song_row['popularity'], byteorder='little', signed=False) if isinstance(song_row['popularity'], bytes) else song_row['popularity']
+            key_step_val = int.from_bytes(song_row['key_step'], byteorder='little', signed=False) if isinstance(song_row['key_step'], bytes) else song_row['key_step']
             
             songs_html.append(html.P(f"{song_row['track_number']}. {song_row['song']} — {song_row['artist']} ({year_val})", style={'fontWeight': 'bold'}))
-            songs_html.append(html.P(f"   Distance: {song_row['distance']:.4f}, Popularity: {pop_val}"))
+            songs_html.append(html.P(f"   Distance: {song_row['distance']:.4f}"))
+            songs_html.append(html.P(f"   Features: BPM={song_row['bpm']}, Mood Score={song_row['mood_score']:.1f}, Key Step={key_step_val}"))
+            songs_html.append(html.P(f"   Core Features: BPM={song_row['bpm']}, Valence={song_row['valence']}, Energy={song_row['energy']}, Dance={song_row['dance']}, Key={song_row['key']}"))
             songs_html.append(html.Hr())
         
         return html.Div(songs_html)
@@ -1082,8 +1198,9 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     
     # Get seed song data from database
     conn = sqlite3.connect(db_path)
+    ensure_custom_playlist_tables(conn)
     seed_data = pd.read_sql(
-        "SELECT Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key = ?",
+        "SELECT Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Camelot FROM tracks WHERE Track_Key = ?",
         conn,
         params=(f"{seed_artist}|{seed_song}",)
     )
@@ -1092,7 +1209,7 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     accepted_track_keys = [f"{song['Artist']}|{song['Song']}" for song in accepted_songs]
     if accepted_track_keys:
         accepted_features = pd.read_sql(
-            f"SELECT Track_Key, BPM, Valence, Dance, Energy, Acoustic, \"Loud (DB)\" as Loud_Db, Popularity, Camelot FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
+            f"SELECT Track_Key, BPM, Valence, Dance, Energy, Camelot FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
             conn,
             params=accepted_track_keys
         )
@@ -1105,22 +1222,26 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     # Create CSV content
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(['Track_Number', 'Track_Key', 'Track_ID', 'Song', 'Artist', 'Album', 'Year', 'BPM', 'Valence', 'Dance', 'Energy', 'Acoustic', 'Loud_Db', 'Camelot', 'Distance', 'Popularity'])
+    writer.writerow(['Track_Number', 'Track_Key', 'Track_ID', 'Song', 'Artist', 'Album', 'Year', 'Distance', 'BPM', 'Valence', 'Energy', 'Dance', 'Key', 'Mood_Score', 'Key_Step'])
     
     # Write seed song
     if not seed_data.empty:
         row = seed_data.iloc[0]
-        writer.writerow([1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Acoustic'], row['Loud_Db'], row['Camelot'], 0.0000, row['Popularity']])
+        seed_mood_score = row['Valence'] + row['Dance'] + row['Energy']
+        seed_key_step = build_key_step_lookup(row['Camelot']).get(str(row['Camelot']), 1)
+        writer.writerow([1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], 0.0000, row['BPM'], row['Valence'], row['Energy'], row['Dance'], row['Camelot'], seed_mood_score, seed_key_step])
     
     # Write accepted songs
     for i, song in enumerate(accepted_songs, 2):
         track_key = f"{song['Artist']}|{song['Song']}"
         if track_key in accepted_features.index:
             features = accepted_features.loc[track_key]
-            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Acoustic'], features['Loud_Db'], features['Camelot'], song['distance'], features['Popularity']])
+            mood_score = features['Valence'] + features['Dance'] + features['Energy']
+            key_step = int(song.get('key_step', build_key_step_lookup(features['Camelot']).get(str(features['Camelot']), len(HARMONIC_RULE_GROUPS) + 1)))
+            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], song['distance'], features['BPM'], features['Valence'], features['Energy'], features['Dance'], features['Camelot'], mood_score, key_step])
         else:
             # Fallback if features not found
-            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], 0, 0, 0, 0, 0, 0, '', song['distance'], song['Popularity']])
+            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], song['distance'], 0, 0, 0, 0, '', 0, int(song.get('key_step', 0))])
     
     output.seek(0)
     
