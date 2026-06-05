@@ -403,7 +403,6 @@ if __name__ == '__main__':
     
     if len(df_seeds) > 0:
         print(f"\nSeed song found successfully!")
-        print(f"Cluster assignment: {df_seeds}")
         
         # Find nearest neighbors for the first seed song
         seed_row = df_seeds.iloc[0]

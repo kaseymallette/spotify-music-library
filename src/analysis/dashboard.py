@@ -41,7 +41,6 @@ conn = sqlite3.connect(db_path)
 # Query artists and songs for KNN dropdowns
 df_songs = pd.read_sql("SELECT Song, Artist FROM tracks ORDER BY Song, Artist", conn)
 song_options = [{'label': f"{row['Song']} - {row['Artist']}", 'value': f"{row['Artist']}|{row['Song']}"} for _, row in df_songs.iterrows()]
-artist_song_counts = df_songs.groupby('Artist')['Song'].nunique().to_dict()
 
 conn.close()
 
@@ -220,10 +219,6 @@ app.layout = html.Div([
     html.Div(id='pb-save-status', style={'marginBottom': '20px', 'fontSize': '18px', 'color': 'green'}),
     dcc.Download(id='pb-download'),
 
-    html.Hr(),
-
-    html.Div(id='pb-artist-songs', style={'marginBottom': '20px'}),
-    
     html.Div(id='pb-playlist'),
     
     html.Hr(),
@@ -715,62 +710,6 @@ def previous_batch(n_clicks, current_index):
         return 0
 
     return max(current_index - 10, 0)
-
-@app.callback(
-    Output('pb-artist-songs', 'children'),
-    Input('pb-knn-results', 'data'),
-    Input('pb-song-dropdown', 'value'),
-    Input('pb-accepted-songs', 'data'),
-    Input('pb-rejected-songs', 'data')
-)
-def update_artist_songs(knn_results, seed_song_artist, accepted_songs, rejected_songs):
-    if not seed_song_artist:
-        return html.Div()
-
-    seed_artist, _ = seed_song_artist.split('|')
-    accepted_songs = accepted_songs or []
-    rejected_songs = rejected_songs or []
-
-    if not knn_results:
-        return html.Div()
-
-    same_artist_candidates = [song for song in knn_results if song.get('Artist') == seed_artist]
-    accepted_keys = set(song.get('Track_Key', f"{song['Artist']}|{song['Song']}") for song in accepted_songs)
-    rejected_keys = set(song.get('Track_Key', f"{song['Artist']}|{song['Song']}") for song in rejected_songs)
-
-    section = [
-        html.H3(f"Other Songs by {seed_artist} (Eligible Keys and Distance)"),
-        html.P("Use the Candidate Songs section above to Select/Reject songs.", style={'fontStyle': 'italic', 'color': '#666'})
-    ]
-
-    if same_artist_candidates:
-        for i, song in enumerate(same_artist_candidates[:10], 1):
-            track_key = song.get('Track_Key', f"{song['Artist']}|{song['Song']}")
-            status = ""
-            status_style = {}
-            if track_key in accepted_keys:
-                status = " [Selected]"
-                status_style = {'color': '#4CAF50', 'fontWeight': 'bold'}
-            elif track_key in rejected_keys:
-                status = " [Rejected]"
-                status_style = {'color': '#f44336', 'fontWeight': 'bold'}
-
-            section.append(html.Div([
-                html.P(f"{i}. {song['Song']} ({song['Album_Year']})", style={'fontWeight': 'bold', 'display': 'inline'}),
-                html.Span(status, style=status_style),
-                html.P(f"   Distance: {song['distance']:.4f}"),
-                html.P(f"   Features: BPM={song['BPM']}, Mood Score={song['mood_score']:.1f}, Key Step={int(song['key_step'])}"),
-                html.P(f"   Core Features: BPM={song['BPM']}, Valence={song['Valence']}, Energy={song['Energy']}, Dance={song['Dance']}, Key={song['Camelot']}"),
-                html.Hr()
-            ]))
-    else:
-        artist_total = artist_song_counts.get(seed_artist, 0)
-        if artist_total <= 1:
-            section.append(html.P("No other songs by artist in library.", style={'fontStyle': 'italic'}))
-        else:
-            section.append(html.P("No other songs by this artist in the current candidate set.", style={'fontStyle': 'italic'}))
-
-    return html.Div(section)
 
 @app.callback(
     Output('pb-progress', 'children'),

@@ -99,15 +99,15 @@ Running create_playlists.py...
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9655
+Row count: 9661
 ✓ create_playlists.py completed successfully
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 5821
-Unique Track_Keys: 5286
+Unique Track_IDs: 5824
+Unique Track_Keys: 5288
 Unique Artists: 2063
-Removed: 535 duplicate tracks (same song, different Track_ID)
+Removed: 536 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
@@ -165,7 +165,7 @@ Backstreet Boys|107
 OneRepublic|88
 Maroon 5|71
 Matt Maeson|64
-Daughter|58
+The Fray|58
 ```
 
 **Get top 5 songs by playlist count:**
@@ -259,8 +259,7 @@ python src/analysis/feature_analysis.py
 
 The script performs K-means clustering on audio features with the following approach:
 
-- **Valence Weighting**: Valence (mood) is weighted 2.5x before clustering to prioritize mood separation. This prevents mixing sad songs with happy songs within the same cluster, which would kill the mood in playlists.
-- **Feature Standardization**: All features are standardized using StandardScaler to ensure equal contribution to the distance metric.
+- **Feature Standardization**: All features are standardized using StandardScaler to ensure equal contribution to the distance metric. The four features (`BPM`, `Valence`, `Dance`, `Energy`) are weighted equally.
 - **Elbow Method**: The optimal number of clusters is determined using the elbow method, which plots inertia (within-cluster sum of squares) against the number of clusters. The elbow point is detected by finding the point with maximum distance from the line connecting the first and last points on the curve.
 - **Cluster Selection**: The algorithm tests cluster counts from 3 to 10. The elbow method detected 6 clusters as the optimal number.
 - **Visualization**: Clusters are visualized using feature pairs (Valence vs Energy, Valence vs Dance, Dance vs Energy, Valence vs BPM) to show how songs group by mood and rhythm/tempo characteristics.

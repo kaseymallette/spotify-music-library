@@ -1,51 +1,51 @@
-Track_Number,Track_Key,Track_ID,Song,Artist,Album,Year,BPM,Valence,Dance,Energy,Acoustic,Loud_Db,Camelot,Distance,Popularity
-1,Arctic Monkeys|Snap Out Of It,0NdTUS4UiNYCNn5FgVqKQY,Snap Out Of It,Arctic Monkeys,AM,2013,130,87,73,64,25,-6,4A,0.0,81
-2,Shania Twain|Whose Bed Have Your Boots Been Under,29t2kfPLZgqIEmPx4jRfYW,Whose Bed Have Your Boots Been Under,Shania Twain,Not Just A Girl (The Highlights),2022,132,80,71,74,9,-5,7B,0.9860388162563799,21
-3,OneRepublic|West Coast,3wSKESVpeeRrShLTe3tpN1,West Coast,OneRepublic,Artificial Paradise (Deluxe),2024,134,90,69,70,36,-8,11A,0.9191453488881367,55
-4,"Eurythmics,Annie Lennox,Dave Stewart|Sweet Dreams (Are Made of This) - 2005 Remaster",1TfqLAPs4K3s2rJMoCokcS,Sweet Dreams (Are Made of This) - 2005 Remaster,"Eurythmics,Annie Lennox,Dave Stewart",Sweet Dreams (Are Made Of This),1983,125,88,69,71,23,-7,5A,0.6486302066077577,86
-5,Bear Hands|Floor It,4E3DhWlhgxDUCUIGeLIRV6,Floor It,Bear Hands,The Key to What,2024,132,79,76,72,26,-6,4B,0.6874507471966254,0
-6,Snow Patrol|Shut Your Eyes,2BQJVwxDZEdGvBOeWrj34g,Shut Your Eyes,Snow Patrol,Eyes Open,2006,125,84,69,74,15,-6,3B,0.7948860933768882,0
-7,Foster The People|Pumped Up Kicks,7w87IxuO7BDcJ3YUqCyMTT,Pumped Up Kicks,Foster The People,Torches,2011,128,97,73,71,14,-6,4A,0.8506630104523432,87
-8,Djo|Delete Ya,7tFI5cqfAoR7MIvmbw1qd8,Delete Ya,Djo,The Crux,2025,118,84,83,67,25,-6,4B,1.0878043721638975,79
-9,Aaron Carter|Fool's Gold,4ibvd9quldF0rV7YRah0DO,Fool's Gold,Aaron Carter,LØVË,2018,130,79,69,70,5,-5,4A,1.058224014919216,33
-10,Tegan and Sara|Walking with a Ghost,7ImkjvM1OKWhJ5HIPOHcHE,Walking with a Ghost,Tegan and Sara,So Jealous,2004,118,93,79,54,13,-6,11A,1.2157253841538957,51
-11,Christian French|thank god,15605LNVSpT3Chvx8jWYm8,thank god,Christian French,The Space Between,2023,136,79,84,63,7,-6,11A,1.1949440368054214,29
-12,Blur|Song 2,3GfOAdcoc3X5GPiiXmpBjK,Song 2,Blur,Blur: The Best Of,2000,130,86,66,71,0,-7,4B,1.1770641457701911,71
-13,"SAINt JHN,Imanbek|Roses - Imanbek Remix",24Yi9hE78yPEbZ4kxyoXAI,Roses - Imanbek Remix,"SAINt JHN,Imanbek",Roses (Imanbek Remix),2019,122,90,77,72,2,-5,4B,1.2203674464663392,76
-14,"Jagged Edge,Nelly|Where the Party At",5mNV8Mz59bzyuQ53gTw0c0,Where the Party At,"Jagged Edge,Nelly",Jagged Little Thrill,2001,129,86,60,66,31,-6,4A,0.8769578882485067,66
-15,Shania Twain|That Don't Impress Me Much,4FUfoWMypAyWbOavmYyeNu,That Don't Impress Me Much,Shania Twain,Come On Over,1997,125,97,76,76,24,-8,3B,1.1439065279226814,63
-16,BLACKWELL|can't get over you,0O8mSSGxKvlqqqZpb09bWh,can't get over you,BLACKWELL,can't get over you,2024,125,89,76,64,0,-6,11A,1.0657829806914363,43
-17,Måneskin|I WANNA BE YOUR SLAVE,4pt5fDVTg5GhEvEtlz9dKk,I WANNA BE YOUR SLAVE,Måneskin,Teatro d'ira - Vol. I,2021,133,96,75,61,0,-4,3B,1.322732161102134,86
-18,Tegan and Sara|I Know I Know I Know,2WxVHQkKYr7qUcJBVnJt2E,I Know I Know I Know,Tegan and Sara,So Jealous,2004,117,85,72,66,16,-6,4B,0.9961004684599529,41
-19,Maroon 5|Lost,6tHQAadcluhVV4oD2IvHSk,Lost,Maroon 5,JORDI (Deluxe),2021,143,77,77,71,22,-7,6A,1.2379209637958288,49
-20,Bear Hands|Intrusive Thoughts,6X3dsWYaXWhU5zdGj0p21G,Intrusive Thoughts,Bear Hands,The Key to What,2024,130,72,75,74,14,-5,7B,1.1994853019690177,0
-21,Shania Twain|(If You're Not In It For Love) I'm Outta Here,6Lst3nF4McKOTLSLuTvLhw,(If You're Not In It For Love) I'm Outta Here,Shania Twain,The Woman In Me,1995,120,87,77,76,14,-8,7B,1.2244493747678014,55
-22,The B-52's|Love Shack,4W4wYHtsrgDiivRASVOINL,Love Shack,The B-52's,Cosmic Thing,1989,134,90,70,80,5,-7,4A,1.2290929944491638,73
-23,Rihanna|S&M,7ySUcLPVX7KudhnmNcgY2D,S&M,Rihanna,Loud,2010,128,84,77,69,1,-5,3B,1.079446293368901,87
-24,The Pussycat Dolls|Sway,0fhk2t4if79W019TC9vUcJ,Sway,The Pussycat Dolls,PCD (Expanded Edition),2005,126,83,70,73,54,-6,6A,1.2942668875894408,45
-25,Destiny's Child|Say My Name,7H6ev70Weq6DdpZyyTmUXk,Say My Name,Destiny's Child,The Writing's On The Wall,1999,138,73,71,68,27,-4,4A,1.2410223563664384,82
-26,"Daniel Bedingfield,D'N'D Productions|Gotta Get Thru This - D'N'D Radio Edit",747tpec1a0Hfqvj2za1pBs,Gotta Get Thru This - D'N'D Radio Edit,"Daniel Bedingfield,D'N'D Productions",Gotta Get Thru This,2002,134,91,84,77,9,-5,6A,1.247972052297025,55
-27,"Mike Posner,Big Sean|Cooler Than Me",2qE3sj3jXj44kbCIU7bkIn,Cooler Than Me,"Mike Posner,Big Sean",A Matter Of Time,2009,129,79,84,50,15,-4,6A,1.3385482185583455,63
-28,Justin Timberlake|LoveStoned / I Think She Knows (Interlude),5iyE2d4U3Vc5cqY9mPTlpy,LoveStoned / I Think She Knows (Interlude),Justin Timberlake,FutureSex/LoveSounds,2006,121,85,86,68,34,-6,3B,1.130027122826354,60
-29,Shania Twain|I'm Gonna Getcha Good,3wimPgsJv0hEgP5A3sQ7Ag,I'm Gonna Getcha Good,Shania Twain,Up! (Green Version),2002,124,95,72,79,4,-5,3B,1.3334533460353202,62
-30,Maroon 5|Sugar,2iuZJX9X9P0GKaE93xcPjk,Sugar,Maroon 5,V,2014,120,88,75,79,6,-7,3B,1.317848796743491,83
-31,Enrique Iglesias|Wish I Was Your Lover,2j5JmCkUL2g0xFvpCrFcbJ,Wish I Was Your Lover,Enrique Iglesias,Insomniac,2007,118,81,68,66,12,-6,4A,1.1081866098874722,23
-32,Echosmith|Cool Kids,3eOeuofLjOgjOCs7eWuvZ0,Cool Kids,Echosmith,Talking Dreams,2013,130,76,69,79,9,-4,4B,1.3756894278238037,67
-33,Tegan and Sara|Back in Your Head,2Pdo1VvYDB9FqeuNx8D1FW,Back in Your Head,Tegan and Sara,The Con,2007,141,82,75,80,4,-7,7B,1.4617369976028936,52
-34,112|Anywhere,0Zze3tFRSNwL6KllmYjLgZ,Anywhere,112,Room 112,1998,126,86,59,50,17,-8,7B,1.367816966223032,59
-35,Saving Abel|The Sex Is Good,1AgQqthiTBuJBzkv0o5cFT,The Sex Is Good,Saving Abel,Miss America,2010,120,76,76,63,10,-8,4A,1.3209243781201032,60
-36,Lola Young|Not Like That Anymore,6ugu9WpCEHXmns0PiqYTU1,Not Like That Anymore,Lola Young,Not Like That Anymore,2025,135,96,76,83,44,-5,4B,1.4300309546098964,59
-37,Culture Wars|Typical Ways,1NOjGNiE6rh8ybXW182pCh,Typical Ways,Culture Wars,Typical Ways,2025,123,97,72,74,11,-4,4A,1.2579705035236257,58
-38,Blake Shelton|Every Time I Look at You,1VQGhzMulHmfOIWso3jJsV,Every Time I Look at You,Blake Shelton,Blake Shelton,2001,121,80,71,75,1,-5,7B,1.3777915613809135,26
-39,Sara Bareilles|King of Anything,3VA8T3rNy5V24AXxNK5u9E,King of Anything,Sara Bareilles,Kaleidoscope Heart,2010,119,81,68,76,46,-4,3B,1.5077630730863114,59
-40,"Gwen Stefani,Akon|The Sweet Escape",66ZcOcouenzZEnzTJvoFmH,The Sweet Escape,"Gwen Stefani,Akon",The Sweet Escape,2006,120,73,76,77,19,-4,3B,1.4750121324214904,81
-41,Britney Spears|Circus,7jk7gqyEonmVVYahZN5zhW,Circus,Britney Spears,Circus (Deluxe Version),2008,115,76,79,73,15,-5,11A,1.481804176988536,81
-42,Beyoncé|Sweet Dreams,1FKxKGONukVFXWVJxAKmlz,Sweet Dreams,Beyoncé,I AM...SASHA FIERCE,2008,122,79,69,83,9,-6,3B,1.393609241591182,68
-43,Reneé Rapp|Leave Me Alone,1T38okUZknebljidMNSvfJ,Leave Me Alone,Reneé Rapp,Leave Me Alone,2025,131,88,73,85,2,-4,4A,1.5246968141939718,3
-44,Cobra Starship|You're Not in on the Joke,3eNSlXKgFkmekLIvyYTRKy,You're Not in on the Joke,Cobra Starship,Hot Mess,2009,130,85,62,77,1,-4,5A,1.4874418206389257,37
-45,"Akon,Sweet Rush|Troublemaker",7FOXrArO9CU6xVZotChlD8,Troublemaker,"Akon,Sweet Rush",Freedom,2008,122,84,86,79,13,-4,6A,1.4918543108967024,71
-46,Backstreet Boys|Masquerade,6h2WKGC3cXXm58BsY77MMO,Masquerade,Backstreet Boys,This Is Us,2009,124,83,71,84,1,-5,6A,1.500515163565033,38
-47,USHER|Superstar,18JosZY3HzD3lMy6iOOSAY,Superstar,USHER,Confessions (Expanded Edition),2004,142,71,67,59,13,-5,11A,1.5006130165189968,64
-48,Elderbrook|Sleepwalking,50Lf1pAMJqgnERsUK1hzG6,Sleepwalking,Elderbrook,Sleepwalking,2018,122,79,83,58,1,-8,11A,1.5307361173536491,39
-49,Tate McRae|greedy,5OUlarOZKy0cmIoLjdVj8L,greedy,Tate McRae,exes,2023,111,83,75,70,28,-4,11A,1.5367858906364362,0
-50,"M.I.A.,Timbaland|Come Around",7iO8C8WokR1folp9mPdN2t,Come Around,"M.I.A.,Timbaland",Kala,2007,120,85,85,85,31,-7,4B,1.540196476589969,59
+Track_Number,Track_Key,Track_ID,Song,Artist,Album,Year,Distance,BPM,Valence,Energy,Dance,Key,Mood_Score,Key_Step
+1,Arctic Monkeys|Snap Out Of It,0NdTUS4UiNYCNn5FgVqKQY,Snap Out Of It,Arctic Monkeys,AM,2013,0.0,130,87,64,73,4A,224,1
+2,Cobra Starship|You're Not in on the Joke,3eNSlXKgFkmekLIvyYTRKy,You're Not in on the Joke,Cobra Starship,Hot Mess,2009,0,130,85,77,62,5A,224,1
+3,Black Eyed Peas|Don't Phunk With My Heart,4MtDnnAJ1AtWit10FRmZdW,Don't Phunk With My Heart,Black Eyed Peas,Monkey Business,2005,0.04191694226687613,131,61,93,69,4A,223,1
+4,Mr. Belt & Wezol|It's Not Right But It's Okay,5OFVzqSeFxGpvDGyHvVeLj,It's Not Right But It's Okay,Mr. Belt & Wezol,It's Not Right But It's Okay,2024,0.07042156278577724,128,62,86,76,4A,224,1
+5,Two Door Cinema Club|Handshake,7tAsO743OcgMj5Mu7OOoIt,Handshake,Two Door Cinema Club,Beacon,2012,0.07677810515152941,131,82,83,56,5A,221,1
+6,YoungBoy Never Broke Again|Kacey Talk,1SF8piqsZWn86DajVKih8F,Kacey Talk,YoungBoy Never Broke Again,Top,2020,0.11500919888212091,127,77,61,88,3A,226,1
+7,Aaron Carter|Fool's Gold,4ibvd9quldF0rV7YRah0DO,Fool's Gold,Aaron Carter,LØVË,2018,0.13645626851649928,130,79,70,69,4A,218,1
+8,"Flo Rida,will.i.am|In the Ayer",6RpiAj9Ofv0Uqp6n2OuRoh,In the Ayer,"Flo Rida,will.i.am",Mail on Sunday,2008,0.14266750486172988,126,65,75,83,4A,223,1
+9,Presley Regier|Kiss,6dzBzOOeBpTvv5iotTf2HJ,Kiss,Presley Regier,Kiss,2025,0.17605390696443995,125,76,57,91,4A,224,1
+10,"Akon,Colby O'Donis,Kardinal Offishall|Beautiful",1GLx5tpDdwEFiA7KaikvX2,Beautiful,"Akon,Colby O'Donis,Kardinal Offishall",Freedom,2008,0.18194169135533045,130,63,95,74,5A,232,1
+11,"Enrique Iglesias,Pitbull|I Like It",7HacCTm33hZYYN8DXpCYuG,I Like It,"Enrique Iglesias,Pitbull",Euphoria,2010,0.18531750640329667,129,73,94,65,3A,232,1
+12,Justin Bieber|What Do You Mean,4B0JvthVoAAuygILe3n4Bs,What Do You Mean,Justin Bieber,Purpose (Deluxe),2015,0.18881222540345582,125,79,57,85,4A,221,1
+13,Bronski Beat|Smalltown Boy,5vmRQ3zELMLUQPo2FLQ76x,Smalltown Boy,Bronski Beat,The Age of Consent,1984,0.18881222540346054,135,94,58,69,4A,221,1
+14,Britney Spears|3,6pymOcrCnMuCWdgGVTvUgP,3,Britney Spears,The Singles Collection,2009,0.19816829443872905,135,79,71,70,4A,220,1
+15,"Eurythmics,Annie Lennox,Dave Stewart|Sweet Dreams (Are Made of This) - 2005 Remaster",1TfqLAPs4K3s2rJMoCokcS,Sweet Dreams (Are Made of This) - 2005 Remaster,"Eurythmics,Annie Lennox,Dave Stewart",Sweet Dreams (Are Made Of This),1983,0.19816829443872905,125,88,71,69,5A,228,1
+16,No Doubt|Platinum Blonde Life,3Dkkz8F9FfsDaEegPtXbpt,Platinum Blonde Life,No Doubt,Rock Steady (Expanded Edition),2001,0.2103829156322263,127,68,82,66,4A,216,1
+17,BANKS|Fall Over,6QeIxGSHZPrHZxJOgYct9V,Fall Over,BANKS,Goddess (Deluxe),2014,0.22742711419416392,130,63,86,65,3A,214,1
+18,Enrique Iglesias|Love To See You Cry,6HojDglE8E3EA7SbTLE8VF,Love To See You Cry,Enrique Iglesias,Escape,2001,0.24752250021220012,123,68,80,75,3A,223,1
+19,3OH!3|HIT ME HARDER,5yuX0dzjDeXEXIeGatHlKD,HIT ME HARDER,3OH!3,HIT ME HARDER,2025,0.24752250021220012,123,74,87,64,3A,225,1
+20,"Jagged Edge,Nelly|Where the Party At",5mNV8Mz59bzyuQ53gTw0c0,Where the Party At,"Jagged Edge,Nelly",Jagged Little Thrill,2001,0.27517458457510857,129,86,66,60,4A,212,1
+21,"Olly Alexander (Years & Years),Tove Lo|Desire",4ZH03VC3uJk7uKk7CwsBqH,Desire,"Olly Alexander (Years & Years),Tove Lo",Communion (Deluxe),2015,0.287091845353176,126,64,78,71,3A,213,1
+22,Bon Jovi|You Give Love A Bad Name,0rmGAIH9LNJewFw7nKzZnc,You Give Love A Bad Name,Bon Jovi,Slippery When Wet,1986,0.2934185958681329,123,81,96,54,5A,231,1
+23,AWOLNATION|Passion,2E2r97GUoaRP3jCVX3nLa5,Passion,AWOLNATION,Passion,2017,0.29601155187993894,138,77,86,65,3A,228,1
+24,"Diplo,Damian Lazarus,Jungle|Don't Be Afraid",5DVNiezdlfBjQunMHakq57,Don't Be Afraid,"Diplo,Damian Lazarus,Jungle",Diplo,2022,0.30590835196995453,125,63,79,71,4A,213,1
+25,Echosmith|Cool Kids,3eOeuofLjOgjOCs7eWuvZ0,Cool Kids,Echosmith,Talking Dreams,2013,0.31615140094460165,130,76,79,69,4B,224,2
+26,Bear Hands|Floor It,4E3DhWlhgxDUCUIGeLIRV6,Floor It,Bear Hands,The Key to What,2024,0.3310075272992868,132,79,72,76,4B,227,2
+27,Blur|Song 2,3GfOAdcoc3X5GPiiXmpBjK,Song 2,Blur,Blur: The Best Of,2000,0.31696835684645314,130,86,71,66,4B,223,2
+28,"Mike Posner,Gigamesh|Cooler Than Me - Single Mix",2V4bv1fNWfTcyRJKmej6Sj,Cooler Than Me - Single Mix,"Mike Posner,Gigamesh",31 Minutes to Takeoff,2010,0.3194066874848752,130,63,82,77,6A,222,2
+29,The Killers|Somebody Told Me,6PwjJ58I4t7Mae9xfZ9l9v,Somebody Told Me,The Killers,Hot Fuss,2004,0.33533553813501166,138,69,97,50,3A,216,1
+30,Bishop Briggs|Tempt My Trouble,3ki2sYrrJ9bOW5hLF8oRI8,Tempt My Trouble,Bishop Briggs,Church Of Scars,2018,0.3521940850207238,127,65,76,78,6A,219,2
+31,Seether|Fake It,1aItKhUXwDGVNQIMdsEv5u,Fake It,Seether,Finding Beauty In Negative Spaces (Bonus Track Version),2007,0.3310075272992854,132,65,95,61,4B,221,2
+32,"Santigold,Spank Rock|Shove It",2RBmWAhs6yX4SDYQX4zgF1,Shove It,"Santigold,Spank Rock",Santigold,2008,0.36907146141337527,134,61,79,69,3A,209,1
+33,Lloyd|Get It Shawty,2a03afRiyAbNAleOByVju4,Get It Shawty,Lloyd,Street Love,2007,0.34833339506029554,128,66,91,82,4A,239,1
+34,The Pussycat Dolls|Sway,0fhk2t4if79W019TC9vUcJ,Sway,The Pussycat Dolls,PCD (Expanded Edition),2005,0.34908081876669644,126,83,73,70,6A,226,2
+35,Crystal Castles|Vanished,4bQ7mjty0UVlKRalhizpGT,Vanished,Crystal Castles,Crystal Castles,2008,0.3550335706952335,120,64,87,71,5A,222,1
+36,"Dr. Dre,Eminem|Forgot About Dre",7iXF2W9vKmDoGAhlHdpyIa,Forgot About Dre,"Dr. Dre,Eminem",2001,1999,0.357860572155288,134,62,74,92,4B,228,2
+37,"NF,Tech N9ne|TRUST",2FSVMyqLldC36p0deIYvI9,TRUST,"NF,Tech N9ne",CLOUDS (THE MIXTAPE),2021,0.37001443984992144,140,66,88,75,3A,229,1
+38,Foster The People|Pumped Up Kicks,7w87IxuO7BDcJ3YUqCyMTT,Pumped Up Kicks,Foster The People,Torches,2011,0.39298719211631883,128,97,71,73,4A,241,1
+39,Daisy Grenade|Are You Scared Of Me Yet,7lY5Hcjkadkmnr4sLnSe12,Are You Scared Of Me Yet,Daisy Grenade,Cult Classic,2023,0.3963365888774581,120,68,80,68,3A,216,1
+40,Haddaway|What Is Love - 7  Mix,7JkZ2hQdDonRURJjlMuh8q,What Is Love - 7  Mix,Haddaway,What Is Love,1992,0.39688190930505496,124,74,77,68,6A,219,2
+41,Destiny's Child|Say My Name,7H6ev70Weq6DdpZyyTmUXk,Say My Name,Destiny's Child,The Writing's On The Wall,1999,0.3922096339368077,138,73,68,71,4A,212,1
+42,Metro Station|Wish We Were Older,3qB5mWRf03GYfXCpH4e4GW,Wish We Were Older,Metro Station,Metro Station,2007,0.40727830456462527,140,83,85,65,3A,233,1
+43,The B-52's|Love Shack,4W4wYHtsrgDiivRASVOINL,Love Shack,The B-52's,Cosmic Thing,1989,0.39018957217449823,134,90,80,70,4A,240,1
+44,Paula Abdul|Cold Hearted,6jrp8qBMJO6vhAeYVAsdk9,Cold Hearted,Paula Abdul,Forever Your Girl,1988,0.4330987729901843,122,72,68,88,6A,228,2
+45,Lady Gaga|Zombieboy,0ElVpg9XIswx3XWs6kUj6a,Zombieboy,Lady Gaga,MAYHEM,2025,0.42511693089501973,122,88,89,61,5A,238,1
+46,"Lady Gaga,Beyoncé|Telephone",7rl7ao5pb9BhvAzPdWStxi,Telephone,"Lady Gaga,Beyoncé",The Fame Monster (Deluxe Edition),2009,0.4083615677564623,122,71,83,83,4A,237,1
+47,"Taio Cruz,Ludacris|Break Your Heart",1CdqVF1ywD0ZO1zXtB9yWa,Break Your Heart,"Taio Cruz,Ludacris",Rokstarr,2010,0.4384399907284508,122,62,90,67,4B,219,2
+48,Backstreet Boys|Straight Through My Heart,20FmYYqoQNKX3VwULnG2VS,Straight Through My Heart,Backstreet Boys,This Is Us,2009,0.46066863090917937,124,59,84,63,5A,206,1
+49,Madonna|Die Another Day,6KUQfbYcFIGZtyr0mdQuv4,Die Another Day,Madonna,Music From The MGM Motion Picture Die Another Day,2002,0.4809918207661024,124,49,76,80,5A,205,1
+50,Fitz and The Tantrums|HandClap,4qRaZYiaOsSvWC7VgcxrI0,HandClap,Fitz and The Tantrums,Fitz and The Tantrums (Deluxe Edition),2017,0.481878943005737,140,72,84,64,4B,220,2
