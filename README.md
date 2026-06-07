@@ -449,7 +449,10 @@ Number of custom playlists: 4
 
 ### Visualize Custom Playlist Distributions
 
-This script generates summary statistics and a chart for custom playlists using `BPM`, `Mood Score`, `Key`, and `Distance`.
+This script generates summary statistics and two charts:
+
+- `BPM`, `Mood Score`, `Key`, and `Distance` distributions
+- Original core feature distributions for `BPM`, `Valence`, `Energy`, and `Dance`
 
 **Run command:**
 
@@ -483,4 +486,8 @@ Snap Out Of It     128.84    73.14   79.02  70.94      223.10      0.28
 **Custom Playlist Distributions Chart:**
 
 ![Custom Playlist Distributions](images/custom_playlist_distributions.png)
+
+**Custom Playlist Core Feature Distributions Chart:**
+
+![Custom Playlist Core Feature Distributions](images/custom_playlist_core_feature_distributions.png)
 

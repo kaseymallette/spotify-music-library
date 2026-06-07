@@ -126,4 +126,37 @@ plt.tight_layout()
 chart_path = os.path.join(images_dir, "custom_playlist_distributions.png")
 plt.savefig(chart_path, dpi=150)
 print(f"\nChart saved: {chart_path}")
+
+# Second chart: original four feature distributions
+fig2, ((bx1, bx2), (bx3, bx4)) = plt.subplots(2, 2, figsize=(16, 12))
+
+bx1.hist(df["bpm"].dropna(), bins=20, color="steelblue", edgecolor="black", alpha=0.8)
+bx1.set_title("BPM Distribution (Custom Playlists)")
+bx1.set_xlabel("BPM")
+bx1.set_ylabel("Song Count")
+bx1.grid(axis="y", alpha=0.3)
+
+bx2.hist(df["valence"].dropna(), bins=20, color="goldenrod", edgecolor="black", alpha=0.8)
+bx2.set_title("Valence Distribution (Custom Playlists)")
+bx2.set_xlabel("Valence")
+bx2.set_ylabel("Song Count")
+bx2.grid(axis="y", alpha=0.3)
+
+bx3.hist(df["energy"].dropna(), bins=20, color="tomato", edgecolor="black", alpha=0.8)
+bx3.set_title("Energy Distribution (Custom Playlists)")
+bx3.set_xlabel("Energy")
+bx3.set_ylabel("Song Count")
+bx3.grid(axis="y", alpha=0.3)
+
+bx4.hist(df["dance"].dropna(), bins=20, color="mediumpurple", edgecolor="black", alpha=0.8)
+bx4.set_title("Dance Distribution (Custom Playlists)")
+bx4.set_xlabel("Dance")
+bx4.set_ylabel("Song Count")
+bx4.grid(axis="y", alpha=0.3)
+
+plt.tight_layout()
+core_chart_path = os.path.join(images_dir, "custom_playlist_core_feature_distributions.png")
+plt.savefig(core_chart_path, dpi=150)
+print(f"Core feature chart saved: {core_chart_path}")
+
 plt.show()

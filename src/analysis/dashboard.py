@@ -1,7 +1,6 @@
 import sqlite3
 import dash
 import pandas as pd
-import plotly.express as px
 from dash import Dash, html, dcc, Input, Output, State
 import dash.dependencies
 import os
@@ -349,24 +348,24 @@ def show_nn_stats(n_clicks, selected_song_artist):
 
         conn = sqlite3.connect(db_path)
         df_metadata = pd.read_sql("""
-            SELECT Track_Key, Song, Artist, Camelot,
+            SELECT Track_Key, Song, Artist, Album_Year, Camelot,
                    BPM, Valence, Dance, Energy
             FROM tracks
             WHERE Album_Year IS NOT NULL
         """, conn)
-
-        df_features = df_metadata[['Track_Key', 'BPM', 'Valence', 'Dance', 'Energy']].copy()
         df_metadata = df_metadata.set_index('Track_Key')
-        df_features = df_features.set_index('Track_Key')
 
         if seed_key not in df_metadata.index:
             conn.close()
             return html.Div("Seed song not found in tracks table.", style={'color': '#f44336'})
 
-        seed_camelot = df_metadata.loc[seed_key]['Camelot']
-
+        seed_row = df_metadata.loc[seed_key]
+        seed_camelot = seed_row['Camelot']
         key_step_lookup = build_key_step_lookup(seed_camelot)
         default_key_step = len(HARMONIC_RULE_GROUPS) + 1
+        seed_mood_score = seed_row['Valence'] + seed_row['Dance'] + seed_row['Energy']
+
+        df_features = df_metadata[['BPM', 'Valence', 'Dance', 'Energy']].copy()
         df_mood_scores = df_features[['Valence', 'Dance', 'Energy']].sum(axis=1)
         df_key_steps = df_metadata['Camelot'].apply(lambda k: key_step_lookup.get(str(k), default_key_step))
 
@@ -374,60 +373,54 @@ def show_nn_stats(n_clicks, selected_song_artist):
             'BPM': df_features['BPM'],
             'Mood_Score': df_mood_scores,
             'Key_Step': df_key_steps
-        }, index=df_features.index)
+        }, index=df_metadata.index)
 
         scaler = StandardScaler()
         df_distance_scaled = scaler.fit_transform(df_distance_features)
 
-        seed_row = df_metadata.loc[seed_key]
-        seed_mood_score = seed_row['Valence'] + seed_row['Dance'] + seed_row['Energy']
-        seed_key_step = key_step_lookup.get(str(seed_camelot), 1)
         seed_distance_df = pd.DataFrame([{
             'BPM': seed_row['BPM'],
             'Mood_Score': seed_mood_score,
-            'Key_Step': seed_key_step
+            'Key_Step': key_step_lookup.get(str(seed_camelot), 1)
         }])
         seed_distance_scaled = scaler.transform(seed_distance_df)[0]
 
         distances = euclidean_distances([seed_distance_scaled], df_distance_scaled)[0]
-        df_metadata['distance'] = distances
-        df_metadata = df_metadata[df_metadata.index != seed_key]
+
+        df_neighbors = df_metadata.copy()
+        df_neighbors['distance'] = distances
+        df_neighbors['mood_score'] = df_mood_scores
+        neighbors = df_neighbors[df_neighbors.index != seed_key].sort_values('distance').head(3)
 
         conn.close()
 
-        total_eligible = int(len(df_metadata))
-        df_within_3 = df_metadata[df_metadata['distance'] <= 3]
-        total_eligible_within_3 = int(len(df_within_3))
+        stats_children = [
+            html.P(
+                f"0. {seed_row['Song']} — {seed_row['Artist']} ({seed_row['Album_Year']})",
+                style={'fontWeight': 'bold', 'fontSize': '18px', 'marginBottom': '6px'}
+            ),
+            html.P(f"Features: BPM={seed_row['BPM']}, Valence={seed_row['Valence']}, Energy={seed_row['Energy']}, Dance={seed_row['Dance']}, Key={seed_camelot}, Mood Score={seed_mood_score:.1f}"),
+        ]
 
-        bucket_counts = {
-            '0-1': int(((df_within_3['distance'] > 0) & (df_within_3['distance'] <= 1)).sum()),
-            '1-2': int(((df_within_3['distance'] > 1) & (df_within_3['distance'] <= 2)).sum()),
-            '2-3': int(((df_within_3['distance'] > 2) & (df_within_3['distance'] <= 3)).sum())
-        }
+        if not neighbors.empty:
+            stats_children.append(html.Hr())
+            stats_children.append(html.H4("3 Nearest Songs", style={'marginBottom': '8px'}))
+            for i, (_, row) in enumerate(neighbors.iterrows(), start=1):
+                stats_children.append(
+                    html.P(
+                        f"{i}. {row['Song']} — {row['Artist']} ({row['Album_Year']})",
+                        style={'fontWeight': 'bold', 'fontSize': '16px', 'marginBottom': '4px'}
+                    )
+                )
+                stats_children.append(html.P(f"Distance: {row['distance']:.4f}"))
+                stats_children.append(
+                    html.P(
+                        f"Features: BPM={row['BPM']}, Valence={row['Valence']}, Energy={row['Energy']}, Dance={row['Dance']}, Key={row['Camelot']}, Mood Score={row['mood_score']:.1f}",
+                        style={'marginBottom': '8px'}
+                    )
+                )
 
-        df_buckets = pd.DataFrame({
-            'Distance Bucket': list(bucket_counts.keys()),
-            'Song Count': list(bucket_counts.values())
-        })
-        fig_buckets = px.bar(
-            df_buckets,
-            x='Distance Bucket',
-            y='Song Count',
-            title='Eligible Songs by Distance Range',
-            color='Distance Bucket',
-            color_discrete_sequence=['#4CAF50', '#FFC107', '#FF9800']
-        )
-        fig_buckets.update_layout(showlegend=False, margin=dict(l=20, r=20, t=45, b=20), height=300)
-
-        return html.Div([
-            html.H4("Nearest Neighbor Stats"),
-            html.P(f"Eligible songs: {total_eligible}"),
-            html.P(f"Songs with Distance <= 3.0: {total_eligible_within_3}"),
-            html.P(f"Distance 0-1: {bucket_counts['0-1']}"),
-            html.P(f"Distance 1-2: {bucket_counts['1-2']}"),
-            html.P(f"Distance 2-3: {bucket_counts['2-3']}"),
-            dcc.Graph(figure=fig_buckets, config={'displayModeBar': False}),
-        ], style={'backgroundColor': '#f5f5f5', 'padding': '10px', 'borderRadius': '6px'})
+        return html.Div(stats_children, style={'backgroundColor': '#f5f5f5', 'padding': '10px', 'borderRadius': '6px'})
 
     except Exception as e:
         import traceback
