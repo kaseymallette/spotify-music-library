@@ -1,0 +1,51 @@
+Track_Number,Track_Key,Track_ID,Song,Artist,Album,Year,Distance,BPM,Valence,Energy,Dance,Key,Mood_Score,Key_Step
+1,Paris Paloma|LABOUR - the cacophony,4B0cJGASxVICLW2AsBZhiE,LABOUR - the cacophony,Paris Paloma,LABOUR (the cacophony),2024,0.0,168,29,79,53,10A,161,1
+2,Halestorm|Like A Woman Can,2a938Z2yqpxHAyNLjJHymh,Like A Woman Can,Halestorm,Everest,2025,0.23008599495406903,172,41,70,42,11A,153,1
+3,Foreign Air|Your Touch,5dS9u36myZ35YBrhgqAIle,Your Touch,Foreign Air,Hello Sunshine,2022,0.21610574318501746,162,28,75,56,9A,159,1
+4,Broken Social Scene|Windsurfing Nation,39f5NyqGQqmHEdZ30bvnu7,Windsurfing Nation,Broken Social Scene,Broken Social Scene,2005,0.2301366798165467,169,33,90,48,10A,171,1
+5,Post Malone|Over Now,09IOPhEh1OMe0HD9b36FJk,Over Now,Post Malone,beerbongs & bentleys,2018,0.23008599495406903,164,18,78,57,9A,153,1
+6,"Taylor Swift,Kendrick Lamar|Bad Blood",6xsEAm6w9oMQYYg3jkEkMT,Bad Blood,"Taylor Swift,Kendrick Lamar",Bad Blood,2015,0.19509478608724912,170,22,66,65,10A,153,1
+7,"Bryce Fox,Sam Tinnesz|Riot",62ekQAQYJgSyWgiWXKVTz7,Riot,"Bryce Fox,Sam Tinnesz",Riot,2023,0.2399240330071047,174,54,62,50,10A,166,1
+8,Evanescence|Going Under,3UygY7qW2cvG9Llkay6i1i,Going Under,Evanescence,Fallen,2003,0.3063542659109426,175,46,86,37,10A,169,1
+9,Seether|Fine Again,4eTIe5eqds88bA9ua6p5p6,Fine Again,Seether,Disclaimer,2002,0.3037728051533455,176,36,86,44,11A,166,1
+10,The Cure|Three Imaginary Boys - 2005 Remaster,660u9agQuREtEDmETVWSts,Three Imaginary Boys - 2005 Remaster,The Cure,Three Imaginary Boys (Deluxe Edition),1979,0.23808042501616222,170,48,63,60,10A,171,1
+11,Train|All I Ever Wanted,0DJJdLSQKTPVnAA2iEuvsQ,All I Ever Wanted,Train,"For Me, It's You",2006,0.3822115139866691,170,47,62,42,10B,151,2
+12,"Lady Gaga,Bruno Mars|Die With A Smile",7so0lgd0zP2Sbgs2d7a1SZ,Die With A Smile,"Lady Gaga,Bruno Mars",MAYHEM,2025,0.3528415275339467,158,50,60,52,11A,162,1
+13,Two Feet|Quick Musical Doodles,7tZdkPtebOG29TzPPHlsem,Quick Musical Doodles,Two Feet,First Steps,2016,0.3260927128221859,170,43,35,69,11A,147,1
+14,Beyoncé|Ring The Alarm,5BkHkyO9PFXs1m7vSMnXp4,Ring The Alarm,Beyoncé,B'Day Deluxe Edition,2007,0.35702286790419413,170,48,75,46,10B,169,2
+15,"Sultans Of Ping F.C.,Frank Mcnamara|Where's Me Jumper",1PWkvrHtJI1TLfnZDWDf2u,Where's Me Jumper,"Sultans Of Ping F.C.,Frank Mcnamara",Moone Boy (Music from the TV Series),2015,0.3821125873316184,174,44,91,40,10A,175,1
+16,Senses Fail|Can't Be Saved,3PHhctErNOXWqevrZDUyNy,Can't Be Saved,Senses Fail,Still Searching,2006,0.45906372843248816,170,45,98,33,10B,176,2
+17,The Neighbourhood|Staying Up,1NA2NvAgCB4EfcBC8OHfuj,Staying Up,The Neighbourhood,I Love You.,2013,0.42074480566547007,176,32,86,39,10B,157,2
+18,Matt Maeson|Get Happy (Live),2iAa0pJTOpbrtokihbuBKk,Get Happy (Live),Matt Maeson,That's My Cue: A Solo Experience,2024,0.39803166281089747,175,64,51,50,10B,165,2
+19,Adele|Send My Love (To Your New Lover),0t7fVeEJxO2Xi4H2K5Svc9,Send My Love (To Your New Lover),Adele,25,2015,0.4329198597636571,164,57,53,69,11A,179,1
+20,Lizzo|Truth Hurts,5qmq61DAAOUaW8AUo8xKhh,Truth Hurts,Lizzo,Cuz I Love You (Deluxe),2019,0.4747179936344549,158,41,62,72,9A,175,1
+21,"Sia,Diplo,Labrinth,LSD|Genius",4xigPf2sigSPmuFH3qCelB,Genius,"Sia,Diplo,Labrinth,LSD","LABRINTH, SIA & DIPLO PRESENT... LSD",2019,0.4999034565717673,159,56,62,60,10A,178,1
+22,Black Math|New Game,56YNYXJI7eWgpmzPht6c77,New Game,Black Math,New Game,2019,0.4931853095956436,160,42,49,58,12A,149,2
+23,"Halsey|I am not a woman, I'm a god",20MWkJVeqKnWf0rGFJJqRY,"I am not a woman, I'm a god",Halsey,"If I Can’t Have Love, I Want Power (Deluxe)",2021,0.5156967133154357,180,52,70,52,11A,174,1
+24,Arctic Monkeys|Arabella,7nzsY8vlnKdvGOEE0rjAXZ,Arabella,Arctic Monkeys,AM,2013,0.5255569632288208,180,51,56,58,10B,165,2
+25,Daughter|Dandelion,0FaTDETtzCRxYIf3noMnsF,Dandelion,Daughter,Stereo Mind Game,2023,0.5229336949289644,158,60,63,55,10A,178,1
+26,Blue October|Driver,27H08UOnOSclCklRLojBFY,Driver,Blue October,Home,2016,0.5544852692971424,165,25,61,55,12A,141,2
+27,Moon Taxi|Good As Gold,4CG2XyRrTdgeVlptAZEw4J,Good As Gold,Moon Taxi,Good As Gold,2017,0.5431137405155909,174,44,79,60,10A,183,1
+28,Mainland|Empty Promises,4JVjcbILBGcbxlZN0VKl9z,Empty Promises,Mainland,Empty Promises,2016,0.5576219063127262,180,57,71,49,10A,177,1
+29,Cortes|Facing My Fear,45AbDqJVqVU7nOxtW4SUTG,Facing My Fear,Cortes,Facing My Fear,2016,0.5685677854854058,168,64,81,41,11A,186,1
+30,Bishop Briggs|White Flag,2ph6BRhGcUzc2W9wIulG5k,White Flag,Bishop Briggs,Church Of Scars,2018,0.6075456103066859,152,36,81,54,9A,171,1
+31,X Ambassadors|Unconsolable,0jpoRHaMiyKNnCectzcXTv,Unconsolable,X Ambassadors,Love Songs Drug Songs,2013,0.599015173783415,151,34,61,67,11A,162,1
+32,"T.I.,Eminem|That's All She Wrote",6XAA7T9VHcqKQSzjmXAJ8o,That's All She Wrote,"T.I.,Eminem",No Mercy,2010,0.6089731536454794,170,36,79,50,9B,165,3
+33,"Webbie,Boosie Badazz,Lil Phat|Independent",0tdjTo4xacmmF7eINqaM8z,Independent,"Webbie,Boosie Badazz,Lil Phat",Savage Life 2,2008,0.676243630570081,174,20,43,73,12A,136,2
+34,Spice Girls|Saturday Night Divas,3M83cWfWcFXtkavdM8NuEZ,Saturday Night Divas,Spice Girls,Spiceworld,1997,0.6377686434189636,169,58,68,63,10A,189,1
+35,Sabrina Carpenter|Nobody’s Son,4SRShYMtFIGgnOU7iBicMH,Nobody’s Son,Sabrina Carpenter,Man’s Best Friend,2025,0.638475746843016,174,65,74,45,10B,184,2
+36,Ella Langley|weren't for the wind,2A22iI0x4EYAVXNpKPhNEM,weren't for the wind,Ella Langley,still hungover,2024,0.616419920167874,152,45,80,47,11A,172,1
+37,Rachel Platten|Fight Song,37f4ITSlgPX81ad2EvmVQr,Fight Song,Rachel Platten,Wildfire,2016,0.6614210350436307,176,33,71,56,9B,160,3
+38,"U2,Green Day|The Saints Are Coming - Live from New Orleans",6pqZp2AGNR5IaUOjxwKcCe,The Saints Are Coming - Live from New Orleans,"U2,Green Day",The Saints Are Coming (Live),2006,0.6963988765709327,152,25,95,23,10A,143,1
+39,Hoobastank|Out Of Control,166u1Cs46FmXoOaTGxh8aB,Out Of Control,Hoobastank,The Reason (20th Anniversary),2024,0.6882063762997321,158,46,97,44,9A,187,1
+40,Matt Maeson|The Hearse,7siD4wJRiNcC4680aiqOZg,The Hearse,Matt Maeson,The Hearse,2018,0.6890767706995556,156,29,63,49,12A,141,2
+41,Baker Grace|Am I Talking To You,1DvIlp15PM55hCSBATR35O,Am I Talking To You,Baker Grace,Am I Talking To You?,2017,0.7011529793784684,186,57,28,75,12A,160,2
+42,Carrie Underwood|Before He Cheats,0ZUo4YjG4saFnEJhdWp9Bt,Before He Cheats,Carrie Underwood,Some Hearts,2005,0.7133375243086516,148,29,75,52,11A,156,1
+43,Bishop Briggs|Woman Is King,1gxc1dIYLmSS2sxMm8BYNj,Woman Is King,Bishop Briggs,Tell My Therapist I'm Fine (Deluxe),2025,0.7225294024905109,149,45,67,61,9A,173,1
+44,CHINCHILLA|Little Girl Gone,56rpEOCBATYItSa4yPksfe,Little Girl Gone,CHINCHILLA,Little Girl Gone,2023,0.7387907954112953,160,50,67,71,12A,188,2
+45,Thirty Seconds To Mars|The Kill,0lP4HYLmvowOKdsQ7CVkuq,The Kill,Thirty Seconds To Mars,A Beautiful Lie,2005,0.7433504970933492,183,29,91,18,9A,138,1
+46,Yeah Yeah Yeahs|Phenomena,63Kdr7jLTZxHr7MgjMiKmh,Phenomena,Yeah Yeah Yeahs,Show Your Bones,2006,0.7675071013873208,157,47,90,50,10B,187,2
+47,Evanescence|Imaginary,7q6CybWAg3uYLgS5tDWqmd,Imaginary,Evanescence,Fallen,2003,0.7545049608037768,150,28,75,40,9A,143,1
+48,Danzig|Mother,7txxAtOMwLLnQTpKeBL6bp,Mother,Danzig,Danzig,1988,0.7728498634079365,148,34,76,37,10A,147,1
+49,Avril Lavigne|Unwanted,1vjIHlmc4WfIaEl74YAvX0,Unwanted,Avril Lavigne,Let Go,2002,0.7796776535046234,162,62,84,48,9A,194,1
+50,Metric|Empty,3wNUaKeGPWmbB7139pfZdj,Empty,Metric,Live It Out,2005,0.7829390462838158,146,36,60,60,9A,156,1
