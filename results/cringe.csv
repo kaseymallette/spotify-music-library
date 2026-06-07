@@ -1,0 +1,51 @@
+Track_Number,Track_Key,Track_ID,Song,Artist,Album,Year,Distance,BPM,Valence,Energy,Dance,Key,Mood_Score,Key_Step
+1,Matt Maeson|Cringe,1OV5oUwrL4iw0UTfZy3pGe,Cringe,Matt Maeson,Who Killed Matt Maeson,2017,0.0,126,40,47,73,7B,160,1
+2,Snow Patrol|The Weight Of Love,1N96ja5vHzX8cFr8rExKED,The Weight Of Love,Snow Patrol,Fallen Empires,2011,0.17407903870893077,124,24,81,62,8B,167,1
+3,Coldplay|Don't Panic,2QhURnm7mQDxBb5jWkbDug,Don't Panic,Coldplay,Parachutes,2000,0.19610481696840384,122,45,61,60,8B,166,1
+4,Matt Maeson|Hallucinogenics,4W6tDPKAb5RTZaixgrcWWm,Hallucinogenics,Matt Maeson,The Hearse,2018,0.2125584654475088,122,32,60,61,8B,153,1
+5,Never Shout Never|Your Biggest Fan,0L3di3gB5KlamEABLJK8KK,Your Biggest Fan,Never Shout Never,Me and My Uke,2009,0.05752149873851822,125,53,31,74,8B,158,1
+6,OneRepublic|What You Wanted,21fq2CKL93mfnYHItpitxg,What You Wanted,OneRepublic,Native,2014,0.23001839776424568,120,24,85,55,8B,164,1
+7,HAIM|That Don't Impress Me Much - triple j Like A Version,1ZOK8VkScTdXrccs7hkUPq,That Don't Impress Me Much - triple j Like A Version,HAIM,That Don't Impress Me Much (triple j Like A Version),2017,0.05752149873851822,125,46,36,76,8B,158,1
+8,Of Monsters and Men|Crystals,5wU6jk9kxYzFGUpeE6T2Q5,Crystals,Of Monsters and Men,Beneath The Skin,2015,0.2515016536012594,132,33,75,58,8B,166,1
+9,Phantogram|Turning Into Stone,2YD9lxZ8sLocATwfCPPoEc,Turning Into Stone,Phantogram,Nightlife,2011,0.248460239797072,122,6,89,56,6B,151,1
+10,Elderbrook|Bird Song,51Wao8QZ4Fv4zamKbRnKQd,Bird Song,Elderbrook,Old Friend,2018,0.26453181993733016,120,26,39,88,8B,153,1
+11,Linkin Park|Good Things Go,6aCBjSb87RizdH8lVBIRW7,Good Things Go,Linkin Park,From Zero,2024,0.29864924166021384,127,31,76,54,7A,161,2
+12,K.Flay|High Enough,5pWG3jP50z7LiL7z9WZsjM,High Enough,K.Flay,High Enough,2017,0.2934185958681344,133,48,63,42,8B,153,1
+13,Ella Isaacson|RUDE,2PXHdc5d8Uuckc2e9hhBEV,RUDE,Ella Isaacson,RUDE,2023,0.3071124206061198,130,41,52,79,7B,172,1
+14,Florence + The Machine|Howl,3GS8qG28p2RF6M7S5rFdx5,Howl,Florence + The Machine,Lungs (Deluxe Edition),2009,0.3071124206061198,130,29,85,58,8B,172,1
+15,"The All-American Rejects|Swing, Swing",003FTlCpBTM4eSqYSWPv4H,"Swing, Swing",The All-American Rejects,The All-American Rejects,2002,0.3048126751352603,128,32,72,55,9B,159,2
+16,Maroon 5|Story - Non-LP Version,2ZJ0357KXCl3WTCwsPQWdQ,Story - Non-LP Version,Maroon 5,The B-Side Collection,2007,0.3104124044193559,120,42,81,47,8B,170,1
+17,The xx|On Hold,5w3CRkbTWXfbYepIdFpGUN,On Hold,The xx,I See You,2017,0.32033897667445876,125,35,67,72,8B,174,1
+18,Rainbow Kitten Surprise|Friendly Fire,7DTAZBykDP2m8LkYehrwhl,Friendly Fire,Rainbow Kitten Surprise,bones,2025,0.3201447374562779,135,38,70,54,7B,162,1
+19,Ariana Grande|in my head,4T652DlATVHe0jdLKaN3Bw,in my head,Ariana Grande,"thank u, next",2019,0.3177120711474917,135,33,60,66,8B,159,1
+20,OneRepublic|Made For You,1uRQzm3P0nRGnSfnuzMTpq,Made For You,OneRepublic,Waking Up,2009,0.3275227099240308,122,40,56,64,9B,160,2
+21,The Palms|Breakin' up,1owBzz8aYKe0bDJlAJt2Yn,Breakin' up,The Palms,Sway,2016,0.33455373831470137,130,36,61,66,7A,163,2
+22,ILUKA|Manic Pixie Dream Girl,2EkbykDiLsmMBL5I27RH5e,Manic Pixie Dream Girl,ILUKA,Manic Pixie Dream Girl,2025,0.33066606902857076,130,23,74,61,9B,158,2
+23,Paris Paloma|Good Girl,5916POJDlPQRBbe1SJc7uK,Good Girl,Paris Paloma,Good Girl,2026,0.342363614961261,129,27,77,62,9B,166,2
+24,Wolf Alice|Don't Delete The Kisses,3K94Fd5ZQkPCW8wV6oyk22,Don't Delete The Kisses,Wolf Alice,Visions Of A Life,2017,0.3481580774178679,122,35,79,60,7B,174,1
+25,Ariana Grande|we can't be friends (wait for your love),51ZQ1vr10ffzbwIjDCwqm4,we can't be friends (wait for your love),Ariana Grande,eternal sunshine,2024,0.35210781392888874,116,30,65,65,7B,160,1
+26,3OH!3|R.I.P,35BspUdHJEuqWx6aCzMG5U,R.I.P,3OH!3,Streets Of Gold,2010,0.36907146141337527,130,39,70,66,6B,175,1
+27,Gin Wigmore|Kill Of The Night,2m17BTWlZq0wtS9cpJsCfM,Kill Of The Night,Gin Wigmore,Gravel & Wine,2011,0.38662609413007576,126,56,70,51,8B,177,1
+28,Griffin Oskar|Hostage,7EbsWLCPQ9pjpQf6hYmKYi,Hostage,Griffin Oskar,Hostage,2017,0.3838905257576499,121,50,54,71,8B,175,1
+29,Billy Raffoul|Driver,6bpcvTmxA0iVRCBER7xw1a,Driver,Billy Raffoul,Driver,2017,0.38798572809414184,115,38,57,64,7B,159,1
+30,Foreign Air|In the Shadows,06KTcf9q6ef0rEYPgjOKl3,In the Shadows,Foreign Air,In the Shadows,2016,0.4072783045646247,116,15,76,60,8B,151,1
+31,Rainbow Kitten Surprise|Shameful Company,4uA1caRo0SsSEXeRlY3VtB,Shameful Company,Rainbow Kitten Surprise,Seven + Mary,2013,0.4114808898151194,130,27,46,70,8B,143,1
+32,The Acid|Basic Instinct,5E0pS3sXgWdQZMKChqYXHE,Basic Instinct,The Acid,Liminal,2014,0.43058308930533074,118,33,47,74,9B,154,2
+33,Thirty Seconds To Mars|From Yesterday,1JBa9B1iA4yNVpJ5wVGrZH,From Yesterday,Thirty Seconds To Mars,A Beautiful Lie,2005,0.41821642973454226,135,13,88,47,6B,148,1
+34,Catfish and the Bottlemen|Twice,2sewj0rFvlr3aEM3bGy12n,Twice,Catfish and the Bottlemen,The Ride,2016,0.4279234433111519,137,29,82,41,8B,152,1
+35,The Neighbourhood|Private,1735xgk2J8CHCGY2LS1HM6,Private,The Neighbourhood,Private,2025,0.45691409872036837,124,44,58,73,7A,175,2
+36,New Atlas|Lay Low,4HCsU4lcQ72n3dQDVZ0khi,Lay Low,New Atlas,Lay Low,2019,0.46483258322686216,136,31,58,74,9B,163,2
+37,Abby Sage|Backwards Directions,5vbnQr1tWSSREmcIONIUm9,Backwards Directions,Abby Sage,Backwards Directions,2022,0.46108636493564076,115,48,38,85,6B,171,1
+38,Billie Eilish|bad guy,2Fxmhks0bxGSBdJ92vM42m,bad guy,Billie Eilish,"WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",2019,0.47932637468075157,135,56,43,70,9B,169,2
+39,Billie Eilish|wish you were gay,3Fj47GNK2kUF0uaEDgXLaD,wish you were gay,Billie Eilish,"WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",2019,0.4911850328013482,118,28,35,85,9B,148,2
+40,"MAX,Lil Uzi Vert|Wrong",17zIpOrDoEDcPvS34i5t3I,Wrong,"MAX,Lil Uzi Vert",Wrong,2015,0.49295093950044383,140,43,56,61,8B,160,1
+41,Elderbrook|Closer,4LKeqetwwD5v72sSrMv72X,Closer,Elderbrook,Closer,2016,0.49844163715622436,120,22,47,76,7A,145,2
+42,The Neighbourhood|Baby Came Home,3ypXE4brttsQR3OLLZbLZB,Baby Came Home,The Neighbourhood,I'm Sorry...,2012,0.532923357729904,113,27,57,64,8B,148,1
+43,The Neighbourhood|Sweater Weather,2QjOHCTQ1Jl3zawyYOpxh6,Sweater Weather,The Neighbourhood,I Love You.,2013,0.5052711777801142,124,40,81,61,6B,182,1
+44,Transviolet|Bloodstream,5heAk2X8BG2BUHGfR08pn3,Bloodstream,Transviolet,Transviolet,2015,0.5222371161268029,120,16,61,62,7B,139,1
+45,"Bebe Rexha,Ty Dolla $ign|Bad Bitch",4ZJPwET9Jrgpkqi4Vo3Yg8,Bad Bitch,"Bebe Rexha,Ty Dolla $ign",All Your Fault: Pt. 1,2017,0.5058966315583069,140,37,62,66,7B,165,1
+46,Sabrina Carpenter|My Man on Willpower,3EMfeKtNK4q4k3sVjwg5Yy,My Man on Willpower,Sabrina Carpenter,Man’s Best Friend,2025,0.5431137405155885,120,43,78,61,6B,182,1
+47,The Unlikely Candidates|Novocaine,2DKMINA8asTPUJz8Qu2CGK,Novocaine,The Unlikely Candidates,Panther Island,2022,0.5466500508208637,116,31,76,66,7A,173,2
+48,"Elvis Drew,Avivian|Not Enough",0l3vdL2Hjm6nSkYWDDzcxn,Not Enough,"Elvis Drew,Avivian",Lapsus,2019,0.5469850087445062,134,23,46,75,9B,144,2
+49,"SZA,Travis Scott|Love Galore",0q75NwOoFiARAVp4EXU4Bs,Love Galore,"SZA,Travis Scott",Ctrl,2017,0.5543609819538707,135,41,59,80,8B,180,1
+50,Yeah Yeah Yeahs|Soft Shock - Acoustic Version,17RY9RzduTCpxZpwN0HtEW,Soft Shock - Acoustic Version,Yeah Yeah Yeahs,It's Blitz! (Deluxe Edition),2009,0.5617657029910175,113,55,48,51,9B,154,2

@@ -440,11 +440,12 @@ python src/db/count_custom_playlists.py
 **Sample output:**
 
 ```text
-Number of custom playlists: 4
+Number of custom playlists: 5
   - Snap Out Of It
   - SCARING ME
   - LABOUR
   - Never Have I Ever
+  - Cringe
 ```
 
 ### Visualize Custom Playlist Distributions
@@ -464,11 +465,12 @@ python src/analysis/visualize_custom_playlists.py
 
 ```text
 === Custom Playlist Summary ===
-Total playlists: 4
-Total songs: 200
+Total playlists: 5
+Total songs: 250
 
 Songs per playlist:
 playlist_name
+Cringe               50
 LABOUR               50
 Never Have I Ever    50
 SCARING ME           50
@@ -477,6 +479,7 @@ Snap Out Of It       50
 Average features by playlist:
                       bpm  valence  energy  dance  mood_score  distance
 playlist_name                                                          
+Cringe             125.62    34.68   62.70  64.44      161.82      0.37
 LABOUR             165.64    42.42   70.90  51.90      165.22      0.51
 Never Have I Ever  128.68    56.90   76.30  64.50      197.70      0.37
 SCARING ME         133.76    27.58   58.66  55.58      141.82      0.46
