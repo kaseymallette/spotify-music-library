@@ -178,17 +178,6 @@ app.layout = html.Div([
     ], style={'marginBottom': '15px'}),
     
     html.Div([
-        dcc.Checklist(
-            id='pb-exclude-previous-playlists',
-            options=[
-                {'label': 'Exclude songs from previous playlists', 'value': 'exclude_previous'}
-            ],
-            value=[],
-            style={'width': '300px'}
-        ),
-    ], style={'marginBottom': '15px'}),
-    
-    html.Div([
         html.Label("Playlist Name:"),
         dcc.Input(
             id='pb-playlist-name',
@@ -200,7 +189,6 @@ app.layout = html.Div([
     ], style={'marginBottom': '15px'}),
     
     html.Button('Start Playlist Builder', id='pb-start-button', n_clicks=0, style={'marginBottom': '20px'}),
-    html.Div(id='pb-exclusion-status', style={'marginBottom': '10px', 'fontStyle': 'italic'}),
     html.Div(id='pb-seed-stats', style={'marginBottom': '15px'}),
     
     html.Div(id='pb-current-song', style={'marginBottom': '20px'}),
@@ -221,29 +209,10 @@ app.layout = html.Div([
 
     html.Div(id='pb-playlist'),
     
-    html.Hr(),
-    html.H2("Saved Playlists"),
-    
-    html.Div([
-        html.Label("Select Playlist to View:"),
-        dcc.Dropdown(
-            id='saved-playlist-dropdown',
-            options=[],
-            value=None,
-            placeholder="Select a playlist...",
-            searchable=True
-        ),
-    ], style={'marginBottom': '15px'}),
-    
-    html.Div(id='selected-playlist-songs'),
-    
-    dcc.Store(id='selected-playlist-id'),
-    
     dcc.Store(id='pb-knn-results'),
     dcc.Store(id='pb-current-index'),
     dcc.Store(id='pb-accepted-songs'),
-    dcc.Store(id='pb-rejected-songs'),
-    dcc.Store(id='pb-excluded-count')
+    dcc.Store(id='pb-rejected-songs')
 ])
 
 @app.callback(
@@ -251,45 +220,20 @@ app.layout = html.Div([
     Output('pb-current-index', 'data'),
     Output('pb-accepted-songs', 'data'),
     Output('pb-rejected-songs', 'data'),
-    Output('pb-excluded-count', 'data'),
     Output('pb-seed-stats', 'children'),
     Input('pb-start-button', 'n_clicks'),
     State('pb-song-dropdown', 'value'),
-    State('pb-exclude-previous-playlists', 'value'),
     prevent_initial_call=True
 )
-def start_playlist_builder(n_clicks, selected_song_artist, exclude_previous_playlists):
+def start_playlist_builder(n_clicks, selected_song_artist):
     if n_clicks == 0 or not selected_song_artist:
-        return None, 0, [], [], None, html.Div()
+        return None, 0, [], [], html.Div()
     
     try:
         selected_artist, selected_song = selected_song_artist.split('|')
         
         conn = sqlite3.connect(db_path)
         ensure_custom_playlist_tables(conn)
-        
-        # Get Track_Keys to exclude from all previous custom playlists
-        excluded_track_keys = set()
-        excluded_count = 0
-        if exclude_previous_playlists and 'exclude_previous' in exclude_previous_playlists:
-            try:
-                df_exclude = pd.read_sql("""
-                    SELECT DISTINCT cps.track_key
-                    FROM custom_playlist_songs cps
-                """, conn)
-                if not df_exclude.empty:
-                    excluded_track_keys = set(df_exclude['track_key'].tolist())
-                    # Map excluded track keys to current normalized track keys
-                    # Get all track keys from tracks table
-                    df_all_tracks = pd.read_sql("SELECT Track_Key FROM tracks", conn)
-                    all_track_keys = set(df_all_tracks['Track_Key'].tolist())
-                    # Filter to only include track keys that exist in current tracks table
-                    excluded_track_keys = excluded_track_keys & all_track_keys
-                    excluded_count = len(excluded_track_keys)
-            except Exception as e:
-                print(f"Error getting excluded playlists: {e}")
-                excluded_track_keys = set()
-                excluded_count = 0
         
         df_metadata = pd.read_sql("""
             SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, Popularity, Camelot,
@@ -313,7 +257,7 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_previous_play
         
         seed_key = f"{selected_artist}|{selected_song}"
         if seed_key not in df_metadata.index:
-            return None, 0, [], [], None, html.Div("Seed song not found in tracks table.", style={'color': '#f44336'})
+            return None, 0, [], [], html.Div("Seed song not found in tracks table.", style={'color': '#f44336'})
         
         seed_row = df_metadata.loc[seed_key]
         seed_camelot = seed_row['Camelot']
@@ -370,28 +314,13 @@ def start_playlist_builder(n_clicks, selected_song_artist, exclude_previous_play
                 song['Track_Key'] = f"{song.get('Artist', '')}|{song.get('Song', '')}"
             else:
                 song['Track_Key'] = str(track_key)
-        
-        # Filter out excluded songs
-        if excluded_track_keys:
-            knn_results = [song for song in knn_results if song.get('Track_Key') not in excluded_track_keys]
-        
-        return knn_results, 0, [], [], excluded_count, html.Div(seed_stats)
+
+        return knn_results, 0, [], [], html.Div(seed_stats)
     
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return None, 0, [], [], None, html.Div(f"Error: {e}", style={'color': '#f44336'})
-
-@app.callback(
-    Output('pb-exclusion-status', 'children'),
-    Input('pb-excluded-count', 'data')
-)
-def update_exclusion_status(excluded_count):
-    if excluded_count is None:
-        return ""
-    if excluded_count == 0:
-        return "No songs were excluded from previous playlists."
-    return f"Excluded {excluded_count} songs from previous playlists."
+        return None, 0, [], [], html.Div(f"Error: {e}", style={'color': '#f44336'})
 
 @app.callback(
     Output('pb-playlist-name', 'value'),
@@ -1024,96 +953,6 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         import traceback
         traceback.print_exc()
         return html.Div(f"Error saving playlist: {str(e)}", style={'color': 'red'})
-
-@app.callback(
-    Output('saved-playlist-dropdown', 'options'),
-    Input('pb-save-db-button', 'n_clicks'),
-    prevent_initial_call=False
-)
-def update_playlist_dropdown(n_clicks):
-    try:
-        conn = sqlite3.connect(db_path)
-        ensure_custom_playlist_tables(conn)
-        df_playlists = pd.read_sql("""
-            SELECT id, playlist_name, seed_song, seed_artist, created_date
-            FROM custom_playlists
-            ORDER BY created_date DESC
-        """, conn)
-        conn.close()
-        
-        if df_playlists.empty:
-            return []
-        
-        options = [
-            {'label': f"{row['playlist_name']} (Seed: {row['seed_song']} by {row['seed_artist']})", 'value': row['id']}
-            for _, row in df_playlists.iterrows()
-        ]
-        
-        return options
-    
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return []
-
-@app.callback(
-    Output('selected-playlist-songs', 'children'),
-    Input('saved-playlist-dropdown', 'value'),
-    prevent_initial_call=False
-)
-def display_playlist_songs(selected_playlist_id):
-    if not selected_playlist_id:
-        return html.P("Select a playlist to view its songs.")
-    
-    try:
-        conn = sqlite3.connect(db_path)
-        
-        # Get playlist info
-        df_playlist = pd.read_sql(
-            "SELECT playlist_name, seed_song, seed_artist, created_date FROM custom_playlists WHERE id = ?",
-            conn,
-            params=(selected_playlist_id,)
-        )
-        
-        # Get songs
-        df_songs = pd.read_sql("""
-            SELECT track_number, song, artist, album, year, distance, bpm, valence, energy, dance, key, mood_score, key_step
-            FROM custom_playlist_songs
-            WHERE playlist_id = ?
-            ORDER BY track_number
-        """, conn, params=(selected_playlist_id,))
-        conn.close()
-        
-        if df_playlist.empty:
-            return html.P("Playlist not found.")
-        
-        playlist_name = df_playlist.iloc[0]['playlist_name']
-        created_date = df_playlist.iloc[0]['created_date']
-        
-        # Build display
-        songs_html = [
-            html.H4(f"Playlist: {playlist_name}"),
-            html.P(f"Created: {created_date}"),
-            html.Hr()
-        ]
-        
-        for _, song_row in df_songs.iterrows():
-            # Convert binary data to integers if needed
-            year_val = int.from_bytes(song_row['year'], byteorder='little', signed=False) if isinstance(song_row['year'], bytes) else song_row['year']
-            key_step_val = int.from_bytes(song_row['key_step'], byteorder='little', signed=False) if isinstance(song_row['key_step'], bytes) else song_row['key_step']
-            
-            songs_html.append(html.P(f"{song_row['track_number']}. {song_row['song']} — {song_row['artist']} ({year_val})", style={'fontWeight': 'bold'}))
-            songs_html.append(html.P(f"   Distance: {song_row['distance']:.4f}"))
-            songs_html.append(html.P(f"   Features: BPM={song_row['bpm']}, Mood Score={song_row['mood_score']:.1f}, Key Step={key_step_val}"))
-            songs_html.append(html.P(f"   Core Features: BPM={song_row['bpm']}, Valence={song_row['valence']}, Energy={song_row['energy']}, Dance={song_row['dance']}, Key={song_row['key']}"))
-            songs_html.append(html.Hr())
-        
-        return html.Div(songs_html)
-    
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return html.Div(f"Error loading playlist: {str(e)}", style={'color': 'red'})
 
 @app.callback(
     Output('pb-download', 'data'),

@@ -399,15 +399,12 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 **Features:**
 
 - **Song Search**: Searchable dropdown with ~5,300 songs sorted by title (format: "Song - Artist")
-- **Year Range Filter**: Filter results to songs within a specified number of years from the seed song's release year
 - **Target Playlist Size**: Set the total number of songs for your playlist (including the seed song, default: 50)
-- **Exclude Previous Playlists**: Optionally exclude songs from the last 5, 10, or all previously created playlists to avoid duplicates
 - **Interactive Review**: Review songs one by one, starting with the most similar
 - **Accept/Reject**: Accept songs to add to your playlist, or reject to skip
 - **Progress Tracking**: Real-time progress display (e.g., "1/50" when seed selected, "25/50" after accepting 24 songs)
 - **Save to Database**: Save completed playlists to the database with playlist name, seed song, and timestamp
 - **Export**: Export your completed playlist to CSV with Track_Number, Track_Key, Track_ID, Song, Artist, Album, Year, `Distance`, `BPM`, `Valence`, `Energy`, `Dance`, `Key`, `Mood_Score`, and `Key_Step`
-- **View Saved Playlists**: Dropdown to select and view songs from previously saved playlists
 
 **Methodology:**
 
@@ -419,17 +416,16 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 **How to Use:**
 
 1. Select a seed song from the dropdown
-2. Set year range, target playlist size, and optionally exclude songs from previous playlists
+2. Set target playlist size
 3. Click "Start Playlist Builder"
 4. Review each song offered and click "Accept" or "Reject"
 5. Continue until you reach your target size
 6. Enter a playlist name and click "Save to Database" to save your playlist
 7. Click "Export Playlist to CSV" to download your playlist as a CSV file
-8. Use the "Saved Playlists" dropdown at the bottom to view songs from previously saved playlists
 
 **Dashboard Screenshot:**
 
-![Dashboard](images/plotly_dashboard.png)
+![Dashboard](images/playlist_builder.png)
 
 The dashboard will start locally at `http://127.0.0.1:8050/`
 

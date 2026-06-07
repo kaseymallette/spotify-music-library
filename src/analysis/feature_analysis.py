@@ -51,7 +51,7 @@ print(f"Feature columns: {len(FEATURES)}\n")
 print("=== Feature Statistics ===")
 print(df_features.describe())
 
-def plot_feature_distributions(df_features, figsize=(14, 10)):
+def plot_feature_distributions(df_features, figsize=(12, 8)):
     """
     Plot histogram + KDE for each feature in the dataframe.
     
@@ -62,8 +62,8 @@ def plot_feature_distributions(df_features, figsize=(14, 10)):
     features = df_features.columns.tolist()
     n_features = len(features)
     
-    # Calculate grid dimensions
-    n_cols = 3
+    # Use two columns so four features render as a clean 2x2 grid
+    n_cols = 2
     n_rows = (n_features + n_cols - 1) // n_cols
     
     fig, axes = plt.subplots(n_rows, n_cols, figsize=figsize)
