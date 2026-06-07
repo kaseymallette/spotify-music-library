@@ -434,16 +434,17 @@ The dashboard will start locally at `http://127.0.0.1:8050/`
 **Run command:**
 
 ```bash
-python src/db/count_playlists.py
+python src/db/count_custom_playlists.py
 ```
 
 **Sample output:**
 
 ```text
-Number of custom playlists: 3
+Number of custom playlists: 4
   - Snap Out Of It
   - SCARING ME
   - LABOUR
+  - Never Have I Ever
 ```
 
 ### Visualize Custom Playlist Distributions
@@ -460,21 +461,23 @@ python src/analysis/visualize_custom_playlists.py
 
 ```text
 === Custom Playlist Summary ===
-Total playlists: 3
-Total songs: 150
+Total playlists: 4
+Total songs: 200
 
 Songs per playlist:
 playlist_name
-LABOUR            50
-SCARING ME        50
-Snap Out Of It    50
+LABOUR               50
+Never Have I Ever    50
+SCARING ME           50
+Snap Out Of It       50
 
 Average features by playlist:
-                   bpm  valence  energy  dance  mood_score  distance
-playlist_name
-LABOUR          165.64    42.42   70.90  51.90      165.22      0.51
-SCARING ME      133.76    27.58   58.66  55.58      141.82      0.46
-Snap Out Of It  128.84    73.14   79.02  70.94      223.10      0.28
+                      bpm  valence  energy  dance  mood_score  distance
+playlist_name                                                          
+LABOUR             165.64    42.42   70.90  51.90      165.22      0.51
+Never Have I Ever  128.68    56.90   76.30  64.50      197.70      0.37
+SCARING ME         133.76    27.58   58.66  55.58      141.82      0.46
+Snap Out Of It     128.84    73.14   79.02  70.94      223.10      0.28
 ```
 
 **Custom Playlist Distributions Chart:**
