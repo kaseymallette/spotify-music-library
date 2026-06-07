@@ -1,0 +1,51 @@
+Track_Number,Track_Key,Track_ID,Song,Artist,Album,Year,Distance,BPM,Valence,Energy,Dance,Key,Mood_Score,Key_Step
+1,cleopatrick|SCARING ME,35Bv4QuokBrmWya208VcK2,SCARING ME,cleopatrick,DOOM,2022,0.0,135,14,66,59,12A,139,1
+2,Interpol|PDA,286mFeYjBJ9fkioaIzaxoN,PDA,Interpol,Turn On The Bright Lights,2002,0.1080528715925077,138,25,91,24,11A,140,1
+3,MEG MYERS|Make a Shadow,5tb5fb5moizAdu3Z6jljn2,Make a Shadow,MEG MYERS,Sorry,2015,0.14092591083169775,134,30,42,73,11A,145,1
+4,Daughter|Numbers,3NQH2BjlxQkkDKM2BmCffa,Numbers,Daughter,Not to Disappear,2016,0.16766776906750716,131,22,71,42,11A,135,1
+5,Matt Maeson|Grave Digger,6UWmNaS12bUJzFBuQB6e7j,Grave Digger,Matt Maeson,Grave Digger,2016,0.18183482023053754,140,37,44,56,11A,137,1
+6,Angus & Julia Stone|Main Street,1pNVVLBd1HNvTiitcuC3HZ,Main Street,Angus & Julia Stone,Angus & Julia Stone (Deluxe),2014,0.18531750640329667,134,21,52,74,12A,147,1
+7,"Bryce Fox,King Green|King is Dead",379D8MEiFstQthmqVqbWCT,King is Dead,"Bryce Fox,King Green",Psychopath,2025,0.2598925511682074,133,6,69,53,11A,128,1
+8,Broken Hands|Turbulence,7FknJlzX8D9UlVLzrF7gWb,Turbulence,Broken Hands,Turbulence,2016,0.28260285739137087,143,17,78,43,12A,138,1
+9,Paramore|All I Wanted,1Bv3h7Vc4AaYA2BcSM3rVd,All I Wanted,Paramore,Brand New Eyes,2009,0.3241586147775231,144,15,72,49,11A,136,1
+10,Post Malone|I Fall Apart,75ZvA4QfFiZvzhj2xkaWAh,I Fall Apart,Post Malone,Stoney (Deluxe),2016,0.3168970325359972,144,29,54,56,1A,139,1
+11,Stateless|Bloodstream,5I2UElY0XPnPhQhBTxBcq3,Bloodstream,Stateless,Stateless,2007,0.32477104400982193,140,35,46,70,11A,151,1
+12,Say Hi|She Just Happens To Date The Prince Of Darkness,20ftdDh5boQkgxgkx30Tri,She Just Happens To Date The Prince Of Darkness,Say Hi,Impeccable Blahs,2006,0.36558298010061835,136,39,53,63,11A,155,1
+13,Manchester Orchestra|Where Have You Been,7LXVDbbx0NY6zJZbdUUaVx,Where Have You Been,Manchester Orchestra,I'm Like a Virgin Losing a Child,2006,0.375674472228374,136,21,42,69,12B,132,2
+14,"WDL,mawe|Monster vs. Angel",0stKYWa4tQ0jFXmOUDFbxM,Monster vs. Angel,"WDL,mawe",No Wings Airline,2017,0.3842018956140203,140,31,56,54,2A,141,2
+15,blackbear|idfc,6y6jbcPG4Yn3Du4moXaenr,idfc,blackbear,deadroses,2015,0.37762445080691753,145,32,50,63,12A,145,1
+16,Amir Obe|CIGARETTES,3TfTZ3fGLYtR1azsY8iEp4,CIGARETTES,Amir Obe,None Of The Clocks Work,2017,0.403743323013087,144,24,38,66,11A,128,1
+17,The Neighbourhood|Holy Ghost,0fFPWoqcdEDfIpS7wk6shV,Holy Ghost,The Neighbourhood,(((((ultraSOUND))))),2025,0.4072783045646231,125,25,66,57,11A,148,1
+18,Mumford & Sons|The Cave,3pLTOP0G0etiWUknFoRpsr,The Cave,Mumford & Sons,Sigh No More,2009,0.4211487571209908,142,34,49,58,12B,141,2
+19,Sir Sly|All Your Love,0sL5WC2mgffTiCXUA0g2nh,All Your Love,Sir Sly,All Your Love,2020,0.4599945391362352,122,23,45,73,11A,141,1
+20,VINCINT|Marrow,4tapVRtce3MUMR0NoLGS9S,Marrow,VINCINT,Marrow,2017,0.44562068748484235,140,29,79,49,12A,157,1
+21,Incubus|Loneliest,1ShxNSFFxy1rSbnopgYpvx,Loneliest,Incubus,8,2017,0.466958843175091,138,38,57,64,12A,159,1
+22,Thirty Seconds To Mars|Over My Head,3tffqhqjhbLMfefbsMupgL,Over My Head,Thirty Seconds To Mars,Over My Head,2026,0.46108636493564126,146,36,62,52,11A,150,1
+23,Lithe|Fall Back,0LdIVAcALGjlmKnwN36WMg,Fall Back,Lithe,Fall Back / Selfish Game,2024,0.5164242599316392,126,46,16,87,2A,149,2
+24,The Weeknd|Twenty Eight,3dQEShIMs5TW8H3eUh11r7,Twenty Eight,The Weeknd,Trilogy,2012,0.4969098849420493,130,25,64,64,2A,153,2
+25,Ashnikko|Little Boy,660rulYF3eLCuW6rQpiMdL,Little Boy,Ashnikko,DEMIDEVIL,2021,0.5090125883228848,130,33,49,78,12A,160,1
+26,Welshly Arms|Legendary,1HxvdVlvQH5NUPi1wsq5L1,Legendary,Welshly Arms,Legendary,2017,0.5173417886381603,142,43,63,53,11A,159,1
+27,Kanye West|Love Lockdown,1kxeWHF9PrCVZHvVskv8lg,Love Lockdown,Kanye West,808s & Heartbreak,2008,0.5281617208933332,120,11,52,76,12A,139,1
+28,GLU|MOONWALKIN',25dJMz1RMvCjoodJ2jI6BV,MOONWALKIN',GLU,MY DEMONS EP,2023,0.5176934886466499,144,43,58,56,12A,157,1
+29,MISSIO|Bottom Of The Deep Blue Sea,6AvslIXIi9iaGvukefyVVK,Bottom Of The Deep Blue Sea,MISSIO,Loner,2017,0.5186387258126828,133,24,75,57,12B,156,2
+30,grandson|Bury Me Face Down,0LSzBkkQZZkwV656r6etLg,Bury Me Face Down,grandson,Bury Me Face Down,2016,0.5374467360607091,142,16,63,39,12A,118,1
+31,Phantogram|Same Old Blues,28iw1FqJf6Vnfl2Fcu9rBh,Same Old Blues,Phantogram,Three,2016,0.5449202494693938,122,23,71,58,11A,152,1
+32,OneRepublic|Didn't I,2IpeTEPICyB66jjg2hU4Vg,Didn't I,OneRepublic,Human (Deluxe),2021,0.5384303151196127,124,24,61,61,12B,146,2
+33,Lykke Li|Rich Kids Blues,1npDFCLgSeJzPnXLszvZQP,Rich Kids Blues,Lykke Li,Wounded Rhymes,2011,0.53744673606071,128,24,67,27,11A,118,1
+34,Blue Foundation|Eyes on Fire,3XHrTm6WE2BOHafLwTT3GR,Eyes on Fire,Blue Foundation,Life Of A Ghost,2007,0.5387487351684456,145,37,38,54,2A,129,2
+35,Backstreet Boys|Incomplete,0CnD7Hiw6pae6rLsZw5q5W,Incomplete,Backstreet Boys,Never Gone,2005,0.5500066881126107,134,17,59,44,12B,120,2
+36,Fuel|These Things,7xgRurvaLwTMdgCXrivL1X,These Things,Fuel,Natural Selection,2003,0.5664366762103793,120,29,62,39,1A,130,1
+37,Chet Faker|It Could Be Nice,1q4L3WSZSygxR2GjuFswAF,It Could Be Nice,Chet Faker,Hotel Surrender (Expanded Edition),2023,0.5637036433267989,131,14,37,64,12A,115,1
+38,Phantogram|16 Years,1R7EfuL60uDJSvGndrH7Np,16 Years,Phantogram,Nightlife,2011,0.5664366762103785,120,19,78,51,11A,148,1
+39,Catfish and the Bottlemen|Oxygen,1kDc700KN1jUerY6t09FNm,Oxygen,Catfish and the Bottlemen,The Ride,2016,0.5752149873851683,125,28,84,47,12A,159,1
+40,Lana Del Rey|West Coast,5fpZBXuorlUCC9SP6LVuw3,West Coast,Lana Del Rey,Ultraviolence,2014,0.604360353832095,123,46,59,53,11A,158,1
+41,MISSIO|Dopamine Kisses,3LWXJOMDhmDxpdhZjBA0OS,Dopamine Kisses,MISSIO,Dopamine Kisses,2026,0.6006715374366496,138,35,89,41,1A,165,1
+42,Crooked Colours|Flow,7mE57yFVWevAttx4HvLZKi,Flow,Crooked Colours,Vera,2017,0.5985832836791101,118,23,63,53,11A,139,1
+43,Matt Maeson|Cliffy,5ULG2PLrYFHu2yan0Qutqe,Cliffy,Matt Maeson,The Hearse,2018,0.6167106811686893,120,7,46,72,11A,125,1
+44,Daughter|Love,6aIkm0WErAfsQ1xazOavfK,Love,Daughter,The Wild Youth EP,2011,0.6050840937105725,134,16,45,56,12B,117,2
+45,Savage Garden|I Don't Know You Anymore,4VAby1snY4GeyCe2On1Sp9,I Don't Know You Anymore,Savage Garden,Affirmation,1999,0.5936619761996862,130,44,20,55,12B,119,2
+46,Bruno Mars|Talking to the Moon,161DnLWsx1i3u1JT05lzqU,Talking to the Moon,Bruno Mars,Doo-Wops & Hooligans,2010,0.6327364861236854,146,8,59,50,12A,117,1
+47,The Fray|Say When,3lqrCvTI9YRt62FR5JSTom,Say When,The Fray,The Fray,2009,0.648317229555051,153,30,68,47,11A,145,1
+48,Sylvia Black|I Put a Spell on You,3WzNy6b7PZIlWbiyZcVj8d,I Put a Spell on You,Sylvia Black,I Put a Spell on You,2018,0.643914349885263,117,48,55,31,12A,134,1
+49,Bat For Lashes|Daniel,3jgGvWC8icBVtEj0ZzCvBf,Daniel,Bat For Lashes,Two Suns,2009,0.636795919743655,135,42,66,59,1A,167,1
+50,Catfish and the Bottlemen|Mission,3LirkthakHFNj98PIO9oan,Mission,Catfish and the Bottlemen,The Balance,2019,0.640623337803439,128,41,84,40,1A,165,1
