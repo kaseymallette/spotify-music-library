@@ -41,6 +41,19 @@ conn = sqlite3.connect(db_path)
 df_songs = pd.read_sql("SELECT Song, Artist FROM tracks ORDER BY Song, Artist", conn)
 song_options = [{'label': f"{row['Song']} - {row['Artist']}", 'value': f"{row['Artist']}|{row['Song']}"} for _, row in df_songs.iterrows()]
 
+df_keys = pd.read_sql("SELECT DISTINCT Camelot FROM tracks WHERE Camelot IS NOT NULL AND TRIM(Camelot) != ''", conn)
+
+def camelot_sort_value(key_label):
+    key_str = str(key_label).strip().upper()
+    if len(key_str) >= 2 and key_str[:-1].isdigit() and key_str[-1] in ('A', 'B'):
+        return (0, key_str[-1], int(key_str[:-1]))
+    return (1, key_str, 999)
+
+key_options = [
+    {'label': key, 'value': key}
+    for key in sorted(df_keys['Camelot'].dropna().astype(str).unique(), key=camelot_sort_value)
+]
+
 conn.close()
 
 df_harmonic_rules = pd.read_csv(harmonic_rules_path)
@@ -207,6 +220,21 @@ app.layout = html.Div([
     dcc.Download(id='pb-download'),
 
     html.Div(id='pb-playlist'),
+
+    html.Hr(),
+    html.H2("Songs by Key"),
+    html.Div([
+        html.Label("Select Key:"),
+        dcc.Dropdown(
+            id='pb-key-dropdown',
+            options=key_options,
+            value=None,
+            placeholder="Select a Camelot key...",
+            searchable=True,
+            style={'width': '300px'}
+        ),
+    ], style={'marginBottom': '15px'}),
+    html.Div(id='pb-key-results', style={'marginBottom': '20px'}),
     
     dcc.Store(id='pb-knn-results'),
     dcc.Store(id='pb-current-index'),
@@ -946,6 +974,49 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
         import traceback
         traceback.print_exc()
         return html.Div(f"Error saving playlist: {str(e)}", style={'color': 'red'})
+
+@app.callback(
+    Output('pb-key-results', 'children'),
+    Input('pb-key-dropdown', 'value')
+)
+def show_songs_by_key(selected_key):
+    if not selected_key:
+        return html.P("Select a key to view songs.")
+
+    try:
+        conn = sqlite3.connect(db_path)
+        df_key_songs = pd.read_sql(
+            """
+            SELECT Song, Artist, Album, Album_Year, BPM, Valence, Energy, Dance
+            FROM tracks
+            WHERE Camelot = ?
+            ORDER BY Artist, Song
+            """,
+            conn,
+            params=(selected_key,)
+        )
+        conn.close()
+
+        if df_key_songs.empty:
+            return html.P(f"No songs found for key {selected_key}.")
+
+        return html.Div([
+            html.P(f"Found {len(df_key_songs)} songs in key {selected_key}.", style={'fontWeight': 'bold'}),
+            dash.dash_table.DataTable(
+                data=df_key_songs.to_dict('records'),
+                columns=[{"name": col, "id": col} for col in df_key_songs.columns],
+                page_size=20,
+                sort_action='native',
+                style_table={'overflowX': 'auto'},
+                style_cell={'textAlign': 'left', 'padding': '6px'},
+                style_header={'fontWeight': 'bold'}
+            )
+        ])
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return html.Div(f"Error loading songs by key: {str(e)}", style={'color': '#f44336'})
 
 @app.callback(
     Output('pb-download', 'data'),
