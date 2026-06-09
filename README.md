@@ -399,29 +399,40 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 **Features:**
 
 - **Song Search**: Searchable dropdown with ~5,300 songs sorted by title (format: "Song - Artist")
+- **Session-only CSV Upload (above seed selection)**: Upload songs directly in Playlist Builder before choosing the seed song.
+- **Uploaded Songs as Seed + Candidates**: Uploaded songs are added to the seed-song dropdown and the candidate pool used for KNN distance ranking.
+- **Uploaded Song Labeling**: Uploaded tracks are marked as `[Uploaded CSV]` in the UI.
 - **Target Playlist Size**: Set the total number of songs for your playlist (including the seed song, default: 50)
 - **Interactive Review**: Review songs one by one, starting with the most similar
 - **Accept/Reject**: Accept songs to add to your playlist, or reject to skip
 - **Progress Tracking**: Real-time progress display (e.g., "1/50" when seed selected, "25/50" after accepting 24 songs)
 - **Save to Database**: Save completed playlists to the database with playlist name, seed song, and timestamp
-- **Export**: Export your completed playlist to CSV with Track_Number, Track_Key, Track_ID, Song, Artist, Album, Year, `Distance`, `BPM`, `Valence`, `Energy`, `Dance`, `Key`, `Mood_Score`, and `Key_Step`
+- **Export**: Export your completed playlist to CSV with Track_Number, Track_Key, Track_ID, Song, Artist, Album, Year, `Distance`, `BPM`, `Valence`, `Energy`, `Dance`, `Key`, `Mood_Score`, and `Key_Step` (including session-uploaded songs selected in the playlist)
 
 **Methodology:**
 
 - Uses the same K-nearest neighbors algorithm as the KNN Seed Songs feature
+- Session-only uploaded CSV rows are merged into the in-memory candidate pool (not persisted to the `tracks` table)
 - Songs are offered in order of similarity (most similar first)
 - Seed song counts as #1 in the playlist
 - Export includes Spotify Track_ID for easy import to Spotify
 
 **How to Use:**
 
-1. Select a seed song from the dropdown
-2. Set target playlist size
-3. Click "Start Playlist Builder"
-4. Review each song offered and click "Accept" or "Reject"
-5. Continue until you reach your target size
-6. Enter a playlist name and click "Save to Database" to save your playlist
-7. Click "Export Playlist to CSV" to download your playlist as a CSV file
+1. (Optional) Upload a CSV in Playlist Builder using `Upload Playlist CSV`
+2. Select a seed song from the dropdown (database or uploaded songs)
+3. Set target playlist size
+4. Click "Start Playlist Builder"
+5. Review each song offered and click "Accept" or "Reject"
+6. Continue until you reach your target size
+7. Enter a playlist name and click "Save to Database" to save your playlist
+8. Click "Export Playlist to CSV" to download your playlist as a CSV file
+
+**CSV requirements (session upload):**
+
+- Required columns: `Song`, `Artist`, `BPM`, `Valence`, `Dance`, `Energy`
+- Also required: either `Camelot` or `Key`
+- Optional columns (if present): `Track_ID`, `Album`, `Year`, `Popularity`
 
 **Dashboard Screenshot:**
 
@@ -441,12 +452,12 @@ python src/db/count_custom_playlists.py
 
 ```text
 Number of custom playlists: 6
-  - Snap Out Of It
-  - SCARING ME
-  - LABOUR
-  - Never Have I Ever
-  - Cringe
-  - Doing The Right Thing
+  - "Snap Out Of It" by Arctic Monkeys
+  - "SCARING ME" by cleopatrick
+  - "LABOUR - the cacophony" by Paris Paloma
+  - "Cringe" by Matt Maeson
+  - "Doing The Right Thing" by Daughter
+  - "Never Have I Ever" by Rainbow Kitten Surprise
 ```
 
 ### Visualize Custom Playlist Distributions
@@ -484,7 +495,7 @@ playlist_name
 Cringe                 125.62    34.68   62.70  64.44      161.82      0.37
 Doing The Right Thing  136.86    22.76   49.38  47.76      119.90      0.57
 LABOUR                 165.64    42.42   70.90  51.90      165.22      0.51
-Never Have I Ever      128.68    56.90   76.30  64.50      197.70      0.37
+Never Have I Ever      128.04    56.70   75.02  65.02      196.74      0.38
 SCARING ME             133.76    27.58   58.66  55.58      141.82      0.46
 Snap Out Of It         128.84    73.14   79.02  70.94      223.10      0.28
 ```

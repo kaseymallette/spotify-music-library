@@ -4,6 +4,8 @@ import pandas as pd
 from dash import Dash, html, dcc, Input, Output, State
 import dash.dependencies
 import os
+import base64
+import io
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import euclidean_distances
 
@@ -164,6 +166,16 @@ app.layout = html.Div([
     
     html.Hr(),
     html.H2("Playlist Builder"),
+
+    html.Div([
+        html.Label("Upload CSV Songs (session only):"),
+        dcc.Upload(
+            id='pb-upload-csv',
+            children=html.Button('Upload Playlist CSV', style={'backgroundColor': '#607D8B', 'color': 'white', 'border': 'none', 'padding': '8px 16px'}),
+            multiple=False
+        ),
+        html.Div(id='pb-upload-status', style={'marginTop': '8px'})
+    ], style={'marginBottom': '15px'}),
     
     html.Div([
         html.Label("Select Seed Song:"),
@@ -239,7 +251,8 @@ app.layout = html.Div([
     dcc.Store(id='pb-knn-results'),
     dcc.Store(id='pb-current-index'),
     dcc.Store(id='pb-accepted-songs'),
-    dcc.Store(id='pb-rejected-songs')
+    dcc.Store(id='pb-rejected-songs'),
+    dcc.Store(id='pb-uploaded-songs')
 ])
 
 @app.callback(
@@ -250,9 +263,10 @@ app.layout = html.Div([
     Output('pb-seed-stats', 'children'),
     Input('pb-start-button', 'n_clicks'),
     State('pb-song-dropdown', 'value'),
+    State('pb-uploaded-songs', 'data'),
     prevent_initial_call=True
 )
-def start_playlist_builder(n_clicks, selected_song_artist):
+def start_playlist_builder(n_clicks, selected_song_artist, uploaded_songs_data):
     if n_clicks == 0 or not selected_song_artist:
         return None, 0, [], [], html.Div()
     
@@ -268,16 +282,37 @@ def start_playlist_builder(n_clicks, selected_song_artist):
             FROM tracks
             WHERE Album_Year IS NOT NULL
         """, conn)
-        
-        df_features = pd.read_sql("""
-            SELECT Track_Key, BPM, Valence, Dance, Energy
-            FROM tracks
-            WHERE Album_Year IS NOT NULL
-        """, conn)
         conn.close()
         
         df_metadata = df_metadata.set_index('Track_Key')
-        df_features = df_features.set_index('Track_Key')
+        df_metadata['Source'] = 'Database'
+
+        if uploaded_songs_data:
+            df_uploaded = pd.DataFrame(uploaded_songs_data)
+            if not df_uploaded.empty:
+                expected_cols = [
+                    'Track_Key', 'Track_ID', 'Song', 'Artist', 'Album', 'Album_Year', 'Popularity',
+                    'Camelot', 'BPM', 'Valence', 'Dance', 'Energy', 'Source'
+                ]
+                for col in expected_cols:
+                    if col not in df_uploaded.columns:
+                        df_uploaded[col] = None
+
+                numeric_cols = ['BPM', 'Valence', 'Dance', 'Energy', 'Album_Year', 'Popularity']
+                for col in numeric_cols:
+                    df_uploaded[col] = pd.to_numeric(df_uploaded[col], errors='coerce')
+
+                df_uploaded = df_uploaded.dropna(subset=['Track_Key', 'Song', 'Artist', 'BPM', 'Valence', 'Dance', 'Energy'])
+                df_uploaded = df_uploaded.set_index('Track_Key')
+                df_uploaded['Source'] = 'Uploaded CSV'
+
+                df_uploaded = df_uploaded[df_metadata.columns.intersection(df_uploaded.columns)]
+                df_uploaded = df_uploaded.reindex(columns=df_metadata.columns)
+
+                df_metadata = pd.concat([df_metadata, df_uploaded], axis=0)
+                df_metadata = df_metadata[~df_metadata.index.duplicated(keep='first')]
+
+        df_features = df_metadata[['BPM', 'Valence', 'Dance', 'Energy']].copy()
         
         # Add Track_Key back as a column for filtering
         df_metadata['Track_Key'] = df_metadata.index
@@ -503,6 +538,7 @@ def update_current_song(knn_results, current_index, accepted_songs, rejected_son
         track_key = song.get('Track_Key', f"{song['Artist']}|{song['Song']}")
         already_selected = track_key in accepted_keys
         already_rejected = track_key in rejected_keys
+        source_text = " [Uploaded CSV]" if song.get('Source') == 'Uploaded CSV' else ""
 
         select_disabled = already_selected or already_rejected
         reject_disabled = already_selected or already_rejected
@@ -510,7 +546,7 @@ def update_current_song(knn_results, current_index, accepted_songs, rejected_son
         reject_label = 'Rejected' if already_rejected else 'Reject'
 
         batch_html.append(html.Div([
-            html.P(f"{i}. {song['Song']} — {song['Artist']} ({song['Album_Year']})", style={'fontSize': '18px', 'fontWeight': 'bold', 'marginBottom': '2px'}),
+            html.P(f"{i}. {song['Song']} — {song['Artist']} ({song['Album_Year']}){source_text}", style={'fontSize': '18px', 'fontWeight': 'bold', 'marginBottom': '2px'}),
             html.P(f"Distance: {song['distance']:.4f}", style={'marginBottom': '6px'}),
             html.P(f"Features: BPM={song['BPM']}, Mood Score={song['mood_score']:.1f}, Key Step={int(song['key_step'])}", style={'marginBottom': '4px'}),
             html.P(f"Core Features: BPM={song['BPM']}, Valence={song['Valence']}, Energy={song['Energy']}, Dance={song['Dance']}, Key={song['Camelot']}", style={'marginBottom': '8px'}),
@@ -635,6 +671,116 @@ def reject_song_from_batch(n_clicks_list, knn_results, current_index, rejected_s
     new_rejected = rejected_songs.copy()
     new_rejected.append(rejected_song)
     return new_rejected
+
+@app.callback(
+    Output('pb-uploaded-songs', 'data'),
+    Output('pb-upload-status', 'children'),
+    Input('pb-upload-csv', 'contents'),
+    State('pb-upload-csv', 'filename'),
+    prevent_initial_call=True
+)
+def parse_uploaded_csv(contents, filename):
+    if not contents:
+        return [], html.Div()
+
+    try:
+        _, content_string = contents.split(',', 1)
+        decoded = base64.b64decode(content_string)
+        df_upload = pd.read_csv(io.StringIO(decoded.decode('utf-8')))
+
+        normalized_cols = {col: col.strip().lower() for col in df_upload.columns}
+        df_upload = df_upload.rename(columns=normalized_cols)
+
+        required_numeric = ['bpm', 'valence', 'dance', 'energy']
+        required_text = ['song', 'artist']
+        if not all(col in df_upload.columns for col in required_numeric + required_text):
+            return [], html.Div("Upload failed: CSV must include Song, Artist, BPM, Valence, Dance, and Energy columns.", style={'color': '#f44336'})
+
+        camelot_col = 'camelot' if 'camelot' in df_upload.columns else ('key' if 'key' in df_upload.columns else None)
+        if camelot_col is None:
+            return [], html.Div("Upload failed: CSV must include either Camelot or Key column.", style={'color': '#f44336'})
+
+        for col in required_numeric:
+            df_upload[col] = pd.to_numeric(df_upload[col], errors='coerce')
+
+        df_upload['song'] = df_upload['song'].astype(str).str.strip()
+        df_upload['artist'] = df_upload['artist'].astype(str).str.strip()
+        df_upload['camelot_norm'] = df_upload[camelot_col].astype(str).str.strip()
+
+        df_upload = df_upload.dropna(subset=required_numeric)
+        df_upload = df_upload[(df_upload['song'] != '') & (df_upload['artist'] != '') & (df_upload['camelot_norm'] != '')]
+
+        if df_upload.empty:
+            return [], html.Div("Upload failed: no valid rows after validation.", style={'color': '#f44336'})
+
+        upload_records = []
+        for _, row in df_upload.iterrows():
+            upload_records.append({
+                'Track_Key': f"{row['artist']}|{row['song']}",
+                'Track_ID': row['track_id'] if 'track_id' in row and pd.notna(row['track_id']) else '',
+                'Song': row['song'],
+                'Artist': row['artist'],
+                'Album': row['album'] if 'album' in row and pd.notna(row['album']) else '',
+                'Album_Year': row['year'] if 'year' in row and pd.notna(row['year']) else None,
+                'Popularity': row['popularity'] if 'popularity' in row and pd.notna(row['popularity']) else None,
+                'Camelot': row['camelot_norm'],
+                'BPM': row['bpm'],
+                'Valence': row['valence'],
+                'Dance': row['dance'],
+                'Energy': row['energy'],
+                'Source': 'Uploaded CSV'
+            })
+
+        df_records = pd.DataFrame(upload_records)
+        df_records = df_records.drop_duplicates(subset=['Track_Key'], keep='first')
+        records = df_records.to_dict('records')
+
+        preview_items = [
+            html.Li(f"{row['Song']} — {row['Artist']}")
+            for row in records[:5]
+        ]
+        more_text = f" (+{len(records) - 5} more)" if len(records) > 5 else ""
+
+        return records, html.Div([
+            html.P(f"Loaded {len(records)} uploaded songs from {filename} (session only).", style={'margin': '0', 'fontWeight': 'bold', 'color': '#2e7d32'}),
+            html.P("These songs are available in Playlist Builder candidate results.", style={'margin': '4px 0 0 0', 'fontStyle': 'italic'}),
+            html.Ul(preview_items, style={'margin': '6px 0 0 18px'}),
+            html.P(more_text, style={'margin': '2px 0 0 0'}) if more_text else html.Div()
+        ])
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return [], html.Div(f"Upload failed: {str(e)}", style={'color': '#f44336'})
+
+@app.callback(
+    Output('pb-song-dropdown', 'options'),
+    Input('pb-uploaded-songs', 'data')
+)
+def update_seed_song_options(uploaded_songs_data):
+    options = list(song_options)
+
+    if not uploaded_songs_data:
+        return options
+
+    existing_values = {opt.get('value') for opt in options}
+    for song in uploaded_songs_data:
+        artist = str(song.get('Artist', '')).strip()
+        title = str(song.get('Song', '')).strip()
+        if not artist or not title:
+            continue
+
+        value = f"{artist}|{title}"
+        if value in existing_values:
+            continue
+
+        options.append({
+            'label': f"{artist} - {title} [Uploaded CSV]",
+            'value': value
+        })
+        existing_values.add(value)
+
+    return options
 
 @app.callback(
     Output('pb-current-index', 'data', allow_duplicate=True),
@@ -964,6 +1110,35 @@ def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_nam
                         INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, key, distance, mood_score, key_step)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (playlist_id, i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Camelot'], song['distance'], mood_score, key_step))
+                else:
+                    bpm = float(song.get('BPM', 0) or 0)
+                    valence = float(song.get('Valence', 0) or 0)
+                    dance = float(song.get('Dance', 0) or 0)
+                    energy = float(song.get('Energy', 0) or 0)
+                    camelot = song.get('Camelot', '')
+                    mood_score = valence + dance + energy
+                    key_step = int(song.get('key_step', build_key_step_lookup(camelot).get(str(camelot), len(HARMONIC_RULE_GROUPS) + 1)))
+                    cursor.execute('''
+                        INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, key, distance, mood_score, key_step)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        playlist_id,
+                        i,
+                        track_key,
+                        song.get('Track_ID', ''),
+                        song['Song'],
+                        song['Artist'],
+                        song.get('Album', ''),
+                        song.get('Album_Year'),
+                        bpm,
+                        valence,
+                        dance,
+                        energy,
+                        camelot,
+                        float(song.get('distance', 0.0) or 0.0),
+                        mood_score,
+                        key_step
+                    ))
         
         conn.commit()
         conn.close()
@@ -1082,8 +1257,14 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
             key_step = int(song.get('key_step', build_key_step_lookup(features['Camelot']).get(str(features['Camelot']), len(HARMONIC_RULE_GROUPS) + 1)))
             writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], song['distance'], features['BPM'], features['Valence'], features['Energy'], features['Dance'], features['Camelot'], mood_score, key_step])
         else:
-            # Fallback if features not found
-            writer.writerow([i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], song['distance'], 0, 0, 0, 0, '', 0, int(song.get('key_step', 0))])
+            bpm = float(song.get('BPM', 0) or 0)
+            valence = float(song.get('Valence', 0) or 0)
+            energy = float(song.get('Energy', 0) or 0)
+            dance = float(song.get('Dance', 0) or 0)
+            camelot = song.get('Camelot', '')
+            mood_score = valence + dance + energy
+            key_step = int(song.get('key_step', build_key_step_lookup(camelot).get(str(camelot), len(HARMONIC_RULE_GROUPS) + 1)))
+            writer.writerow([i, track_key, song.get('Track_ID', ''), song['Song'], song['Artist'], song.get('Album', ''), song.get('Album_Year'), song.get('distance', 0.0), bpm, valence, energy, dance, camelot, mood_score, key_step])
     
     output.seek(0)
     
