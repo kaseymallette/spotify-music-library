@@ -9,7 +9,6 @@ scripts = [
     ("create_tracks.py", "Deduplicate tracks and create tracks table"),
     ("create_song_playlist_count.py", "Create song playlist count table"),
     ("create_artist_playlist_count.py", "Create artist playlist count table"),
-    ("create_custom_playlists.py", "Create custom playlists table"),
     ("create_mixing_rules.py", "Create harmonic mixing rules table"),
 ]
 

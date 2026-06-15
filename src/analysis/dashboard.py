@@ -77,71 +77,6 @@ def build_key_step_lookup(seed_camelot):
 
     return step_lookup
 
-def ensure_custom_playlist_tables(conn):
-    """Ensure custom playlist tables exist and have required columns for current output schema."""
-    cursor = conn.cursor()
-
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS custom_playlists (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            playlist_name TEXT NOT NULL,
-            seed_song TEXT NOT NULL,
-            seed_artist TEXT NOT NULL,
-            year_range INTEGER,
-            target_size INTEGER NOT NULL,
-            created_date TEXT NOT NULL,
-            csv_path TEXT
-        )
-    ''')
-
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS custom_playlist_songs (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            playlist_id INTEGER NOT NULL,
-            track_number INTEGER NOT NULL,
-            track_key TEXT NOT NULL,
-            track_id TEXT NOT NULL,
-            song TEXT NOT NULL,
-            artist TEXT NOT NULL,
-            album TEXT,
-            year INTEGER,
-            bpm REAL,
-            valence REAL,
-            dance REAL,
-            energy REAL,
-            key TEXT,
-            distance REAL,
-            mood_score REAL,
-            key_step INTEGER,
-            FOREIGN KEY (playlist_id) REFERENCES custom_playlists(id) ON DELETE CASCADE
-        )
-    ''')
-
-    cursor.execute('''
-        CREATE INDEX IF NOT EXISTS idx_custom_playlist_songs_playlist_id
-        ON custom_playlist_songs(playlist_id)
-    ''')
-
-    existing_cols = {
-        row[1] for row in cursor.execute("PRAGMA table_info(custom_playlist_songs)").fetchall()
-    }
-    required_cols = {
-        'bpm': 'REAL',
-        'valence': 'REAL',
-        'energy': 'REAL',
-        'dance': 'REAL',
-        'key': 'TEXT',
-        'distance': 'REAL',
-        'mood_score': 'REAL',
-        'key_step': 'INTEGER'
-    }
-
-    for col_name, col_type in required_cols.items():
-        if col_name not in existing_cols:
-            cursor.execute(f"ALTER TABLE custom_playlist_songs ADD COLUMN {col_name} {col_type}")
-
-    conn.commit()
-
 # Create Dash app
 app = Dash(__name__)
 
@@ -201,17 +136,6 @@ app.layout = html.Div([
         ),
     ], style={'marginBottom': '15px'}),
     
-    html.Div([
-        html.Label("Playlist Name:"),
-        dcc.Input(
-            id='pb-playlist-name',
-            type='text',
-            value='',
-            placeholder="Auto-generated from seed song...",
-            style={'width': '300px'}
-        ),
-    ], style={'marginBottom': '15px'}),
-    
     html.Button('Start Playlist Builder', id='pb-start-button', n_clicks=0, style={'marginBottom': '20px'}),
     html.Div(id='pb-seed-stats', style={'marginBottom': '15px'}),
     
@@ -225,10 +149,8 @@ app.layout = html.Div([
     html.Div(id='pb-progress', style={'marginBottom': '20px', 'fontSize': '18px'}),
 
     html.Div([
-        html.Button('Export Playlist to CSV', id='pb-export-button', n_clicks=0, disabled=True, style={'marginRight': '10px', 'backgroundColor': '#2196F3', 'color': 'white', 'border': 'none', 'padding': '10px 20px'}),
-        html.Button('Save to Database', id='pb-save-db-button', n_clicks=0, disabled=True, style={'backgroundColor': '#9C27B0', 'color': 'white', 'border': 'none', 'padding': '10px 20px'}),
+        html.Button('Export Playlist to CSV', id='pb-export-button', n_clicks=0, disabled=True, style={'backgroundColor': '#2196F3', 'color': 'white', 'border': 'none', 'padding': '10px 20px'}),
     ], style={'marginBottom': '20px'}),
-    html.Div(id='pb-save-status', style={'marginBottom': '20px', 'fontSize': '18px', 'color': 'green'}),
     dcc.Download(id='pb-download'),
 
     html.Div(id='pb-playlist'),
@@ -274,7 +196,6 @@ def start_playlist_builder(n_clicks, selected_song_artist, uploaded_songs_data):
         selected_artist, selected_song = selected_song_artist.split('|')
         
         conn = sqlite3.connect(db_path)
-        ensure_custom_playlist_tables(conn)
         
         df_metadata = pd.read_sql("""
             SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, Popularity, Camelot,
@@ -383,17 +304,6 @@ def start_playlist_builder(n_clicks, selected_song_artist, uploaded_songs_data):
         import traceback
         traceback.print_exc()
         return None, 0, [], [], html.Div(f"Error: {e}", style={'color': '#f44336'})
-
-@app.callback(
-    Output('pb-playlist-name', 'value'),
-    Input('pb-song-dropdown', 'value')
-)
-def update_playlist_name(selected_song_artist):
-    if not selected_song_artist:
-        return ''
-    seed_artist, seed_song = selected_song_artist.split('|')
-    # Generate default playlist name: "Snap Out Of It"
-    return seed_song
 
 @app.callback(
     Output('pb-nn-stats', 'children', allow_duplicate=True),
@@ -811,7 +721,6 @@ def previous_batch(n_clicks, current_index):
     Output('pb-progress', 'children'),
     Output('pb-playlist', 'children'),
     Output('pb-export-button', 'disabled'),
-    Output('pb-save-db-button', 'disabled'),
     Input('pb-accepted-songs', 'data'),
     Input('pb-rejected-songs', 'data'),
     Input('pb-target-size', 'value'),
@@ -828,8 +737,8 @@ def update_progress_playlist(accepted_songs, rejected_songs, target_size, seed_s
 
     if not accepted_songs:
         if seed_song_artist:
-            return html.Div(f"Progress: 1/{target_size} songs (Seed song selected)"), html.Div(), True, True
-        return html.Div(f"Progress: 0/{target_size} songs"), html.Div(), True, True
+            return html.Div(f"Progress: 1/{target_size} songs (Seed song selected)"), html.Div(), True
+        return html.Div(f"Progress: 0/{target_size} songs"), html.Div(), True
     
     current_count = 1 + len(accepted_songs)  # Seed song + accepted songs
     progress_text = f"Progress: {current_count}/{target_size} songs"
@@ -906,7 +815,7 @@ def update_progress_playlist(accepted_songs, rejected_songs, target_size, seed_s
                 html.Hr()
             ]))
     
-    return html.Div(progress_text, style={'fontWeight': 'bold'}), html.Div(playlist_html), not is_complete, not is_complete
+    return html.Div(progress_text, style={'fontWeight': 'bold'}), html.Div(playlist_html), not is_complete
 
 @app.callback(
     Output('pb-accepted-songs', 'data', allow_duplicate=True),
@@ -1042,115 +951,6 @@ def add_rejected_song(n_clicks_list, accepted_songs, rejected_songs):
     return new_accepted, new_rejected
 
 @app.callback(
-    Output('pb-save-status', 'children'),
-    Input('pb-save-db-button', 'n_clicks'),
-    State('pb-accepted-songs', 'data'),
-    State('pb-song-dropdown', 'value'),
-    State('pb-playlist-name', 'value'),
-    State('pb-target-size', 'value'),
-    prevent_initial_call=True
-)
-def save_playlist_to_db(n_clicks, accepted_songs, seed_song_artist, playlist_name, target_size):
-    if not accepted_songs or not seed_song_artist or not playlist_name:
-        return html.Div("Please enter a playlist name and complete the playlist first.", style={'color': 'red'})
-    
-    try:
-        from datetime import datetime
-        
-        seed_artist, seed_song = seed_song_artist.split('|')
-        
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-        ensure_custom_playlist_tables(conn)
-        
-        # Insert playlist metadata
-        created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        cursor.execute('''
-            INSERT INTO custom_playlists (playlist_name, seed_song, seed_artist, target_size, created_date)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (playlist_name, seed_song, seed_artist, target_size, created_date))
-        
-        playlist_id = cursor.lastrowid
-        
-        # Get audio features for seed song
-        seed_data = pd.read_sql(
-            "SELECT Track_Key, Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Camelot FROM tracks WHERE Track_Key = ?",
-            conn,
-            params=(f"{seed_artist}|{seed_song}",)
-        )
-        
-        # Insert seed song
-        if not seed_data.empty:
-            row = seed_data.iloc[0]
-            seed_mood_score = row['Valence'] + row['Dance'] + row['Energy']
-            seed_key_step = build_key_step_lookup(row['Camelot']).get(str(row['Camelot']), 1)
-            cursor.execute('''
-                INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, key, distance, mood_score, key_step)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (playlist_id, 1, f"{row['Artist']}|{row['Song']}", row['Track_ID'], row['Song'], row['Artist'], row['Album'], row['Album_Year'], row['BPM'], row['Valence'], row['Dance'], row['Energy'], row['Camelot'], 0.0, seed_mood_score, seed_key_step))
-        
-        # Get audio features for accepted songs
-        accepted_track_keys = [f"{song['Artist']}|{song['Song']}" for song in accepted_songs]
-        if accepted_track_keys:
-            accepted_features = pd.read_sql(
-                f"SELECT Track_Key, BPM, Valence, Dance, Energy, Camelot FROM tracks WHERE Track_Key IN ({','.join(['?']*len(accepted_track_keys))})",
-                conn,
-                params=accepted_track_keys
-            )
-            accepted_features = accepted_features.set_index('Track_Key')
-            
-            # Insert accepted songs
-            for i, song in enumerate(accepted_songs, 2):
-                track_key = f"{song['Artist']}|{song['Song']}"
-                if track_key in accepted_features.index:
-                    features = accepted_features.loc[track_key]
-                    mood_score = features['Valence'] + features['Dance'] + features['Energy']
-                    key_step = int(song.get('key_step', build_key_step_lookup(features['Camelot']).get(str(features['Camelot']), len(HARMONIC_RULE_GROUPS) + 1)))
-                    cursor.execute('''
-                        INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, key, distance, mood_score, key_step)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (playlist_id, i, track_key, song['Track_ID'], song['Song'], song['Artist'], song['Album'], song['Album_Year'], features['BPM'], features['Valence'], features['Dance'], features['Energy'], features['Camelot'], song['distance'], mood_score, key_step))
-                else:
-                    bpm = float(song.get('BPM', 0) or 0)
-                    valence = float(song.get('Valence', 0) or 0)
-                    dance = float(song.get('Dance', 0) or 0)
-                    energy = float(song.get('Energy', 0) or 0)
-                    camelot = song.get('Camelot', '')
-                    mood_score = valence + dance + energy
-                    key_step = int(song.get('key_step', build_key_step_lookup(camelot).get(str(camelot), len(HARMONIC_RULE_GROUPS) + 1)))
-                    cursor.execute('''
-                        INSERT INTO custom_playlist_songs (playlist_id, track_number, track_key, track_id, song, artist, album, year, bpm, valence, dance, energy, key, distance, mood_score, key_step)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (
-                        playlist_id,
-                        i,
-                        track_key,
-                        song.get('Track_ID', ''),
-                        song['Song'],
-                        song['Artist'],
-                        song.get('Album', ''),
-                        song.get('Album_Year'),
-                        bpm,
-                        valence,
-                        dance,
-                        energy,
-                        camelot,
-                        float(song.get('distance', 0.0) or 0.0),
-                        mood_score,
-                        key_step
-                    ))
-        
-        conn.commit()
-        conn.close()
-        
-        return html.Div(f"Playlist '{playlist_name}' saved to database successfully!", style={'color': 'green', 'fontWeight': 'bold'})
-    
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return html.Div(f"Error saving playlist: {str(e)}", style={'color': 'red'})
-
-@app.callback(
     Output('pb-key-results', 'children'),
     Input('pb-key-dropdown', 'value')
 )
@@ -1215,7 +1015,6 @@ def export_playlist(n_clicks, accepted_songs, seed_song_artist):
     
     # Get seed song data from database
     conn = sqlite3.connect(db_path)
-    ensure_custom_playlist_tables(conn)
     seed_data = pd.read_sql(
         "SELECT Track_ID, Song, Artist, Album, Album_Year, BPM, Valence, Dance, Energy, Camelot FROM tracks WHERE Track_Key = ?",
         conn,

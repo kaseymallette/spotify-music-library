@@ -1,36 +1,40 @@
-import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
-import struct
 import re
 
 
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-db_path = os.path.join(root_dir, "spotify_music_library.db")
+results_dir = os.path.join(root_dir, "results")
 images_dir = os.path.join(root_dir, "images")
 os.makedirs(images_dir, exist_ok=True)
 
-conn = sqlite3.connect(db_path)
+csv_files = sorted(
+    [name for name in os.listdir(results_dir) if name.lower().endswith('.csv')]
+) if os.path.isdir(results_dir) else []
 
-query = """
-SELECT
-    cp.playlist_name,
-    cps.song,
-    cps.artist,
-    cps.bpm,
-    cps.valence,
-    cps.energy,
-    cps.dance,
-    cps.distance,
-    cps.mood_score,
-    cps.key
-FROM custom_playlist_songs cps
-JOIN custom_playlists cp ON cp.id = cps.playlist_id
-"""
+frames = []
+for csv_name in csv_files:
+    csv_path = os.path.join(results_dir, csv_name)
+    playlist_name = os.path.splitext(csv_name)[0]
+    playlist_df = pd.read_csv(csv_path)
+    playlist_df["playlist_name"] = playlist_name
+    frames.append(playlist_df)
 
-df = pd.read_sql(query, conn)
-conn.close()
+df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+df = df.rename(
+    columns={
+        "Song": "song",
+        "Artist": "artist",
+        "BPM": "bpm",
+        "Valence": "valence",
+        "Energy": "energy",
+        "Dance": "dance",
+        "Distance": "distance",
+        "Mood_Score": "mood_score",
+        "Key": "key",
+    }
+)
 
 
 def _coerce_numeric(value, col_name):
@@ -38,22 +42,6 @@ def _coerce_numeric(value, col_name):
         return None
     if isinstance(value, (int, float)):
         return float(value)
-    if isinstance(value, (bytes, bytearray)):
-        if len(value) == 8:
-            int_candidate = struct.unpack("<q", value)[0]
-            float_candidate = struct.unpack("<d", value)[0]
-            if col_name == "distance":
-                if float_candidate == float_candidate and 0 <= float_candidate <= 10:
-                    return float_candidate
-                if 0 <= int_candidate <= 10:
-                    return float(int_candidate)
-                return None
-            if 0 <= int_candidate <= 500:
-                return float(int_candidate)
-            if float_candidate == float_candidate and 0 <= float_candidate <= 500:
-                return float_candidate
-            return None
-        return None
     try:
         return float(value)
     except (TypeError, ValueError):
@@ -73,10 +61,15 @@ def _key_sort_value(key_label):
 
 numeric_cols = ["bpm", "valence", "energy", "dance", "distance", "mood_score"]
 for col in numeric_cols:
+    if col not in df.columns:
+        df[col] = None
     df[col] = pd.to_numeric(df[col].map(lambda value: _coerce_numeric(value, col)), errors="coerce")
 
+if "key" not in df.columns:
+    df["key"] = None
+
 if df.empty:
-    print("No songs found in custom playlists. Build and save a playlist first.")
+    print("No playlist CSVs found in results/. Export playlists from the dashboard first.")
     raise SystemExit(0)
 
 print("=== Custom Playlist Summary ===")

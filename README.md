@@ -40,7 +40,6 @@ This project ingests 50 Spotify playlists into a SQLite database, deduplicates t
     │   └── visualize_distributions.py
     └── db/
         ├── create_artist_playlist_count.py
-        ├── create_custom_playlists.py
         ├── create_mixing_rules.py
         ├── create_playlists.py
         ├── create_song_playlist_count.py
@@ -99,38 +98,33 @@ Running create_playlists.py...
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9661
+Row count: 9933
 ✓ create_playlists.py completed successfully
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 5824
-Unique Track_Keys: 5288
-Unique Artists: 2063
-Removed: 536 duplicate tracks (same song, different Track_ID)
+Unique Track_IDs: 6027
+Unique Track_Keys: 5473
+Unique Artists: 2077
+Removed: 554 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5286
-Songs in multiple playlists: 2288
+Total unique songs: 5473
+Songs in multiple playlists: 2324
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
 
 --- Create artist playlist count table ---
 Running create_artist_playlist_count.py...
-Total unique artists: 2063
-Artists in multiple playlists: 1075
-Maximum playlists per artist: 19
+Total unique artists: 2077
+Artists in multiple playlists: 1084
+Maximum playlists per artist: 20
 Artist playlist count table created successfully.
 ✓ create_artist_playlist_count.py completed successfully
-
---- Create custom playlists table ---
-Running create_custom_playlists.py...
-Custom playlists tables created successfully.
-✓ create_custom_playlists.py completed successfully
 
 --- Create harmonic mixing rules table ---
 Running create_mixing_rules.py...
@@ -154,10 +148,10 @@ python src/analysis/sample_queries.py
 50
 
 **Get number of unique artists:**
-2063
+2077
 
 **Get number of unique songs:**
-5286
+5473
 
 **Get top five artists with song count:**
 ```
@@ -173,14 +167,14 @@ The Fray|58
 Get top 5 songs by playlist count:
 Kenny Loggins - Danger Zone - From  Top Gun  Original Soundtrack: 11 playlists
 The Fray - Singing Low: 10 playlists
+Arctic Monkeys - Do I Wanna Know: 9 playlists
 Shania Twain - That Don't Impress Me Much: 8 playlists
-Flo Rida,T-Pain - Low: 8 playlists
-Britney Spears - Breathe on Me: 8 playlists
+Blue Foundation - Eyes on Fire: 8 playlists
 ```
 
 **Get top 5 artists by playlist count:**
 ```
-Rainbow Kitten Surprise: 19 playlists
+Rainbow Kitten Surprise: 20 playlists
 OneRepublic: 18 playlists
 Matt Maeson: 18 playlists
 Britney Spears: 18 playlists
@@ -221,11 +215,11 @@ The Fray: 16 playlists
 
 The `src/analysis/visualize_distributions.py` script generates charts to analyze the library's composition and identify patterns:
 
-- **Artist Distribution:** 47.9% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
-- **Track Distribution:** 56.7% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
+- **Artist Distribution:** 47.8% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
+- **Track Distribution:** 57.5% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
 - **Playlist Composition:**
   - Artist density: 42% of playlists contain fewer than 50 unique artists, while 6% of playlists contain more than 200 unique artists.
-  - Track volume: 16% of playlists have 50 or fewer songs and 8% of playlists exceed 500 tracks; the majority vary in size, between 51-500 songs.
+  - Track volume: 14% of playlists have 50 or fewer songs and 8% of playlists exceed 500 tracks; the majority vary in size, between 51-500 songs.
 
 **Run script:**
 ```bash
@@ -320,52 +314,50 @@ python src/analysis/knn_seed_songs.py --song "Snap Out Of It" --artist "Arctic M
    Core Features: BPM=130, Valence=85, Energy=77, Dance=62, Key=5A
 
 2. Don't Phunk With My Heart — Black Eyed Peas (2005)
-   Distance: 0.0419
+   Distance: 0.0417
    Features: BPM=131, Mood Score=223.0, Key Step=1
    Core Features: BPM=131, Valence=61, Energy=93, Dance=69, Key=4A
 
 3. It's Not Right But It's Okay — Mr. Belt & Wezol (2024)
-   Distance: 0.0704
+   Distance: 0.0702
    Features: BPM=128, Mood Score=224.0, Key Step=1
    Core Features: BPM=128, Valence=62, Energy=86, Dance=76, Key=4A
 
 4. Handshake — Two Door Cinema Club (2012)
-   Distance: 0.0768
+   Distance: 0.0761
    Features: BPM=131, Mood Score=221.0, Key Step=1
    Core Features: BPM=131, Valence=82, Energy=83, Dance=56, Key=5A
 
 5. Kacey Talk — YoungBoy Never Broke Again (2020)
-   Distance: 0.1150
+   Distance: 0.1146
    Features: BPM=127, Mood Score=226.0, Key Step=1
    Core Features: BPM=127, Valence=77, Energy=61, Dance=88, Key=3A
 
 6. Fool's Gold — Aaron Carter (2018)
-   Distance: 0.1364
+   Distance: 0.1351
    Features: BPM=130, Mood Score=218.0, Key Step=1
    Core Features: BPM=130, Valence=79, Energy=70, Dance=69, Key=4A
 
 7. In the Ayer — Flo Rida,will.i.am (2008)
-   Distance: 0.1426
+   Distance: 0.1422
    Features: BPM=126, Mood Score=223.0, Key Step=1
    Core Features: BPM=126, Valence=65, Energy=75, Dance=83, Key=4A
 
 8. Kiss — Presley Regier (2025)
-   Distance: 0.1760
+   Distance: 0.1756
    Features: BPM=125, Mood Score=224.0, Key Step=1
    Core Features: BPM=125, Valence=76, Energy=57, Dance=91, Key=4A
 
 9. Beautiful — Akon,Colby O'Donis,Kardinal Offishall (2008)
-   Distance: 0.1819
+   Distance: 0.1802
    Features: BPM=130, Mood Score=232.0, Key Step=1
    Core Features: BPM=130, Valence=63, Energy=95, Dance=74, Key=5A
 
 10. I Like It — Enrique Iglesias,Pitbull (2010)
-   Distance: 0.1853
+   Distance: 0.1835
    Features: BPM=129, Mood Score=232.0, Key Step=1
    Core Features: BPM=129, Valence=73, Energy=94, Dance=65, Key=3A
 ```
-
-**Note:** The album year displayed reflects the release date of the album in the database, which may not always be the song's original release year. For example, "Whose Bed Have Your Boots Been Under" by Shania Twain appears as 2022 from the album "Not Just A Girl (The Highlights)" (a re-release compilation), but the song was originally released in 1995. This can happen when artists re-release songs on compilation albums or re-issues.
 
 ## Interactive Dashboard
 
@@ -406,7 +398,6 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 - **Interactive Review**: Review songs one by one, starting with the most similar
 - **Accept/Reject**: Accept songs to add to your playlist, or reject to skip
 - **Progress Tracking**: Real-time progress display (e.g., "1/50" when seed selected, "25/50" after accepting 24 songs)
-- **Save to Database**: Save completed playlists to the database with playlist name, seed song, and timestamp
 - **Export**: Export your completed playlist to CSV with Track_Number, Track_Key, Track_ID, Song, Artist, Album, Year, `Distance`, `BPM`, `Valence`, `Energy`, `Dance`, `Key`, `Mood_Score`, and `Key_Step` (including session-uploaded songs selected in the playlist)
 
 **Methodology:**
@@ -425,8 +416,7 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 4. Click "Start Playlist Builder"
 5. Review each song offered and click "Accept" or "Reject"
 6. Continue until you reach your target size
-7. Enter a playlist name and click "Save to Database" to save your playlist
-8. Click "Export Playlist to CSV" to download your playlist as a CSV file
+7. Click "Export Playlist to CSV" to download your playlist as a CSV file
 
 **CSV requirements (session upload):**
 
@@ -434,38 +424,23 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 - Also required: either `Camelot` or `Key`
 - Optional columns (if present): `Track_ID`, `Album`, `Year`, `Popularity`
 
-**Dashboard Screenshot:**
+### Songs by Key
 
-![Dashboard](images/playlist_builder.png)
+The dashboard also includes a **Songs by Key** section so you can quickly examine songs that share the same Camelot key.
 
-The dashboard will start locally at `http://127.0.0.1:8050/`
-
-### Count Custom Playlists in DB
-
-**Run command:**
-
-```bash
-python src/db/count_custom_playlists.py
-```
-
-**Sample output:**
-
-```text
-Number of custom playlists: 6
-  - "Snap Out Of It" by Arctic Monkeys
-  - "SCARING ME" by cleopatrick
-  - "LABOUR - the cacophony" by Paris Paloma
-  - "Cringe" by Matt Maeson
-  - "Doing The Right Thing" by Daughter
-  - "Never Have I Ever" by Rainbow Kitten Surprise
-```
+- Select a key to view matching songs from the library.
+- Use it to check harmonic compatibility when building playlists.
 
 ### Visualize Custom Playlist Distributions
 
-This script generates summary statistics and two charts:
+Use `src/analysis/visualize_custom_playlists.py` to analyze exported custom playlists from the `results/` folder.
 
-- `BPM`, `Mood Score`, `Key`, and `Distance` distributions
-- Original core feature distributions for `BPM`, `Valence`, `Energy`, and `Dance`
+This script reads all playlist CSVs in `results/` and generates:
+
+- Summary stats (total playlists, total songs, songs per playlist)
+- Average playlist-level features (`bpm`, `valence`, `energy`, `dance`, `mood_score`, `distance`)
+- Distribution charts for `BPM`, `Mood Score`, `Key`, and `Distance`
+- Core feature distribution charts for `BPM`, `Valence`, `Energy`, and `Dance`
 
 **Run command:**
 
@@ -473,38 +448,13 @@ This script generates summary statistics and two charts:
 python src/analysis/visualize_custom_playlists.py
 ```
 
-**Sample output:**
+**Output charts:**
 
-```text
-=== Custom Playlist Summary ===
-Total playlists: 6
-Total songs: 300
+- `images/custom_playlist_distributions.png`
+- `images/custom_playlist_core_feature_distributions.png`
 
-Songs per playlist:
-playlist_name
-Cringe                   50
-Doing The Right Thing    50
-LABOUR                   50
-Never Have I Ever        50
-SCARING ME               50
-Snap Out Of It           50
+### Dashboard Screenshot
 
-Average features by playlist:
-                          bpm  valence  energy  dance  mood_score  distance
-playlist_name                                                              
-Cringe                 125.62    34.68   62.70  64.44      161.82      0.37
-Doing The Right Thing  136.86    22.76   49.38  47.76      119.90      0.57
-LABOUR                 165.64    42.42   70.90  51.90      165.22      0.51
-Never Have I Ever      128.04    56.70   75.02  65.02      196.74      0.38
-SCARING ME             133.76    27.58   58.66  55.58      141.82      0.46
-Snap Out Of It         128.84    73.14   79.02  70.94      223.10      0.28
-```
+![Dashboard](images/playlist_builder.png)
 
-**Custom Playlist Distributions Chart:**
-
-![Custom Playlist Distributions](images/custom_playlist_distributions.png)
-
-**Custom Playlist Core Feature Distributions Chart:**
-
-![Custom Playlist Core Feature Distributions](images/custom_playlist_core_feature_distributions.png)
-
+The dashboard will start locally at `http://127.0.0.1:8050/`
