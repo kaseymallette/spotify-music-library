@@ -368,6 +368,12 @@ The `src/analysis/dashboard.py` script creates an interactive Plotly Dash dashbo
 - **Number of Songs**: Configure how many similar songs to return (default: 10)
 - **Results Display**: Shows the seed song and similar songs with distance, `Features` (`BPM`, `Mood Score`, `Key Step`) and `Core Features` (`BPM`, `Valence`, `Energy`, `Dance`, `Key`)
 
+**Dashboard Screenshot:**
+
+![Dashboard](images/playlist_builder.png)
+
+The dashboard will start locally at `http://127.0.0.1:8050/`
+
 **Methodology:**
 
 - Uses Euclidean distance on standardized `BPM`, `mood_score`, and `key_step`
@@ -424,12 +430,6 @@ The dashboard includes an interactive playlist builder that lets you create a cu
 - Also required: either `Camelot` or `Key`
 - Optional columns (if present): `Track_ID`, `Album`, `Year`, `Popularity`
 
-### Dashboard Screenshot
-
-![Dashboard](images/playlist_builder.png)
-
-The dashboard will start locally at `http://127.0.0.1:8050/`
-
 ### Songs by Key
 
 The dashboard also includes a **Songs by Key** section so you can quickly examine songs that share the same Camelot key.
@@ -458,4 +458,3 @@ python src/analysis/visualize_custom_playlists.py
 
 - `images/custom_playlist_distributions.png`
 - `images/custom_playlist_core_feature_distributions.png`
-
