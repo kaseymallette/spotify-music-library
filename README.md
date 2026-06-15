@@ -1,9 +1,9 @@
 # spotify-music-library
-A Spotify-powered song recommendation system using K-nearest neighbors on audio features, with clustering analysis to explore mood and sonic patterns across 5,300+ tracks.
+A Spotify-powered song recommendation system using K-nearest neighbors on audio features, with clustering analysis to explore mood and sonic patterns across 5,500 tracks.
 
 ## Overview
 
-This project ingests 50 Spotify playlists into a SQLite database, deduplicates tracks across playlists, and analyzes audio features (BPM, valence, energy, acousticness, etc.) across 5,300+ songs. Three analysis layers are built on top: K-means clustering to surface mood and sonic groupings across the library, K-nearest neighbors recommendation to find songs similar to a given seed track, and an interactive playlist builder that constructs custom playlists by walking through similarity-ranked candidates with accept/reject review. The goal is discovery without repetition: building new playlists that don't recycle the same tracks. 
+This project ingests 50 Spotify playlists into a SQLite database, deduplicates tracks across playlists, and analyzes audio features (BPM, valence, energy, acousticness, etc.) across 5,500+ songs. Three analysis layers are built on top: K-means clustering to surface mood and sonic groupings across the library, K-nearest neighbors recommendation to find songs similar to a given seed track, and an interactive playlist builder that constructs custom playlists by walking through similarity-ranked candidates with accept/reject review. The goal is discovery without repetition: building new playlists that don't recycle the same tracks. 
 
 **Stack:** Python, SQLite, pandas, scikit-learn, Plotly Dash, matplotlib/seaborn.
 
@@ -103,17 +103,17 @@ Row count: 9933
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 6027
-Unique Track_Keys: 5473
+Unique Track_IDs: 6025
+Unique Track_Keys: 5541
 Unique Artists: 2077
-Removed: 554 duplicate tracks (same song, different Track_ID)
+Removed: 484 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5473
-Songs in multiple playlists: 2324
+Total unique songs: 5541
+Songs in multiple playlists: 2394
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
@@ -151,7 +151,7 @@ python src/analysis/sample_queries.py
 2077
 
 **Get number of unique songs:**
-5473
+5541
 
 **Get top five artists with song count:**
 ```
