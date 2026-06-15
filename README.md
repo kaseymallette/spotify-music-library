@@ -458,3 +458,7 @@ python src/analysis/visualize_custom_playlists.py
 
 - `images/custom_playlist_distributions.png`
 - `images/custom_playlist_core_feature_distributions.png`
+
+![Custom Playlist Distributions](images/custom_playlist_distributions.png)
+
+![Custom Playlist Core Feature Distributions](images/custom_playlist_core_feature_distributions.png)
