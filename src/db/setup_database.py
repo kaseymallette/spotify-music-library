@@ -4,6 +4,8 @@ import sys
 
 print("=== Spotify Music Library Database Setup ===\n")
 
+db_dir = os.path.dirname(os.path.abspath(__file__))
+
 scripts = [
     ("create_playlists.py", "Create playlists table from CSV files"),
     ("create_tracks.py", "Deduplicate tracks and create tracks table"),
@@ -15,8 +17,8 @@ scripts = [
 for script, description in scripts:
     print(f"\n--- {description} ---")
     print(f"Running {script}...")
-    script_path = os.path.join(os.path.dirname(__file__), script)
-    result = subprocess.run([sys.executable, script_path], cwd=os.path.dirname(__file__))
+    script_path = os.path.join(db_dir, script)
+    result = subprocess.run([sys.executable, script_path], cwd=db_dir)
     if result.returncode != 0:
         print(f"Error: {script} failed with exit code {result.returncode}")
         sys.exit(1)

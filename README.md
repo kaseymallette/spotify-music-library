@@ -1,5 +1,5 @@
 # spotify-music-library
-A Spotify-powered song recommendation system using K-nearest neighbors on audio features, with clustering analysis to explore mood and sonic patterns across 5,500 tracks.
+A Spotify-powered song recommendation system using K-nearest neighbors on audio features, with clustering analysis to explore mood and sonic patterns across 5,500+ tracks.
 
 ## Overview
 
@@ -98,30 +98,30 @@ Running create_playlists.py...
 Database created: spotify_music_library.db
 Playlists table created successfully.
 Number of playlists: 50
-Row count: 9933
+Row count: 10000
 ✓ create_playlists.py completed successfully
 
 --- Deduplicate tracks and create tracks table ---
 Running create_tracks.py...
-Unique Track_IDs: 6025
-Unique Track_Keys: 5541
-Unique Artists: 2077
-Removed: 484 duplicate tracks (same song, different Track_ID)
+Unique Track_IDs: 6088
+Unique Track_Keys: 5530
+Unique Artists: 2089
+Removed: 558 duplicate tracks (same song, different Track_ID)
 Tracks table created with unique tracks sorted by Artist, Song.
 ✓ create_tracks.py completed successfully
 
 --- Create song playlist count table ---
 Running create_song_playlist_count.py...
-Total unique songs: 5541
-Songs in multiple playlists: 2394
+Total unique songs: 5530
+Songs in multiple playlists: 2330
 Maximum playlists per song: 11
 Song playlist count table created successfully.
 ✓ create_song_playlist_count.py completed successfully
 
 --- Create artist playlist count table ---
 Running create_artist_playlist_count.py...
-Total unique artists: 2077
-Artists in multiple playlists: 1084
+Total unique artists: 2089
+Artists in multiple playlists: 1086
 Maximum playlists per artist: 20
 Artist playlist count table created successfully.
 ✓ create_artist_playlist_count.py completed successfully
@@ -148,15 +148,15 @@ python src/analysis/sample_queries.py
 50
 
 **Get number of unique artists:**
-2077
+2089
 
 **Get number of unique songs:**
-5541
+5530
 
 **Get top five artists with song count:**
 ```
 Backstreet Boys|107
-OneRepublic|88
+OneRepublic|89
 Maroon 5|71
 Matt Maeson|64
 The Fray|58
@@ -215,8 +215,8 @@ The Fray: 16 playlists
 
 The `src/analysis/visualize_distributions.py` script generates charts to analyze the library's composition and identify patterns:
 
-- **Artist Distribution:** 47.8% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
-- **Track Distribution:** 57.5% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
+- **Artist Distribution:** 48.0% of artists appear in only one playlist, suggesting a wide artist range across the library rather than repeated reuse.
+- **Track Distribution:** 57.9% of songs are unique to a single playlist, indicating that playlists tend to function as distinct collections rather than overlapping selections.
 - **Playlist Composition:**
   - Artist density: 42% of playlists contain fewer than 50 unique artists, while 6% of playlists contain more than 200 unique artists.
   - Track volume: 14% of playlists have 50 or fewer songs and 8% of playlists exceed 500 tracks; the majority vary in size, between 51-500 songs.
